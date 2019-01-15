@@ -1,1 +1,51 @@
 /* You can add global styles to this file, and also import other style files */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  padding: 10px;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.container {
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  background: pink;
+  padding: 5px;
+}
+
+h2 {
+  margin: 0;
+}
+
+.header {
+  background: black;
+  color: white;
+  padding: 20px;
+}
+
+.menu {
+  display: flex;
+  background: lightblue;
+  padding: 5px;
+}
+
+.content {
+  background: yellow;
+}
+
+a {
+  padding: 5px;
+  background: orange;
+  margin-right: 5px;
+}
