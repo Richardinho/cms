@@ -1,6 +1,6 @@
-# Cms
+# CMSC
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.2.
+Content Management System for website.
 
 ## Development server
 
@@ -22,6 +22,15 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-## Further help
+##  Deployment
+Delete app folder from server, then upload files.
+Must have ssh keys set up for this.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+```
+  # log into remote server. Once in, use cd, rm etc. to delete app folder
+  ssh richardh@richardhunter.co.uk
+
+  # load build folder to server
+  scp -r dist/cms richardh@richardhunter.co.uk:/home/richardh/public_html/
+
+```
