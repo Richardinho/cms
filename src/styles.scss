@@ -1,7 +1,10 @@
+@import './reset';
+$base-color: blue;
 /* You can add global styles to this file, and also import other style files */
 html, body {
   height: 100%;
   margin: 0;
+  font-family: helvetica;
 }
 
 body {
@@ -20,7 +23,7 @@ html {
   height: 100%;
   display: grid;
   grid-template-rows: auto auto 1fr;
-  background: pink;
+  background: lighten($base-color, 20%);
   padding: 5px;
 }
 
@@ -29,23 +32,22 @@ h2 {
 }
 
 .header {
-  background: black;
+  background: lighten($base-color, 30%);
   color: white;
   padding: 20px;
 }
 
 .menu {
   display: flex;
-  background: lightblue;
+  background: lighten($base-color, 40%);
   padding: 5px;
 }
 
 .content {
-  background: yellow;
+  background: white;
 }
 
-a {
-  padding: 5px;
-  background: orange;
-  margin-right: 5px;
+.article-content {
+  padding: 20px;
 }
+
