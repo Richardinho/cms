@@ -34,7 +34,7 @@ Should I restrict multiple log in attempts by a user within a certain time frame
 * **THEN** they should be redirected to a sign in page
 * **WHEN** they input a username and password that exists in the users database
 * **THEN** they should be designated as authorised users
-* **AND** they should be redirected to the originally requested page
+  * **AND** they should be redirected to the originally requested page
 
 
 
@@ -48,15 +48,15 @@ Should I restrict multiple log in attempts by a user within a certain time frame
 
 * **GIVEN** a user is unauthorised (todo: define unauthorised)
 * **WHEN** they navigate directly to the login page 
-* **AND** they input a username and password that exists in the users database
+  * **AND** they input a username and password that exists in the users database
 * **THEN** they should be designated as authorised users
-* **AND** they should be redirected to the home page
+  * **AND** they should be redirected to the home page
 
 
 
 * **GIVEN** a user is unauthorised (todo: define unauthorised)
 * **WHEN** they navigate directly to the login page 
-* **AND** they input a username and password that does NOT exist in the users database
+  * **AND** they input a username and password that does NOT exist in the users database
 * **THEN** they should see an error message: 'User not found'
 
 
