@@ -17,18 +17,19 @@ Should I restrict multiple log in attempts by a user within a certain time frame
 
 ## Acceptance Criteria
 
+### Authorised users navigating to a page
 * **GIVEN** a user is authorised (todo: define authorised)
 * **WHEN** they attempt to navigate to a page on the app
 * **THEN** they should navigate to the requested page
 
 
-
+### Authorised users navigating to login page
 * **GIVEN** a user is authorised (todo: define authorised)
 * **WHEN** they navigate to the login page
 * **THEN** they should see a message: 'You are already logged in'
 
 
-
+### Unauthorised users navigating to a page with correct username/password
 * **GIVEN** a user is unauthorised (todo: define unauthorised)
 * **WHEN** they attempt to navigate to a page on the app
 * **THEN** they should be redirected to a sign in page
@@ -37,7 +38,7 @@ Should I restrict multiple log in attempts by a user within a certain time frame
   * **AND** they should be redirected to the originally requested page
 
 
-
+### Unauthorised users with incorrect username/password
 * **GIVEN** a user is unauthorised (todo: define unauthorised)
 * **WHEN** they attempt to navigate to a page on the app
 * **THEN** they should be redirected to a sign in page
@@ -45,7 +46,7 @@ Should I restrict multiple log in attempts by a user within a certain time frame
 * **THEN** they should see an error message: 'User not found'
 
 
-
+### Unauthorised users navigating to login page with correct username/password
 * **GIVEN** a user is unauthorised (todo: define unauthorised)
 * **WHEN** they navigate directly to the login page 
   * **AND** they input a username and password that exists in the users database
@@ -53,7 +54,7 @@ Should I restrict multiple log in attempts by a user within a certain time frame
   * **AND** they should be redirected to the home page
 
 
-
+### Unauthorised users navigating to login page with incorrect username/password
 * **GIVEN** a user is unauthorised (todo: define unauthorised)
 * **WHEN** they navigate directly to the login page 
   * **AND** they input a username and password that does NOT exist in the users database
