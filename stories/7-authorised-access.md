@@ -38,7 +38,7 @@ Should I restrict multiple log in attempts by a user within a certain time frame
   * **AND** they should be redirected to the originally requested page
 
 
-### Unauthorised users with incorrect username/password
+### Unauthorised users navigating to a page with incorrect username/password
 * **GIVEN** a user is unauthorised (todo: define unauthorised)
 * **WHEN** they attempt to navigate to a page on the app
 * **THEN** they should be redirected to a sign in page
