@@ -29,6 +29,4 @@ install:
 
 script:
   - npm run test -- --no-watch --no-progress --browsers=ChromeHeadless
-  - ng serve &
-  - npm run cy:run
-  - kill $(jobs -p) || true
+  - npm run foo 
