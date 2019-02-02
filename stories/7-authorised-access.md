@@ -1,36 +1,45 @@
-# As an adminstrator I want to prevent unauthorised access to the app
+# 7. As an adminstrator I want to prevent unauthorised access to the app and to the API
 
-Unauthorised users should not be able to access any part of the CMS.
-They should also be restricted from accessing parts of the API e.g. metadata and from changing data. Data that is publicly accessible through the website is also accessible without authorisation via the API.
+Unauthorised users should not be able to access any part of the CMS, apart from the login page.
+Unauthorised users should not be able to access the API
 
-Authorised users should have a username and password key. 
-Authentication will be carried out using Json Web Tokens.
-Authorised users will have to sign in using their username and password in order to get a JWT.
+Users will be required to submit a username and password in order to become authorised
+
+Account management is not in scope here. The database will contain a single user (myself!) and there
+will be no way for this to be changed from within the application.
+
+Changes to the API should be made first.
+
+## API Acceptance Criteria
+
+### Authorised users accessing the API
+* **GIVEN** a user is authorised 
+* **WHEN** they attempt to access an HTTP request to the API
+* **THEN** the  request should be successful
+
+### Unauthorised users accessing the API
+* **GIVEN** a user is unauthorised 
+* **WHEN** they attempt to access an HTTP request to the API
+* **THEN** the  request should NOT be successful
 
 
-Questions: 
-Whilst the most important thing is to secure access to the API, do we also want to secure access to the UI code? (Given that without data there is no security risk)
+## CMS Acceptance Criteria
 
-Is account management in scope? (or do we just assume one user - me!)
-
-Should I restrict multiple log in attempts by a user within a certain time frame?
-
-## Acceptance Criteria
 
 ### Authorised users navigating to a page
-* **GIVEN** a user is authorised (todo: define authorised)
+* **GIVEN** a user is authorised
 * **WHEN** they attempt to navigate to a page on the app
 * **THEN** they should navigate to the requested page
 
 
 ### Authorised users navigating to login page
-* **GIVEN** a user is authorised (todo: define authorised)
+* **GIVEN** a user is authorised
 * **WHEN** they navigate to the login page
 * **THEN** they should see a message: 'You are already logged in'
 
 
 ### Unauthorised users navigating to a page with correct username/password
-* **GIVEN** a user is unauthorised (todo: define unauthorised)
+* **GIVEN** a user is unauthorised
 * **WHEN** they attempt to navigate to a page on the app
 * **THEN** they should be redirected to a sign in page
 * **WHEN** they input a username and password that exists in the users database
@@ -39,7 +48,7 @@ Should I restrict multiple log in attempts by a user within a certain time frame
 
 
 ### Unauthorised users navigating to a page with incorrect username/password
-* **GIVEN** a user is unauthorised (todo: define unauthorised)
+* **GIVEN** a user is unauthorised
 * **WHEN** they attempt to navigate to a page on the app
 * **THEN** they should be redirected to a sign in page
 * **WHEN** they input a username and password that does NOT exist in the users database
@@ -47,7 +56,7 @@ Should I restrict multiple log in attempts by a user within a certain time frame
 
 
 ### Unauthorised users navigating to login page with correct username/password
-* **GIVEN** a user is unauthorised (todo: define unauthorised)
+* **GIVEN** a user is unauthorised
 * **WHEN** they navigate directly to the login page 
   * **AND** they input a username and password that exists in the users database
 * **THEN** they should be designated as authorised users
@@ -55,9 +64,13 @@ Should I restrict multiple log in attempts by a user within a certain time frame
 
 
 ### Unauthorised users navigating to login page with incorrect username/password
-* **GIVEN** a user is unauthorised (todo: define unauthorised)
+* **GIVEN** a user is unauthorised
 * **WHEN** they navigate directly to the login page 
   * **AND** they input a username and password that does NOT exist in the users database
 * **THEN** they should see an error message: 'User not found'
+
+#### Definitions
+* authorised user: user has a way of identifying themselves to application as being authorised
+* unauthorised user: user does NOT have a way of identifying themselves to application as being authorised
 
 
