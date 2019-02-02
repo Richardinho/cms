@@ -1,4 +1,4 @@
-#  13. As a user I want to view an article
+#  13. As a user,  I want to view an article
 
 The user should be able to select an article from the site and view it in read-only mode.
 

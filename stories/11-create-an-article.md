@@ -1,4 +1,4 @@
-# 11. Create an Article
+# 11. As a user, I want to Create an Article
 
 As a user, I want to be able to create an article and save it into the database
 

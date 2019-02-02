@@ -1,4 +1,4 @@
-# 7. As an adminstrator I want to prevent unauthorised access to the app and to the API
+# 7. As an administrator,  I want to prevent unauthorised access to the app and to the API
 
 Unauthorised users should not be able to access any part of the CMS, apart from the login page.
 Unauthorised users should not be able to access the API
@@ -14,13 +14,17 @@ Changes to the API should be made first.
 
 ### Authorised users accessing the API
 * **GIVEN** a user is authorised 
-* **WHEN** they attempt to access an HTTP request to the API
+* **WHEN** they make an HTTP request to the API
 * **THEN** the  request should be successful
 
 ### Unauthorised users accessing the API
 * **GIVEN** a user is unauthorised 
-* **WHEN** they attempt to access an HTTP request to the API
+* **WHEN** they make an HTTP request to the API
 * **THEN** the  request should NOT be successful
+
+## Technical Considerations
+
+
 
 
 ## CMS Acceptance Criteria
