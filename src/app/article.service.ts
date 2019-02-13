@@ -2,20 +2,30 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
 import { Article } from './article';
+import { AuthService } from './auth/auth.service';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArticleService {
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService
+  ) {}
 
   getArticles(): Observable<Array<Article>> {
     const url = 'http://october.richardhunter.co.uk/index.php/api/articles/';
 
-    return this.http.get<any>(url)
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Basic ${this.authService.getToken()}`, 
+      })
+    }; 
+
+    return this.http.get<any>(url, httpOptions)
       .pipe(map(data => {
         return data.articles;
       }));
@@ -24,6 +34,14 @@ export class ArticleService {
   getArticle(id: number | string) {
     const url = 'http://october.richardhunter.co.uk/index.php/api/article/' + id;
 
-    return this.http.get(url);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Basic ${this.authService.getToken()}`, 
+      })
+    }; 
+    return this.http.get<any>(url, httpOptions)
+      .pipe(map(data => {
+        return data;
+      });
   }
 }

@@ -22,10 +22,6 @@ Changes to the API should be made first.
 * **WHEN** they make an HTTP request to the API
 * **THEN** the  request should NOT be successful
 
-## Technical Considerations
-
-
-
 
 ## CMS Acceptance Criteria
 
