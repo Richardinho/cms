@@ -1,8 +1,8 @@
 <div>
   <h1>Login page</h1>
 
-  <label>Username:<input type="text"/></label>
-  <label>Password<input type="password"/></label>
+  <label>Username:<input [formControl]="username" type="text"/></label>
+  <label>Password<input [formControl]="password" type="password"/></label>
 
   <br/>
   <button (click)="onSubmit()">Login</button>

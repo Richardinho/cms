@@ -42,6 +42,6 @@ export class ArticleService {
     return this.http.get<any>(url, httpOptions)
       .pipe(map(data => {
         return data;
-      });
+      }));
   }
 }
