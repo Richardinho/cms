@@ -48,7 +48,7 @@ export class ArticleService {
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': `Basic 33${this.authService.getToken()}`, 
+        'Authorization': `Basic ${this.authService.getToken()}`, 
       })
     }; 
 
