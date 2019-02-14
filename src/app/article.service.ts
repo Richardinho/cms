@@ -4,7 +4,7 @@ import { throwError, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Article } from './article';
 import { AuthService } from './auth/auth.service';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders, HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'

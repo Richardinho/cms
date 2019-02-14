@@ -17,6 +17,8 @@ export class LoginPageComponent implements OnInit {
   username = new FormControl('');
   password = new FormControl('');
 
+  errorMessage: string;
+
   constructor(
     private http: HttpClient,
     private router: Router,

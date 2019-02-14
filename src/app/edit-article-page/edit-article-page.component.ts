@@ -15,6 +15,8 @@ export class EditArticlePageComponent implements OnInit {
   article: Article;
   article$:Observable<any>;
 
+  errorMessage: string;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
