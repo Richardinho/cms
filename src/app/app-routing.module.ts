@@ -4,6 +4,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { EditArticlePageComponent } from './edit-article-page/edit-article-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { HomeGuard } from './auth/home.guard';
+import { GeneralGuard } from './auth/general.guard';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 const routes: Routes = [
   {
@@ -27,7 +28,8 @@ const routes: Routes = [
   },
   {
     path: '**',
-    component: PageNotFoundComponent
+    component: PageNotFoundComponent,
+    canActivate: [GeneralGuard]
   }
 ];
 
