@@ -1,6 +1,8 @@
-<ul class="links">
+<ul class="links" *ngIf="articles">
   <li *ngFor="let article of articles" class="link">
     <span>{{article.title}}</span>
     <button [routerLink]="['/edit-article', article.id]" class="button">view article</button>
   </li>
 </ul>
+
+<div *ngIf="errorMessage">{{errorMessage}}</div>

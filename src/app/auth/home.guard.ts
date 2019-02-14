@@ -18,7 +18,9 @@ export class HomeGuard implements CanActivate {
       const loggedIn = this.authService.isLoggedIn();
 
       if (!loggedIn) {
+        this.authService.redirectUrl = state.url;
         this.router.navigate(['/login']);
+
         return false;
       } else {
         return true;

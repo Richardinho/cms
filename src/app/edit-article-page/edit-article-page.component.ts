@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Article } from '../article';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-article-page',
@@ -16,6 +17,7 @@ export class EditArticlePageComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private articleService: ArticleService) {}
 
   ngOnInit() {
@@ -27,7 +29,15 @@ export class EditArticlePageComponent implements OnInit {
 
     this.article$.subscribe(article => {
       this.article = article; 
+    }, (e) => {
+      /*
+       *  if error is 401, we redirect to login page. Otherwise we show an error message
+       */
+      if (e.status && e.status === 401) {
+        this.router.navigate(['/login']);
+      } else {
+        this.errorMessage = 'an error occurred';
+      }
     });
   }
-
 }

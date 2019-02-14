@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { throwError, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { Article } from './article';
 import { AuthService } from './auth/auth.service';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
@@ -25,10 +25,22 @@ export class ArticleService {
       })
     }; 
 
-    return this.http.get<any>(url, httpOptions)
-      .pipe(map(data => {
+    return this.http.get<any>(url, httpOptions).pipe(
+      map(data => {
         return data.articles;
-      }));
+      }),
+      catchError((error: HttpErrorResponse) => {
+        if (error.error instanceof ErrorEvent) {
+          return throwError({
+            message: 'an error occurred'
+          });
+        } else {
+          return throwError({
+            status: error.status
+          });
+        }
+      })
+    );
   }
 
   getArticle(id: number | string) {
@@ -36,12 +48,26 @@ export class ArticleService {
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': `Basic ${this.authService.getToken()}`, 
+        'Authorization': `Basic 33${this.authService.getToken()}`, 
       })
     }; 
+
     return this.http.get<any>(url, httpOptions)
-      .pipe(map(data => {
-        return data;
-      }));
+      .pipe(
+        map(data => {
+          return data;
+        }), 
+        catchError((error: HttpErrorResponse) => {
+          if(error.error instanceof ErrorEvent) {
+            return throwError({
+              message: 'an error occurred'
+            });
+          } else {
+            return throwError({
+              status: error.status
+            });
+          }
+        })
+      );
   }
 }

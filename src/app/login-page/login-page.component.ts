@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
@@ -13,7 +13,7 @@ interface LoginResponseData {
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss']
 })
-export class LoginPageComponent {
+export class LoginPageComponent implements OnInit {
   username = new FormControl('');
   password = new FormControl('');
 
@@ -22,6 +22,9 @@ export class LoginPageComponent {
     private router: Router,
     private authService: AuthService) {}
 
+  ngOnInit() {
+    this.authService.logOut();
+  }
 
   onSubmit() {
     const url = 'http://october.richardhunter.co.uk/index.php/api/login';
@@ -39,9 +42,17 @@ export class LoginPageComponent {
       .subscribe(token => {
         this.authService.setToken(token.jwt_token);
 
-        this.router.navigate(['/home']);
-      }, () => {
-        console.log('error happened');
+        if (this.authService.redirectUrl) {
+          this.router.navigate([this.authService.redirectUrl]);
+        } else {
+          this.router.navigate(['/home']);
+        }
+      }, (e) => {
+        if (e.status === 403) {
+          this.errorMessage = 'Your submitted username and password were wrong';
+        } else {
+          this.errorMessage = 'Some other error occurred';
+        }
       });
   }
 }

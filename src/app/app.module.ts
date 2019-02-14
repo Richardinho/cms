@@ -9,6 +9,7 @@ import { EditArticlePageComponent } from './edit-article-page/edit-article-page.
 import { MarkdownToHTMLPipe } from './pipes/markdown-to-html.pipe';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { AuthService } from './auth/auth.service';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { AuthService } from './auth/auth.service';
     EditArticlePageComponent,
     MarkdownToHTMLPipe,
     LoginPageComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     ReactiveFormsModule,

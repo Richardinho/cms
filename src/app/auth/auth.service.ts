@@ -5,8 +5,14 @@ import { Injectable } from '@angular/core';
 })
 export class AuthService {
 
+  redirectUrl: string;
+
   public isLoggedIn() {
     return !!this.getToken();
+  }
+
+  public logOut() {
+    localStorage.removeItem('jwt_token');
   }
 
   public setToken(token) {
