@@ -35,7 +35,7 @@ describe('HomeGuard', () => {
 
   describe('when user is logged in', () => {
     it('should return true', inject([HomeGuard], (guard: HomeGuard) => {
-      //  Get
+      //  Given
       const authService = TestBed.get(AuthService);
       authService.isLoggedIn.and.returnValue(true);
 
@@ -51,7 +51,7 @@ describe('HomeGuard', () => {
 
   describe('when user is NOT logged in', () => {
     it('should save redirect url, navigate to login page, and return false', inject([HomeGuard], (guard: HomeGuard) => {
-      //  Get
+      //  Given
       const authService = TestBed.get(AuthService);
       const router = TestBed.get(Router);
       authService.isLoggedIn.and.returnValue(false);
