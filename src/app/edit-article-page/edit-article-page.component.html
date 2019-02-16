@@ -1,2 +1,2 @@
 <p class="article-content" *ngIf="article" [innerHTML]="article.body | markdownToHTML"></p>
-<div *ngIf="errorMessage">{{errorMessage}}</div>
+<div class="error-message" *ngIf="errorMessage">{{errorMessage}}</div>
