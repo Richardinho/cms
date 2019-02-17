@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ArticleService } from '../article.service';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { Article } from '../article';
 import { Observable } from 'rxjs';
 import { HomePageComponent } from './home-page.component';
@@ -12,63 +12,59 @@ const stubArticles = [
   { id: 3, title: 'this is foo' }
 ];
 
-describe('HomePageComponent', () => {
+describe('when page loads', () => {
   let component: HomePageComponent;
+  let articleServiceSpy;
+  let routerSpy;
 
   beforeEach(() => {
-    const articleServiceSpy = jasmine.createSpyObj('ArticleService', ['getArticles']);
-    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-    articleServiceSpy.getArticles.and.returnValue(of(stubArticles as Array<Article>));
-    component = new HomePageComponent(articleServiceSpy, routerSpy);
-    component.ngOnInit();
+    articleServiceSpy = jasmine.createSpyObj('ArticleService', ['getArticles']);
+    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
   });
 
-  it('should get articles from server on init', () => {
-    expect(component.articles).toEqual(stubArticles);
+  describe('when user is logged in', () => {
+    it('should fetch articles from service', () => {
+      //  Given
+      articleServiceSpy.getArticles.and.returnValue(of(stubArticles as Array<Article>));
+      component = new HomePageComponent(articleServiceSpy, routerSpy);
+      
+      //  When
+      component.ngOnInit();
+
+      //  Then
+      expect(component.articles.length).toBe(1);
+      expect(component.articles[0].title).toBe('this is foo');
+    });
+  });
+
+  describe('when user is not logged in', () => {
+    it('should redirect to login page', () => {
+      //  Given
+      articleServiceSpy.getArticles.and.returnValue(throwError({ status: 401 }));
+
+      component = new HomePageComponent(articleServiceSpy, routerSpy);
+      
+      //  When
+      component.ngOnInit();
+
+      //  Then
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
+    });
+  });
+
+  describe('when some other error occurs', () => {
+    it('should show generic error message', () => {
+      //  Given
+      articleServiceSpy.getArticles.and.returnValue(throwError({}));
+
+      component = new HomePageComponent(articleServiceSpy, routerSpy);
+      
+      //  When
+      component.ngOnInit();
+
+      //  Then
+      expect(component.errorMessage).toBe('Some error occurred');
+    });
   });
 });
 
-class StubArticleService {
-
-  getArticles(): Observable<Array<Article>> {
-  
-    return of(stubArticles);
-  }
-}
-describe('rendering template', () => {
-  let component: HomePageComponent;
-  let fixture: ComponentFixture<HomePageComponent>;
-
-  beforeEach(async(() => {
-    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-
-    TestBed.configureTestingModule({
-      declarations: [
-        HomePageComponent,
-      ],
-      providers: [
-        {
-          provide: ArticleService,
-          useClass: StubArticleService,
-        }, 
-        { 
-          provide: Router, 
-          useValue: routerSpy,
-        }
-      ],
-
-      schemas: [ NO_ERRORS_SCHEMA ]
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(HomePageComponent);
-    fixture.detectChanges();
-  });
-
-  it('should render article links', () => {
-    const links = fixture.nativeElement.querySelectorAll('.link');
-    expect(links[0].querySelector('span').textContent).toBe('this is foo');
-  });
-});
