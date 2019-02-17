@@ -30,13 +30,13 @@ export class ArticleService {
         return data.articles;
       }),
       catchError((error: HttpErrorResponse) => {
-        if (error.error instanceof ErrorEvent) {
+        if (error.status) {
           return throwError({
-            message: 'an error occurred'
+            status: error.status
           });
         } else {
           return throwError({
-            status: error.status
+            message: 'an error occurred'
           });
         }
       })
@@ -58,13 +58,13 @@ export class ArticleService {
           return data;
         }), 
         catchError((error: HttpErrorResponse) => {
-          if(error.error instanceof ErrorEvent) {
+          if(error.status) {
             return throwError({
-              message: 'an error occurred'
+              status: error.status
             });
           } else {
             return throwError({
-              status: error.status
+              message: 'an error occurred'
             });
           }
         })
