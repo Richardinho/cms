@@ -14,7 +14,6 @@ export class GeneralGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-
       const loggedIn = this.authService.isLoggedIn();
 
       if (!loggedIn) {
