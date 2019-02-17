@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 import { Article } from '../article';
 import { Observable } from 'rxjs';
 import { HomePageComponent } from './home-page.component';
+import { Router } from '@angular/router';
 
 const stubArticles = [
   { id: 3, title: 'this is foo' }
@@ -16,8 +17,9 @@ describe('HomePageComponent', () => {
 
   beforeEach(() => {
     const articleServiceSpy = jasmine.createSpyObj('ArticleService', ['getArticles']);
+    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     articleServiceSpy.getArticles.and.returnValue(of(stubArticles as Array<Article>));
-    component = new HomePageComponent(articleServiceSpy);
+    component = new HomePageComponent(articleServiceSpy, routerSpy);
     component.ngOnInit();
   });
 
@@ -38,6 +40,7 @@ describe('rendering template', () => {
   let fixture: ComponentFixture<HomePageComponent>;
 
   beforeEach(async(() => {
+    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
     TestBed.configureTestingModule({
       declarations: [
@@ -47,6 +50,10 @@ describe('rendering template', () => {
         {
           provide: ArticleService,
           useClass: StubArticleService,
+        }, 
+        { 
+          provide: Router, 
+          useValue: routerSpy,
         }
       ],
 

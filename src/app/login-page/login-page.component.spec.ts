@@ -3,13 +3,9 @@ import { Router } from '@angular/router';
 import { LoginPageComponent } from './login-page.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'; 
 import { AuthService } from '../auth/auth.service';
-import { of, defer } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-
-export function asyncError<T>(errorObject: any) {
-  return defer(() => Promise.reject(errorObject));
-}
 
 describe('LoginPageComponent', () => {
   let authServiceSpy;
@@ -21,31 +17,20 @@ describe('LoginPageComponent', () => {
     httpSpy = jasmine.createSpyObj('HttpClient', ['post']);
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     authServiceSpy = jasmine.createSpyObj('AuthService', ['setToken', 'logOut']);
-    httpSpy.post.and.returnValue(of({
-      jwt_token: 'blah',
-    }));
   });
 
+  
   describe('when the user submits a correct username and password', () => {
+    beforeEach(() => {
+      httpSpy.post.and.returnValue(of({
+        jwt_token: 'blah',
+      }));
+    });
+
     describe('and there is NOT a stored redirect url', () => {
       it('should set the jwt token and redirect to url', () => {
-        TestBed.configureTestingModule({
-          declarations: [
-            LoginPageComponent
-          ],
-          providers: [
-            { provide: HttpClient, useValue: httpSpy },
-            { provide: Router, useValue: routerSpy },
-            { provide: AuthService, useValue: authServiceSpy },
-          ],
-          imports: [
-            ReactiveFormsModule,
-            BrowserModule,
-          ]
-        });
-
-        fixture = TestBed.createComponent(LoginPageComponent);
-        const component = fixture.debugElement.componentInstance;
+        //  Given
+        const component = new LoginPageComponent(httpSpy, routerSpy, authServiceSpy);
 
         //  When
         component.onSubmit();
@@ -58,27 +43,13 @@ describe('LoginPageComponent', () => {
 
     describe('and there is a stored redirect url', () => {
       it('should set the jwt token and redirect to home page', () => {
-        TestBed.configureTestingModule({
-          declarations: [
-            LoginPageComponent
-          ],
-          providers: [
-            { provide: HttpClient, useValue: httpSpy },
-            { provide: Router, useValue: routerSpy },
-            { provide: AuthService, useValue: authServiceSpy }
-          ],
-          imports: [
-            ReactiveFormsModule,
-            BrowserModule
-          ]
-        });
+        //  Given
+        authServiceSpy.redirectUrl = '/foobar';
+        const component = new LoginPageComponent(httpSpy, routerSpy, authServiceSpy);
 
-        fixture = TestBed.createComponent(LoginPageComponent);
-        const component = fixture.debugElement.componentInstance;
-
-        component.authService.redirectUrl = '/foobar';
         //  When
         component.onSubmit();
+
         //  Then
         expect(authServiceSpy.setToken).toHaveBeenCalledWith('blah');
         expect(routerSpy.navigate).toHaveBeenCalledWith(['/foobar']);
@@ -87,73 +58,37 @@ describe('LoginPageComponent', () => {
   });
 
   describe('when the user submits an incorrect username and password', () => {
-    it('should show error message', async(() => {
+    it('should show error telling the user that they submitted the wrong username/password pair', () => {
       //  Given
       const errorResponse = {
         status: 403,
       };
 
-      httpSpy.post.and.returnValue(asyncError(errorResponse));
+      httpSpy.post.and.returnValue(throwError(errorResponse));
 
-      TestBed.configureTestingModule({
-        declarations: [
-          LoginPageComponent
-        ],
-        providers: [
-          { provide: HttpClient, useValue: httpSpy },
-          { provide: Router, useValue: routerSpy },
-          { provide: AuthService, useValue: authServiceSpy }
-        ],
-        imports: [
-          ReactiveFormsModule,
-          BrowserModule
-        ]
-      });
-
-      fixture = TestBed.createComponent(LoginPageComponent);
-      const component = fixture.debugElement.componentInstance;
+      const component = new LoginPageComponent(httpSpy, routerSpy, authServiceSpy);
 
       //  When
       component.onSubmit();
 
-      fixture.whenStable().then(() => {
-        //  Then
-        expect(component.errorMessage).toBe('Your submitted username and password were wrong');
-      });
-    }));
+      //  Then
+      expect(component.errorMessage).toBe('Your submitted username and password were wrong');
+     });
   });
 
   describe('when some other error occurs', () => {
     it('should show generic error', async(() => {
       //  Given
       const errorResponse = {};
-      httpSpy.post.and.returnValue(asyncError(errorResponse));
+      httpSpy.post.and.returnValue(throwError(errorResponse));
 
-      TestBed.configureTestingModule({
-        declarations: [
-          LoginPageComponent
-        ],
-        providers: [
-          { provide: HttpClient, useValue: httpSpy },
-          { provide: Router, useValue: routerSpy },
-          { provide: AuthService, useValue: authServiceSpy }
-        ],
-        imports: [
-          ReactiveFormsModule,
-          BrowserModule
-        ]
-      });
-
-      fixture = TestBed.createComponent(LoginPageComponent);
-      const component = fixture.debugElement.componentInstance;
+      const component = new LoginPageComponent(httpSpy, routerSpy, authServiceSpy);
 
       //  When
       component.onSubmit();
 
       //  Then
-      fixture.whenStable().then(() => {
-        expect(component.errorMessage).toBe('Some other error occurred');
-      });
+      expect(component.errorMessage).toBe('Some other error occurred');
     }));
   });
 });
