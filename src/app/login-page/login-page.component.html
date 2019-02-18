@@ -1,11 +1,11 @@
 <div>
   <h1>Login page</h1>
 
-  <label>Username:<input [formControl]="username" type="text"/></label>
-  <label>Password<input [formControl]="password" type="password"/></label>
+  <label>Username:<input class="username" [formControl]="username" type="text"/></label>
+  <label>Password<input class="password" [formControl]="password" type="password"/></label>
 
   <br/>
-  <button (click)="onSubmit()">Login</button>
+  <button id="login-button" (click)="onSubmit()">Login</button>
   <div *ngIf="errorMessage">{{errorMessage}}</div>
 </div>
 
