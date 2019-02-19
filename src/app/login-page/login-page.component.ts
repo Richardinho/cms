@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
+import { environment } from '../../environments/environment';
 
 interface LoginResponseData {
   jwt_token: string
@@ -29,7 +30,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   onSubmit() {
-    const url = 'http://october.richardhunter.co.uk/index.php/api/login';
+    const url = environment.blogDomain + '/index.php/api/login';
 
     const formData = new FormData();
 

@@ -10,6 +10,7 @@ import { MarkdownToHTMLPipe } from './pipes/markdown-to-html.pipe';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { AuthService } from './auth/auth.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [

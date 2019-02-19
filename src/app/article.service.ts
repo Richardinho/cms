@@ -5,6 +5,7 @@ import { map, catchError } from 'rxjs/operators';
 import { Article } from './article';
 import { AuthService } from './auth/auth.service';
 import { HttpErrorResponse, HttpHeaders, HttpClient } from '@angular/common/http';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class ArticleService {
   ) {}
 
   getArticles(): Observable<Array<Article>> {
-    const url = 'http://october.richardhunter.co.uk/index.php/api/articles/';
+    const url = environment.blogDomain + '/index.php/api/articles/';
 
     const httpOptions = {
       headers: new HttpHeaders({
@@ -44,7 +45,7 @@ export class ArticleService {
   }
 
   getArticle(id: number | string) {
-    const url = 'http://october.richardhunter.co.uk/index.php/api/article/' + id;
+    const url = environment.blogDomain + '/index.php/api/article/' + id;
 
     const httpOptions = {
       headers: new HttpHeaders({

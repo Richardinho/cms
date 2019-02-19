@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  blogDomain: 'http://blog.richardhunter.co.uk',
 };
