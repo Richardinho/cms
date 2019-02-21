@@ -1,6 +1,7 @@
 # I want to be able to: 
-* view an article
-* access the site only if authorised
+* 13. view an article
+* 17. Logout
+* 7. access the site only if authorised
 * edit an article
 * save changes
 * publish an article
