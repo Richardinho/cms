@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { HttpClientModule } from '@angular/common/http';
-import { EditArticlePageComponent } from './edit-article-page/edit-article-page.component';
+import { ViewArticlePageComponent } from './view-article-page/view-article-page.component';
 import { MarkdownToHTMLPipe } from './pipes/markdown-to-html.pipe';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { AuthService } from './auth/auth.service';
@@ -16,7 +16,7 @@ import { environment } from '../environments/environment';
   declarations: [
     AppComponent,
     HomePageComponent,
-    EditArticlePageComponent,
+    ViewArticlePageComponent,
     MarkdownToHTMLPipe,
     LoginPageComponent,
     PageNotFoundComponent,

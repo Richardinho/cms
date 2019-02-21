@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomePageComponent } from './home-page/home-page.component';
-import { EditArticlePageComponent } from './edit-article-page/edit-article-page.component';
+import { ViewArticlePageComponent } from './view-article-page/view-article-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { HomeGuard } from './auth/home.guard';
 import { GeneralGuard } from './auth/general.guard';
@@ -17,8 +17,8 @@ const routes: Routes = [
     canActivate: [HomeGuard],
   },
   {
-    path: 'edit-article/:id',
-    component: EditArticlePageComponent,
+    path: 'view-article/:id',
+    component: ViewArticlePageComponent,
     canActivate: [HomeGuard],
   },
   {

@@ -7,11 +7,11 @@ import { Article } from '../article';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-edit-article-page',
-  templateUrl: './edit-article-page.component.html',
-  styleUrls: ['./edit-article-page.component.scss']
+  selector: 'app-view-article-page',
+  templateUrl: './view-article-page.component.html',
+  styleUrls: ['./view-article-page.component.scss']
 })
-export class EditArticlePageComponent implements OnInit {
+export class ViewArticlePageComponent implements OnInit {
   article: Article;
   article$:Observable<any>;
 
