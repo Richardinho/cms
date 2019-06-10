@@ -1,19 +1,18 @@
 # I want to be able to: 
-* 13. view an article
+* 01. set the tags on an article (e.g. HTML, JS etc.)
+* 02. set the number of article links on different pages
+* 03. upload images to my CDN
+* 05. use the app on a mobile device
+* 06. warned if I try and navigate away from a page while I have unsaved changes
+* 07. access the site only if authorised (done)
+* 08. enable/disable comments
+* 09. delete an article
+* 10. publish an article
+* 11. create an article
+* 12. edit an article (in progress)
+* 13. view an article (done)
+* 14. unpublish articles
+* 15. set the email address
+* 16. set the GitHub url
 * 17. Logout
-* 7. access the site only if authorised
-* edit an article
-* save changes
-* publish an article
-* create an article
-* warned if I try and navigate away from a page while I have unsaved changes
-* set the GitHub url
-* set the email address
-* unpublish articles
-* delete an article
-* enable/disable comments
-* use the app on a mobile device
-* upload images to my CDN
-* set the number of article links on different pages
-* set the tags on an article (e.g. HTML, JS etc.)
 

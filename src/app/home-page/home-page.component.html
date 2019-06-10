@@ -1,7 +1,10 @@
-<ul class="links" *ngIf="articles">
+<ul data-test="home-page" class="links" *ngIf="articles">
   <li *ngFor="let article of articles" class="link">
     <span>{{article.title}}</span>
-    <button [routerLink]="['/edit-article', article.id]" class="button">view article</button>
+    <button
+       [routerLink]="['/view-article', article.id]"
+       class="button"
+       data-test="view-article-button">view article</button>
   </li>
 </ul>
 

@@ -1,7 +1,14 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Article } from '../article';
 import { ArticleService } from '../article.service';
-import { EditArticlePageComponent } from './edit-article-page.component';
+import { AuthService } from '../auth/auth.service';
+import {
+  NETWORK_ERROR_MESSAGE,
+  SERVER_ERROR_MESSAGE,
+  ARTICLE_MISSING_ERROR_MESSAGE,
+  SHOW_MESSAGE_DURATION,
+  EditArticlePageComponent
+} from './edit-article-page.component';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ActivatedRouteStub } from '../testing/activated-route-stub';
 import { of, throwError } from 'rxjs';
@@ -9,6 +16,7 @@ import { of, throwError } from 'rxjs';
 const mockArticle = {
   id: 3,
   title: 'Hello world',
+  body: 'its the end of the world as we know it',
 };
 
 const mockParams = {
@@ -22,53 +30,119 @@ describe('EditArticlePageComponent', () => {
   let activatedRouteStub;
 
   beforeEach(() => {
-    articleServiceSpy = jasmine.createSpyObj('ArticleService', ['getArticle']);
+    articleServiceSpy = jasmine.createSpyObj('ArticleService', ['getArticle', 'updateArticle']);
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     activatedRouteStub = new ActivatedRouteStub(mockParams);
   });
 
-  describe('on page load', () => {
-    it('should fetch article from service', () => {
-      //  Given
-      articleServiceSpy.getArticle.and.returnValue(of(mockArticle));
-      component = new EditArticlePageComponent(activatedRouteStub, routerSpy, articleServiceSpy);
+  describe('saveEdit()', () => {
+    it('should save article and show messages.', fakeAsync(() => {
+      articleServiceSpy.updateArticle.and.returnValue(of({}));
+    
+      component = new EditArticlePageComponent(
+        activatedRouteStub,
+        routerSpy,
+        {} as AuthService, 
+        articleServiceSpy);
 
-      //  When
+      component.articleService.hasUnsavedChanges = true;
+      component.showArticleSavedMessage = false;
+
+      component.saveEdit();
+
+      expect(component.articleService.hasUnsavedChanges).toBe(false);
+      expect(component.showArticleSavedMessage).toBe(true);
+
+      tick(SHOW_MESSAGE_DURATION);
+
+      expect(component.showArticleSavedMessage).toBe(false);
+    }));
+  });
+
+  describe('ngOnInit()', () => {
+    it('should fetch article from service', () => {
+      articleServiceSpy.getArticle.and.returnValue(of(mockArticle));
+
+      component = new EditArticlePageComponent(
+        activatedRouteStub,
+        routerSpy,
+        {} as AuthService, 
+        articleServiceSpy);
+
       component.ngOnInit();
 
-      //  Then
       expect(component.article).toEqual(mockArticle);
+      expect(component.editArticleFormControl.value).toBe('its the end of the world as we know it');
     });
 
-    describe('if user is not logged in', () => {
-      it('should redirect to login page', () => {
-        //  Given
+    describe('when user is not logged in', () => {
+      it('should redirect to login page and save this url to allow app to redirect back here later', () => {
         articleServiceSpy.getArticle.and.returnValue(throwError({
           status: 401
         }));
+      
+        component = new EditArticlePageComponent(
+          activatedRouteStub,
+          routerSpy,
+          {} as AuthService,
+          articleServiceSpy);
 
-        component = new EditArticlePageComponent(activatedRouteStub, routerSpy, articleServiceSpy);
-
-        //  When
         component.ngOnInit();
 
-        //  Then
         expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
+        expect(component.authService.redirectUrl).toBe('/edit-article/5');
       });
-    }); 
+    });
 
-    describe('if some other error occurs', () => {
-      it('should show generic error message', () => {
-        //  Given
+    describe('when article does not exist', () => {
+      it('should show error message relating to missing article', () => {
+        articleServiceSpy.getArticle.and.returnValue(throwError({
+          status: 404
+        }));
+
+        component = new EditArticlePageComponent(
+          activatedRouteStub,
+          routerSpy,
+          {} as AuthService,
+          articleServiceSpy);
+
+        component.ngOnInit();
+
+        expect(component.errorMessage).toBe(ARTICLE_MISSING_ERROR_MESSAGE);
+      });
+    });
+
+    describe('when server error occurs', () => {
+      it('should show error message relating to server', () => {
+        articleServiceSpy.getArticle.and.returnValue(throwError({
+          status: 500 
+        }));
+
+        component = new EditArticlePageComponent(
+          activatedRouteStub,
+          routerSpy,
+          {} as AuthService,
+          articleServiceSpy);
+
+        component.ngOnInit();
+
+        expect(component.errorMessage).toBe(SERVER_ERROR_MESSAGE);
+      });
+    });
+
+    describe('if network is down', () => {
+      it('should show error message relating to network', () => {
         articleServiceSpy.getArticle.and.returnValue(throwError({}));
 
-        component = new EditArticlePageComponent(activatedRouteStub, routerSpy, articleServiceSpy);
+        component = new EditArticlePageComponent(
+          activatedRouteStub,
+          routerSpy,
+          {} as AuthService,
+          articleServiceSpy);
 
-        //  When
         component.ngOnInit();
 
-        //  Then
-        expect(component.errorMessage).toBe('an error occurred');
+        expect(component.errorMessage).toBe(NETWORK_ERROR_MESSAGE);
       });
     });
   });

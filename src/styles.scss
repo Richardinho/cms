@@ -1,5 +1,5 @@
 @import './reset';
-$base-color: blue;
+@import './variables';
 /* You can add global styles to this file, and also import other style files */
 html, body {
   height: 100%;
@@ -19,49 +19,19 @@ html {
   box-sizing: inherit;
 }
 
-.container {
-  height: 100%;
-  display: grid;
-  grid-template-rows: auto auto 1fr;
-  background: lighten($base-color, 20%);
-  padding: 5px;
-}
-
-h2 {
-  margin: 0;
-}
-
 .button {
   appearance: none;
-  line-height: 1;
-  padding: 10px 20px;
-  font-weight: bold;
-  font-size: 16px;
-  background: linear-gradient(to top, lighten($base-color, 30%), lighten($base-color, 40%));
-  background-size: cover;
   background-repeat: no-repeat;
+  background-size: cover;
+  background: linear-gradient(to top, lighten($base-color, 30%), lighten($base-color, 40%));
   border-radius: 5px;
   border: solid 1px lighten($base-color, 20%);
   color: lighten(black, 15%);
-}
-
-.header {
-  background: lighten($base-color, 30%);
-  color: white;
-  padding: 20px;
-}
-
-.menu {
-  display: flex;
-  background: lighten($base-color, 40%);
-  padding: 5px;
-}
-
-.content {
-  background: white;
-}
-
-.article-content {
-  padding: 20px;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1;
+  padding: 10px 20px;
 }
 
