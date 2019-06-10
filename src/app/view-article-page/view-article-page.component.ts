@@ -5,6 +5,7 @@ import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Article } from '../article';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-view-article-page',
@@ -13,33 +14,38 @@ import { Router } from '@angular/router';
 })
 export class ViewArticlePageComponent implements OnInit {
   article: Article;
-  article$:Observable<any>;
-
   errorMessage: string;
+  private articleId;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private authService: AuthService,
     private articleService: ArticleService) {}
 
   ngOnInit() {
-    this.article$ = this.route.paramMap.pipe(
+    this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
-        return this.articleService.getArticle(params.get('id'));
-      })
-    );
+        this.articleId = params.get('id');
 
-    this.article$.subscribe(article => {
-      this.article = article; 
-    }, (e) => {
-      /*
-       *  if error is 401, we redirect to login page. Otherwise we show an error message
-       */
-      if (e.status && e.status === 401) {
-        this.router.navigate(['/login']);
-      } else {
-        this.errorMessage = 'an error occurred';
-      }
-    });
+        return this.articleService.getArticle(this.articleId);
+      })
+    ).subscribe(
+      this.handleResponse.bind(this),
+      this.handleError.bind(this));
+  }
+
+  handleResponse(article) {
+    this.article = article; 
+  }
+
+  handleError(error) {
+    if (error.status && error.status === 401) {
+      this.authService.redirectUrl = '/article/' + this.articleId;
+
+      this.router.navigate(['/login']);
+    } else {
+      this.errorMessage = 'an error occurred';
+    }
   }
 }

@@ -1,0 +1,33 @@
+<div
+  data-test="edit-article-page"
+  class="container">
+
+  <div class="menu">
+
+    {{errorMessage}}
+
+    <div
+      data-test="saved-message"
+      *ngIf="showArticleSavedMessage">Article saved</div>
+
+    <button
+      *ngIf="hasUnsavedChanges()"
+      class="button"
+      data-test="save-button"
+      (click)="saveEdit()">Save edit</button>
+
+  </div>
+
+  <div *ngIf="article" class="split-pane">
+
+    <textarea 
+      data-test="edit-pane"
+      [formControl]="editArticleFormControl"
+      class="edit-article-pane"></textarea>
+
+    <div
+      [innerHTML]="article.body | markdownToHTML"
+      class="article-content article-pane"></div>
+
+  </div>
+</div>

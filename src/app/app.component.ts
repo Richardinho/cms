@@ -8,19 +8,16 @@ import { AuthService } from './auth/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  isLoggedIn = false;
+  title = 'cms';
 
   constructor(
     private router: Router,
     private authService: AuthService,
-  ) {
+  ) {}
 
-
-  }
-
-  title = 'cms';
-
-  isLoggedIn() {
-    return this.authService.isLoggedIn();;
+  ngDoCheck() {
+    this.isLoggedIn = this.authService.isLoggedIn();
   }
 
   logout() {

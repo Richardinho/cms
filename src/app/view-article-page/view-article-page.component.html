@@ -1,2 +1,15 @@
-<p class="article-content" *ngIf="article" [innerHTML]="article.body | markdownToHTML"></p>
-<div class="error-message" *ngIf="errorMessage">{{errorMessage}}</div>
+<div data-test="article-page" *ngIf="article">
+  <a class="button"
+     data-test="edit-article-button"
+     [routerLink]="['/edit-article', article.id]">edit article</a>
+  <div class="content">
+    <p class="article-content"
+      [innerHTML]="article.body | markdownToHTML">
+    </p>
+  </div>
+</div>
+<div data-test="article-page"></div>
+<div
+ class="error-message"
+ *ngIf="errorMessage">{{errorMessage}}</div>
+

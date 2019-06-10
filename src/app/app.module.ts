@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ViewArticlePageComponent } from './view-article-page/view-article-page.component';
+import { EditArticlePageComponent } from './edit-article-page/edit-article-page.component';
 import { MarkdownToHTMLPipe } from './pipes/markdown-to-html.pipe';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { AuthService } from './auth/auth.service';
@@ -17,6 +18,7 @@ import { environment } from '../environments/environment';
     AppComponent,
     HomePageComponent,
     ViewArticlePageComponent,
+    EditArticlePageComponent,
     MarkdownToHTMLPipe,
     LoginPageComponent,
     PageNotFoundComponent,
@@ -25,10 +27,10 @@ import { environment } from '../environments/environment';
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
-    AuthService
+    AuthService,
   ],
   bootstrap: [AppComponent]
 })

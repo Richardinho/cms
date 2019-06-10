@@ -40,4 +40,6 @@ testem.log
 .DS_Store
 Thumbs.db
 
-cypress/screenshots
+# cypress test artifacts
+/cypress/screenshots
+/cypress/videos
