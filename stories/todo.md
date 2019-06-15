@@ -8,8 +8,8 @@
 * 08. enable/disable comments
 * 09. delete an article
 * 10. publish an article
-* 11. create an article
-* 12. edit an article (in progress)
+* 11. create an article (in progress)
+* 12. edit an article (done)
 * 13. view an article (done)
 * 14. unpublish articles
 * 15. set the email address
