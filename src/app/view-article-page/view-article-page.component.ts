@@ -41,7 +41,7 @@ export class ViewArticlePageComponent implements OnInit {
 
   handleError(error) {
     if (error.status && error.status === 401) {
-      this.authService.redirectUrl = '/article/' + this.articleId;
+      this.authService.redirectUrl = '/view-article/' + this.articleId;
 
       this.router.navigate(['/login']);
     } else {

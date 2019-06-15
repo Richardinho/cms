@@ -13,6 +13,9 @@ Delete app folder from server, then upload files.
 Must have ssh keys set up for this.
 
 ```
+  # build Angular project
+  npm run build
+  
   # log into remote server. Once in, use cd, rm etc. to delete app folder
   ssh richardh@richardhunter.co.uk
 
