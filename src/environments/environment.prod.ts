@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  blogDomain: 'http://blog.richardhunter.co.uk',
+  blogDomain: 'https://blog.richardhunter.co.uk',
 };

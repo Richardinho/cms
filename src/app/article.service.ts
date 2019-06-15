@@ -52,15 +52,7 @@ export class ArticleService {
 
     return this.http.post<any>(url, formData, httpOptions).pipe(
       map(data => {
-        return {
-          data: data,
-          text: 'lalala',
-        }
-      }),
-      catchError((error: HttpErrorResponse) => {
-        return throwError({
-          message: 'balahaha'
-        });
+        return { data }
       })
     );
   }

@@ -79,11 +79,10 @@ export class EditArticlePageComponent implements OnInit {
    *  Error Handling
    *
    *  401: not authenticated. Redirect to Login page
-   *  404: Article not found. Show appropriate message. TODO: display link back to home page
+   *  404: Article not found. Show appropriate message
    *  500 or any other status code. Probably a server error. Show appropriate message. display link back to home page
    *  non status code. Probably a network error. Ask user to check connection
    *
-   *  TODO: retry button
    */
 
   handleError(error) {
