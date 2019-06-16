@@ -7,8 +7,12 @@ import { Observable } from 'rxjs';
 import { Article } from '../article';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
+import { MessageService } from '../message-service/message.service';
+import {
+  UNAUTHORIZED,
+  NOT_FOUND,
+} from '../status-code.constants';
 
-export const SHOW_MESSAGE_DURATION = 2000;
 export const SERVER_ERROR_MESSAGE = 'a server error occurred';
 export const NETWORK_ERROR_MESSAGE = 'a network error occurred';
 export const ARTICLE_MISSING_ERROR_MESSAGE = 'article is missing';
@@ -20,14 +24,15 @@ export const ARTICLE_MISSING_ERROR_MESSAGE = 'article is missing';
 })
 export class EditArticlePageComponent implements OnInit {
   article: Article;
-  errorMessage: string;
   showArticleSavedMessage = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private articleService: ArticleService) {}
+    private articleService: ArticleService,
+    private messageService: MessageService,
+  ) {}
     private articleId;
 
     private editArticleFormControl: FormControl = new FormControl();
@@ -67,10 +72,7 @@ export class EditArticlePageComponent implements OnInit {
         () => {
           this.articleService.hasUnsavedChanges = false;
           this.showArticleSavedMessage = true;
-
-          setTimeout(() => {
-            this.showArticleSavedMessage = false;
-          }, SHOW_MESSAGE_DURATION);
+          this.messageService.show('article was saved');
         },
         this.handleError.bind(this));
   }
@@ -87,17 +89,17 @@ export class EditArticlePageComponent implements OnInit {
 
   handleError(error) {
     if (error.status) {
-      if (error.status === 401) {
+      if (error.status === UNAUTHORIZED) {
         this.authService.redirectUrl = '/edit-article/' + this.articleId;
 
         this.router.navigate(['/login']);
-      } else if (error.status === 404) {
-        this.errorMessage = ARTICLE_MISSING_ERROR_MESSAGE;
+      } else if (error.status === NOT_FOUND) {
+        this.messageService.show(ARTICLE_MISSING_ERROR_MESSAGE);
       } else {
-        this.errorMessage = SERVER_ERROR_MESSAGE;
+        this.messageService.show(SERVER_ERROR_MESSAGE);
       }
     } else {
-      this.errorMessage = NETWORK_ERROR_MESSAGE;
+      this.messageService.show(NETWORK_ERROR_MESSAGE);
     }
   }
 

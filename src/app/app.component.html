@@ -1,11 +1,20 @@
 <div class="container">
   <div class="header">
     <h2 class="app-title">Richard's CMS</h2>
+
+    <button 
+      (click)="createArticle()"
+      class="button">create article</button>
+
     <button
       *ngIf="isLoggedIn"
       class="button"
       (click)="logout()">logout</button>
+
+    <message-widget></message-widget>
+
   </div>
+
   <div class="content">
     <router-outlet></router-outlet>
   </div>
