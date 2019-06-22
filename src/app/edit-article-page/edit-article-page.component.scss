@@ -1,40 +1,93 @@
 @import '../../variables';
 .container {
-  background: lighten($base-color, 44%);
-  height: 100%;
+  padding: 20px;
+  display: grid;
+  column-gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas: "menu menu" "etc ap" "esc ap" "ebc ap";
 }
 
 .menu {
   display: flex;
+  grid-area: menu;
   align-items: center;
-  padding: 0 20px;
   height: 60px;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  > div:last-child {
+    margin-left: 20px;
+    flex-grow: 1;
+  }
 }
 
-.split-pane {
-  display: flex;
-  height: calc(100% - 60px);
+.edit-title-container,
+.edit-body-container,
+.edit-summary-container {
+  border-radius: 4px;
+  background: lighten($base-color, 60%);
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
-.edit-article-pane,
+.edit-title-container {
+  grid-area: etc;
+}
+
+.edit-summary-container {
+  grid-area: esc;
+}
+
+.edit-body-container {
+  grid-area: ebc;
+  margin-bottom: 0;
+}
+
+.button {
+  margin-right: 10px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
 .article-pane {
-  width: 50%;
-  overflow-y: scroll;
-}
-
-.article-pane {
+  grid-area: ap;
   background: white;
   padding: 20px;
+  overflow-y: scroll;
+  border-radius: 4px;
 }
 
-.edit-article-pane {
-  resize: none;
-  padding: 20px;
+.edit-label {
+  display: block;
+  font-size: 18px;
+  padding: 10px 0;
+}
+
+.edit-title-input,
+.edit-summary-pane,
+.edit-body-pane {
   font-family: courier;
-  outline: none;
   border: none;
-  font-size: 20px;
-  color: white;
-  background: lighten($base-color, 15%);
+  background: lighten($base-color, 70%);
+  width: 100%;
+  border: solid 2px lighten($base-color, 30%);
+  padding: 10px;
+  border-radius: 4px;
+  vertical-align: middle;
+
+  &:focus {
+    box-shadow: 0 0 0px 4px lighten($base-color, 80%);
+    outline: none;
+  }
+}
+
+.edit-summary-pane {
+  resize: vertical;
+}
+
+.edit-body-pane {
+  resize: vertical;
+  min-height: 200px;
 }
 

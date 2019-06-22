@@ -24,7 +24,8 @@ export const ARTICLE_MISSING_ERROR_MESSAGE = 'article is missing';
 })
 export class EditArticlePageComponent implements OnInit {
   article: Article;
-  showArticleSavedMessage = false;
+  public message: string;
+  public showWarning = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,16 +37,32 @@ export class EditArticlePageComponent implements OnInit {
     private articleId;
 
     private editArticleFormControl: FormControl = new FormControl();
+    private editArticleTitleFormControl: FormControl = new FormControl();
+    private editArticleSummaryFormControl: FormControl = new FormControl();
+
 
   /*
    *  Fetch article from server
    */
 
   ngOnInit() {
+
     this.editArticleFormControl.valueChanges.subscribe(val => {
       this.articleService.hasUnsavedChanges = true;
 
       this.article.body = val;
+    });
+
+    this.editArticleTitleFormControl.valueChanges.subscribe(val => {
+      this.articleService.hasUnsavedChanges = true;
+
+      this.article.title = val;
+    });
+
+    this.editArticleSummaryFormControl.valueChanges.subscribe(val => {
+      this.articleService.hasUnsavedChanges = true;
+
+      this.article.summary = val;
     });
 
     this.route.paramMap.pipe(
@@ -57,6 +74,8 @@ export class EditArticlePageComponent implements OnInit {
         this.article = article;
 
         this.editArticleFormControl.setValue(article.body, { emitEvent: false });
+        this.editArticleSummaryFormControl.setValue(article.summary, { emitEvent: false });
+        this.editArticleTitleFormControl.setValue(article.title, { emitEvent: false });
       },
       this.handleError.bind(this));
   }
@@ -71,10 +90,18 @@ export class EditArticlePageComponent implements OnInit {
       .subscribe(
         () => {
           this.articleService.hasUnsavedChanges = false;
-          this.showArticleSavedMessage = true;
+
           this.messageService.show('article was saved');
         },
         this.handleError.bind(this));
+  }
+
+  /*
+   *  Delete the article
+   */
+
+  delete() {
+    console.log('delete article');
   }
 
   /*
@@ -84,30 +111,27 @@ export class EditArticlePageComponent implements OnInit {
    *  404: Article not found. Show appropriate message
    *  500 or any other status code. Probably a server error. Show appropriate message. display link back to home page
    *  non status code. Probably a network error. Ask user to check connection
-   *
    */
 
   handleError(error) {
     if (error.status) {
       if (error.status === UNAUTHORIZED) {
         this.authService.redirectUrl = '/edit-article/' + this.articleId;
-
         this.router.navigate(['/login']);
       } else if (error.status === NOT_FOUND) {
-        this.messageService.show(ARTICLE_MISSING_ERROR_MESSAGE);
+        this.message = ARTICLE_MISSING_ERROR_MESSAGE;
+        this.showWarning = true;
       } else {
-        this.messageService.show(SERVER_ERROR_MESSAGE);
+        this.message = SERVER_ERROR_MESSAGE;
+        this.showWarning = true;
       }
     } else {
-      this.messageService.show(NETWORK_ERROR_MESSAGE);
+      this.message = NETWORK_ERROR_MESSAGE;
+      this.showWarning = true;
     }
   }
 
-  /*
-   *  returns true when user has unsaved changes
-   */
-
-  hasUnsavedChanges() {
+  get hasUnsavedChanges() {
     return this.articleService.hasUnsavedChanges;
   }
 }

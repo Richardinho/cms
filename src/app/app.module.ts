@@ -14,6 +14,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { environment } from '../environments/environment';
 import { MessageService } from './message-service/message.service';
 import { MessageWidgetComponent } from './message-widget/message-widget.component';
+import { MenuComponent } from './menu/menu.component';
+import { MenuService } from './menu-service/menu.service';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { MessageWidgetComponent } from './message-widget/message-widget.componen
     LoginPageComponent,
     PageNotFoundComponent,
     MessageWidgetComponent,
+    MenuComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -35,6 +38,7 @@ import { MessageWidgetComponent } from './message-widget/message-widget.componen
   providers: [
     AuthService,
     MessageService,
+    MenuService,
   ],
   bootstrap: [AppComponent]
 })

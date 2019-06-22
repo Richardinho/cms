@@ -44,7 +44,10 @@ export class ArticleService {
 
   updateArticle(article) {
     const formData = new FormData();
+
     formData.append('body', article.body);
+    formData.append('title', article.title);
+    formData.append('summary', article.summary);
 
     const token = this.authService.getToken();
 

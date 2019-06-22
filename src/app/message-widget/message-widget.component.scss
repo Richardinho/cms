@@ -1,9 +1,13 @@
-.message {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 10px;
-  background: yellow;
+:host {
   color: black;
+  display: block;
+  flex-grow: 1;
+  background: #98FB98;
+  padding: 20px;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 400px;
+  box-shadow: 0 0 2px 3px #98FB98;
 }
+
