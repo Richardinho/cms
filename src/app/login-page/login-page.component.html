@@ -1,17 +1,21 @@
-<div>
-  <h1>Login page</h1>
+<h1>Login page</h1>
 
-  <label>Username:<input class="username" [formControl]="username" type="text"/></label>
-  <label>Password<input class="password" [formControl]="password" type="password"/></label>
+<label>
+  <span class="left">Username</span>
+  <span class="right"><input class="username" [formControl]="username" type="text"/></span>
+</label>
+<label>
+  <span class="left">Password</span>
+  <span class="right"><input class="password" [formControl]="password" type="password"/></span>
+</label>
 
-  <br/>
+<br/>
 
-  <button
-    data-test="login-button"
-    class="button"
-    id="login-button"
-    (click)="onSubmit()">Login</button>
+<button
+  data-test="login-button"
+  class="button"
+  id="login-button"
+  (click)="onSubmit()">Login</button>
 
-  <div *ngIf="errorMessage">{{errorMessage}}</div>
-</div>
+<div *ngIf="errorMessage">{{errorMessage}}</div>
 

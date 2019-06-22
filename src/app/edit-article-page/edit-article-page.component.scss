@@ -1,8 +1,9 @@
+
 @import '../../variables';
 .container {
-  padding: 20px;
+  padding: $size-gutter;
   display: grid;
-  column-gap: 20px;
+  column-gap: $size-gutter;
   grid-template-columns: repeat(2, 1fr);
   grid-template-areas: "menu menu" "etc ap" "esc ap" "ebc ap";
 }
@@ -13,10 +14,10 @@
   align-items: center;
   height: 60px;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: $size-gutter;
 
   > div:last-child {
-    margin-left: 20px;
+    margin-left: $size-gutter;
     flex-grow: 1;
   }
 }
@@ -24,10 +25,10 @@
 .edit-title-container,
 .edit-body-container,
 .edit-summary-container {
-  border-radius: 4px;
+  border-radius: $border-radius;
   background: lighten($base-color, 60%);
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: $size-gutter-small;
+  margin-bottom: $size-gutter-small;
 }
 
 .edit-title-container {
@@ -44,7 +45,7 @@
 }
 
 .button {
-  margin-right: 10px;
+  margin-right: $size-gutter-small;
 
   &:last-child {
     margin-right: 0;
@@ -52,16 +53,16 @@
 }
 .article-pane {
   grid-area: ap;
-  background: white;
-  padding: 20px;
+  background: $color-white;
+  padding: $size-gutter;
   overflow-y: scroll;
-  border-radius: 4px;
+  border-radius: $border-radius;
 }
 
 .edit-label {
   display: block;
   font-size: 18px;
-  padding: 10px 0;
+  padding: $size-gutter-small 0;
 }
 
 .edit-title-input,
@@ -72,14 +73,11 @@
   background: lighten($base-color, 70%);
   width: 100%;
   border: solid 2px lighten($base-color, 30%);
-  padding: 10px;
-  border-radius: 4px;
+  padding: $size-gutter-small;
+  border-radius: $border-radius;
   vertical-align: middle;
 
-  &:focus {
-    box-shadow: 0 0 0px 4px lighten($base-color, 80%);
-    outline: none;
-  }
+  @include focus-input();
 }
 
 .edit-summary-pane {
