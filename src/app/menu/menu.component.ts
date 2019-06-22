@@ -5,24 +5,25 @@ import { MenuService } from '../menu-service/menu.service';
 import { Router } from '@angular/router';
 import { ArticleService } from '../article.service';
 import { AuthService } from '../auth/auth.service';
+import { UNAUTHORIZED, NOT_FOUND } from '../status-code.constants';
 
 @Component({
   selector: 'app-menu',
   styleUrls: ['./menu.component.scss'],
   templateUrl: './menu.component.html'
-}
+})
 export class MenuComponent {
   constructor(
-    private articleService: ArticleService,
-    private authService: AuthService,
-    private menuService: MenuService,
-    private router: Router) {}
+    private articleService :ArticleService,
+    private authService :AuthService,
+    private menuService :MenuService,
+    private router :Router) {}
 
 
   public isLoggedIn: boolean = true;
   
   @Input() 
-  public showCreateArticleButton;
+  public showCreateArticleButton :boolean;
 
 
   ngOnInit() {
