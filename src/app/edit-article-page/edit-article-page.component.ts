@@ -24,8 +24,6 @@ export const ARTICLE_MISSING_ERROR_MESSAGE = 'article is missing';
 })
 export class EditArticlePageComponent implements OnInit {
   article: Article;
-  public message: string;
-  public showWarning = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -117,17 +115,15 @@ export class EditArticlePageComponent implements OnInit {
     if (error.status) {
       if (error.status === UNAUTHORIZED) {
         this.authService.redirectUrl = '/edit-article/' + this.articleId;
+
         this.router.navigate(['/login']);
       } else if (error.status === NOT_FOUND) {
-        this.message = ARTICLE_MISSING_ERROR_MESSAGE;
-        this.showWarning = true;
+        this.messageService.show(ARTICLE_MISSING_ERROR_MESSAGE);
       } else {
-        this.message = SERVER_ERROR_MESSAGE;
-        this.showWarning = true;
+        this.messageService.show(SERVER_ERROR_MESSAGE);
       }
     } else {
-      this.message = NETWORK_ERROR_MESSAGE;
-      this.showWarning = true;
+      this.messageService.show(NETWORK_ERROR_MESSAGE);
     }
   }
 
