@@ -6,6 +6,17 @@ import { Router } from '@angular/router';
 import { ArticleService } from '../article.service';
 import { AuthService } from '../auth/auth.service';
 import { UNAUTHORIZED, NOT_FOUND } from '../status-code.constants';
+import {
+  MessageService,
+  INFO,
+  ERROR,
+  WARNING
+} from '../message-service/message.service';
+
+export const NOT_LOGGED_IN_MESSAGE = 'You are not logged in. Please log in before trying to create an article';
+export const ARTICLE_NOT_CREATED_MESSAGE = 'Your article was not created';
+export const SERVER_ERROR_MESSAGE = 'It\'s not you, it\'s use. Somer error occurred on our server';
+export const NETWORK_ERROR_MESSAGE = 'a network error occurred. Please check that you are connected or try again later';
 
 @Component({
   selector: 'app-menu',
@@ -17,7 +28,9 @@ export class MenuComponent {
     private articleService :ArticleService,
     private authService :AuthService,
     private menuService :MenuService,
-    private router :Router) {}
+    private router :Router,
+    private messageService :MessageService
+  ) {}
 
 
   public isLoggedIn: boolean = true;
@@ -33,12 +46,6 @@ export class MenuComponent {
   }
 
   createArticle() {
-    /*
-     *  If the user is currently editing an article what do we want to do?o
-     *
-     *  1. not show the create article button
-     *
-     */
 
     this.articleService
       .create()
@@ -47,14 +54,14 @@ export class MenuComponent {
       }, error => {
         if (error.status) {
           if (error.status === UNAUTHORIZED) {
-            //           this.messageService.show('You are not logged in. Please log in before trying to create an article');
+            this.messageService.show(NOT_LOGGED_IN_MESSAGE, WARNING);
           } else if (error.status === NOT_FOUND) {
-            //this.messageService.show('Your article has not been created');
+            this.messageService.show(ARTICLE_NOT_CREATED_MESSAGE, WARNING);
           } else {
-            //this.messageService.show('It\'s not you, it\'s us. Some error occurred on our server');
+            this.messageService.show(SERVER_ERROR_MESSAGE, ERROR);
           }
         } else {
-          //this.messageService.show('a network error occurred. Please check that you are connected or try again later');
+          this.messageService.show(NETWORK_ERROR_MESSAGE, ERROR);
         }
       });
   }

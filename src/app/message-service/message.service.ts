@@ -8,10 +8,11 @@ export const ERROR = 'error';
 export class MessageService {
   showMessage = new EventEmitter();
 
-  show(message: string, mode?: string) {
+  show(message: string, mode: string = INFO) {
 
     this.showMessage.emit({
       message,
+      mode,
       show: true,
     });
 
