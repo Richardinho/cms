@@ -1,15 +1,29 @@
-<div data-test="article-page" *ngIf="article">
-  <a class="button"
+<app-menu
+  [showCreateArticleButton]="true"
+  >
+
+  <button
+    class="button"
      data-test="edit-article-button"
-     [routerLink]="['/edit-article', article.id]">edit article</a>
-  <div class="content">
-    <p class="article-content"
-      [innerHTML]="article.body | markdownToHTML">
-    </p>
+     [routerLink]="['/edit-article', article?.id]">edit article</button>
+
+</app-menu>
+
+<div class="cms-article-container" data-test="article-page" *ngIf="article">
+
+  <div class="cms-content">
+    
+    <h2 class="article-header">{{article.title}}</h2>
+
+    <div
+      class="article-summary"
+      [innerHTML]="article.summary | markdownToHTML"
+      ></div>
+
+    <div
+      class="article-content"
+      [innerHTML]="article.body | markdownToHTML"
+      ></div>
   </div>
 </div>
-<div data-test="article-page"></div>
-<div
- class="error-message"
- *ngIf="errorMessage">{{errorMessage}}</div>
 

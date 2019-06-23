@@ -1,1 +1,18 @@
+$border-radius: 4px;
+$size-gutter: 20px;
+$size-gutter-small: 10px;
+
+/*
+  colors
+*/
+
 $base-color: #2e4d65;
+$color-white: white;
+$color-light-blue: lighten($base-color, 60%);
+
+@mixin focus-input() {
+  &:focus {
+    box-shadow: 0 0 0px 4px lighten($base-color, 80%);
+    outline: none;
+  }
+}

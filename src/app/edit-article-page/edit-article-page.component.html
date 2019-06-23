@@ -1,33 +1,73 @@
+<app-menu
+  [showCreateArticleButton]="false"
+  >
+
+  <button
+    *ngIf="hasUnsavedChanges"
+    class="button"
+    data-test="save-button"
+    (click)="saveEdit()">Save&nbsp;edit</button>
+
+
+  <button
+    class="button"
+    (click)="delete()">Delete&nbsp;article</button>
+
+</app-menu>
+
+
 <div
   data-test="edit-article-page"
   class="container">
 
-  <div class="menu">
 
-    {{errorMessage}}
 
-    <div
-      data-test="saved-message"
-      *ngIf="showArticleSavedMessage">Article saved</div>
+  <ng-container *ngIf="article">
+    <div class="edit-pane">
+      <div class="edit-title-container">
+        <label
+          for="edit-title"
+          class="edit-label">Title</label>
+        <input
+          id="edit-title"
+          [formControl]="editArticleTitleFormControl"
+          class="edit-title-input"/>
+      </div>
 
-    <button
-      *ngIf="hasUnsavedChanges()"
-      class="button"
-      data-test="save-button"
-      (click)="saveEdit()">Save edit</button>
+      <div class="edit-summary-container">
+        <label for="edit-summary" class="edit-label">summary</label>
+        <textarea
+          id="edit-summary"
+          [formControl]="editArticleSummaryFormControl"
+          class="edit-summary-pane"></textarea>
+      </div>
 
-  </div>
+      <div class="edit-body-container">
+        <label
+          for="edit-body"
+          class="edit-label">body text</label>
+        <textarea 
+          id="edit-body"
+          data-test="edit-pane"
+          [formControl]="editArticleBodyFormControl"
+          class="edit-body-pane"
+          ></textarea>
+      </div>
+    </div>
 
-  <div *ngIf="article" class="split-pane">
+    <div class="article-pane">
+      <h2 class="article-header">{{article.title}}</h2>
 
-    <textarea 
-      data-test="edit-pane"
-      [formControl]="editArticleFormControl"
-      class="edit-article-pane"></textarea>
+      <div
+        class="article-summary"
+        [innerHTML]="article.summary | markdownToHTML"
+        ></div>
 
-    <div
-      [innerHTML]="article.body | markdownToHTML"
-      class="article-content article-pane"></div>
+      <div
+        class="article-content"
+        [innerHTML]="article.body | markdownToHTML"
+        ></div>
 
-  </div>
+    </div>
+  </ng-container>
 </div>

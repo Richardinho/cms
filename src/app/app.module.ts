@@ -12,6 +12,10 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { AuthService } from './auth/auth.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { environment } from '../environments/environment';
+import { MessageService } from './message-service/message.service';
+import { MessageWidgetComponent } from './message-widget/message-widget.component';
+import { MenuComponent } from './menu/menu.component';
+import { MenuService } from './menu-service/menu.service';
 
 @NgModule({
   declarations: [
@@ -22,6 +26,8 @@ import { environment } from '../environments/environment';
     MarkdownToHTMLPipe,
     LoginPageComponent,
     PageNotFoundComponent,
+    MessageWidgetComponent,
+    MenuComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -31,6 +37,8 @@ import { environment } from '../environments/environment';
   ],
   providers: [
     AuthService,
+    MessageService,
+    MenuService,
   ],
   bootstrap: [AppComponent]
 })

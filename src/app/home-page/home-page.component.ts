@@ -22,10 +22,12 @@ export class HomePageComponent implements OnInit {
       .subscribe((data: Array<Article>) => {
         this.articles = data;
       }, (e) => {
+
         /*
          * If user is forbidden to access this page, then we redirect to login page.
          * Otherwise, we just show a generic error message
          */
+
         if (e.status && e.status === 401) {
           this.router.navigate(['/login']);
         } else {
@@ -33,5 +35,4 @@ export class HomePageComponent implements OnInit {
         }
       });
   }
-
 }

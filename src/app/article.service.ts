@@ -25,9 +25,29 @@ export class ArticleService {
     private authService: AuthService
   ) {}
 
+  create() {
+    const formData = new FormData();
+
+    const url = environment.blogDomain + '/index.php/api/article/';
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Basic ${this.authService.getToken()}`, 
+        'enctype': 'multipart/form-data'
+      })
+    }; 
+
+    return this.http
+      .put<any>(url, formData, httpOptions)
+      .pipe(map(data => data.id));
+  }
+
   updateArticle(article) {
     const formData = new FormData();
+
     formData.append('body', article.body);
+    formData.append('title', article.title);
+    formData.append('summary', article.summary);
 
     const token = this.authService.getToken();
 

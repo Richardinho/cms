@@ -14,24 +14,24 @@ const stubArticles = [
 
 describe('when page loads', () => {
   let component: HomePageComponent;
-  let articleServiceSpy;
+  let articleServiceStub;
   let routerSpy;
 
   beforeEach(() => {
-    articleServiceSpy = jasmine.createSpyObj('ArticleService', ['getArticles']);
+    articleServiceStub = jasmine.createSpyObj('ArticleService', ['getArticles']);
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
   });
 
   describe('when user is logged in', () => {
     it('should fetch articles from service', () => {
-      //  Given
-      articleServiceSpy.getArticles.and.returnValue(of(stubArticles as Array<Article>));
-      component = new HomePageComponent(articleServiceSpy, routerSpy);
+      articleServiceStub = jasmine.createSpyObj('ArticleService', {
+        getArticles: of(stubArticles as Array<Article>)
+      });
+
+      component = new HomePageComponent(articleServiceStub, routerSpy);
       
-      //  When
       component.ngOnInit();
 
-      //  Then
       expect(component.articles.length).toBe(1);
       expect(component.articles[0].title).toBe('this is foo');
     });
@@ -39,30 +39,26 @@ describe('when page loads', () => {
 
   describe('when user is not logged in', () => {
     it('should redirect to login page', () => {
-      //  Given
-      articleServiceSpy.getArticles.and.returnValue(throwError({ status: 401 }));
+      articleServiceStub = jasmine.createSpyObj('ArticleService', {
+        getArticles: throwError({ status: 401 })
+      });
 
-      component = new HomePageComponent(articleServiceSpy, routerSpy);
-      
-      //  When
+      component = new HomePageComponent(articleServiceStub, routerSpy);
       component.ngOnInit();
 
-      //  Then
       expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
     });
   });
 
   describe('when some other error occurs', () => {
     it('should show generic error message', () => {
-      //  Given
-      articleServiceSpy.getArticles.and.returnValue(throwError({}));
+      articleServiceStub = jasmine.createSpyObj('ArticleService', {
+        getArticles: throwError({})
+      });
 
-      component = new HomePageComponent(articleServiceSpy, routerSpy);
-      
-      //  When
+      component = new HomePageComponent(articleServiceStub, routerSpy);
       component.ngOnInit();
 
-      //  Then
       expect(component.errorMessage).toBe('Some error occurred');
     });
   });

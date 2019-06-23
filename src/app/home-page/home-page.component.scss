@@ -1,13 +1,14 @@
 @import '../../styles';
 .links {
-  background: pink;
+  padding: 20px;
 }
 
 .link {
-  background: lighten($base-color, 45%);
-  border-bottom: solid 1px lighten($base-color, 30%);
+  background: $color-light-blue;
+  border-radius: $border-radius;
   display: grid;
   grid-template-columns: 1fr auto auto;
+  margin-bottom: $size-gutter-small;
   padding: 20px;
 
   &:last-child {

@@ -1,24 +1,15 @@
 @import '../variables';
 .container {
-  background: lighten($base-color, 20%);
   display: grid;
   grid-template-rows: auto auto 1fr;
-  padding: 5px;
 }
 
 .content {
-  background: white;
-  height: 70vh;
   overflow-y: scroll;
 }
 
 .header {
-  align-items: center;
   background: lighten($base-color, 30%);
   color: white;
-  display: flex;
-  justify-content: space-between;
-  height: 60px;
-  padding: 0 20px;
   padding: 20px;
 }

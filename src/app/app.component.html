@@ -1,11 +1,12 @@
 <div class="container">
   <div class="header">
     <h2 class="app-title">Richard's CMS</h2>
-    <button
-      *ngIf="isLoggedIn"
-      class="button"
-      (click)="logout()">logout</button>
+
+    <app-messages></app-messages>
+
   </div>
+
+
   <div class="content">
     <router-outlet></router-outlet>
   </div>

@@ -1,40 +1,77 @@
 @import '../../variables';
+
 .container {
-  background: lighten($base-color, 44%);
-  height: 100%;
-}
-
-.menu {
+  padding: $size-gutter;
   display: flex;
-  align-items: center;
-  padding: 0 20px;
-  height: 60px;
 }
 
-.split-pane {
-  display: flex;
-  height: calc(100% - 60px);
-}
-
-.edit-article-pane,
+.edit-pane,
 .article-pane {
   width: 50%;
-  overflow-y: scroll;
+}
+
+.edit-pane {
+  padding-right: 10px;
 }
 
 .article-pane {
-  background: white;
-  padding: 20px;
+  padding-left: 10px;
 }
 
-.edit-article-pane {
-  resize: none;
-  padding: 20px;
+.edit-title-container,
+.edit-body-container,
+.edit-summary-container {
+  border-radius: $border-radius;
+  background: $color-light-blue;
+  padding: $size-gutter-small;
+  margin-bottom: $size-gutter-small;
+}
+
+.edit-body-container {
+  margin-bottom: 0;
+}
+
+.button {
+  margin-right: $size-gutter-small;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+.article-pane {
+  background: $color-white;
+  padding: $size-gutter;
+  overflow-y: scroll;
+  border-radius: $border-radius;
+}
+
+.edit-label {
+  display: block;
+  font-size: 18px;
+  padding: $size-gutter-small 0;
+}
+
+.edit-title-input,
+.edit-summary-pane,
+.edit-body-pane {
   font-family: courier;
-  outline: none;
   border: none;
-  font-size: 20px;
-  color: white;
-  background: lighten($base-color, 15%);
+  background: lighten($base-color, 70%);
+  width: 100%;
+  border: solid 2px lighten($base-color, 30%);
+  padding: $size-gutter-small;
+  border-radius: $border-radius;
+  vertical-align: middle;
+
+  @include focus-input();
+}
+
+.edit-summary-pane {
+  resize: vertical;
+}
+
+.edit-body-pane {
+  resize: vertical;
+  min-height: 200px;
 }
 

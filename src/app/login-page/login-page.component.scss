@@ -1,0 +1,48 @@
+@import '../../variables';
+
+:host {
+  display: block;
+  padding: $size-gutter;
+  text-align: center;
+}
+
+h1 {
+  font-size: 30px;
+  margin-bottom: $size-gutter;
+  padding: $size-gutter;
+}
+
+label {
+  display: flex;
+  font-size: 20px;
+  justify-content: space-between;
+  margin-bottom: $size-gutter;
+  width: 100%;
+
+  span.left {
+    display: inline-block;
+    line-height: 40px;
+    padding-right: $size-gutter;
+    text-align: right;
+    vertical-align: center;
+    width : 50%;
+  }
+
+  span.right {
+    display: inline-block;
+    text-align: left;
+    vertical-align: center;
+    width : 50%;
+  }
+}
+
+input {
+  border-radius: $border-radius;
+  border: none;
+  display: inline-block;
+  font-size: 20px;
+  height: 40px;
+  padding: 0 $size-gutter-small;
+
+  @include focus-input();
+}
