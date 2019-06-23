@@ -6,9 +6,9 @@
 * 06. warned if I try and navigate away from a page while I have unsaved changes
 * 07. access the site only if authorised (done)
 * 08. enable/disable comments
-* 09. delete an article
+* 09. delete an article (in-progress)
 * 10. publish an article
-* 11. create an article (in progress)
+* 11. create an article (done)
 * 12. edit an article (done)
 * 13. view an article (done)
 * 14. unpublish articles
