@@ -6,48 +6,52 @@ import {
 import { AuthService } from './auth.service';
 import { HomeGuard } from './home.guard';
 
-
 describe('HomeGuard', () => {
-  let authServiceSpy;
+  let authServiceStub;
   let routerSpy;
   let next;
   let state;
   let guard;
+  let result;
 
   beforeEach(() => {
-    authServiceSpy = jasmine.createSpyObj('AuthService', ['isLoggedIn']);
+    authServiceStub = jasmine.createSpyObj('AuthService', ['isLoggedIn']);
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
   });
 
   describe('when user is logged in', () => {
     it('should return true', () => {
-      //  Given
-      authServiceSpy.isLoggedIn.and.returnValue(true);
+      authServiceStub = jasmine.createSpyObj({
+        isLoggedIn: true,
+      });
 
-      guard = new HomeGuard(authServiceSpy, routerSpy);
+      guard = new HomeGuard(authServiceStub, routerSpy);
+      result = guard.canActivate({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot);
 
-      //  When
-      const result = guard.canActivate({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot);
-
-      //  Then
       expect(result).toBe(true);
     });
   });
 
   describe('when user is NOT logged in', () => {
-    it('should save redirect url, navigate to login page, and return false', () => {
-      //  Given
-      authServiceSpy.isLoggedIn.and.returnValue(false);
+    beforeEach(() => {
+      authServiceStub = jasmine.createSpyObj({
+        isLoggedIn: false,
+      });
 
-      guard = new HomeGuard(authServiceSpy, routerSpy);
+      guard = new HomeGuard(authServiceStub, routerSpy);
+      result = guard.canActivate({} as ActivatedRouteSnapshot, { url: '/foo'} as RouterStateSnapshot);
+    });
 
-      //  When
-      const result = guard.canActivate({} as ActivatedRouteSnapshot, { url: '/foo'} as RouterStateSnapshot);
-
-      //  Then
-      expect(authServiceSpy.redirectUrl).toBe('/foo');
-      expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
+    it('should return false', () => {
       expect(result).toBe(false);
+    });
+
+    it('should save redirect url', () => {
+      expect(authServiceStub.redirectUrl).toBe('/foo');
+    });
+
+    it('should navigate to login page', () => {
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
     });
   });
 });
