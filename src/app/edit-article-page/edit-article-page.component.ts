@@ -34,7 +34,7 @@ export class EditArticlePageComponent implements OnInit {
   ) {}
     private articleId;
 
-    private editArticleFormControl: FormControl = new FormControl();
+    private editArticleBodyFormControl: FormControl = new FormControl();
     private editArticleTitleFormControl: FormControl = new FormControl();
     private editArticleSummaryFormControl: FormControl = new FormControl();
 
@@ -45,7 +45,7 @@ export class EditArticlePageComponent implements OnInit {
 
   ngOnInit() {
 
-    this.editArticleFormControl.valueChanges.subscribe(val => {
+    this.editArticleBodyFormControl.valueChanges.subscribe(val => {
       this.articleService.hasUnsavedChanges = true;
 
       this.article.body = val;
@@ -71,7 +71,7 @@ export class EditArticlePageComponent implements OnInit {
       })).subscribe((article) => {
         this.article = article;
 
-        this.editArticleFormControl.setValue(article.body, { emitEvent: false });
+        this.editArticleBodyFormControl.setValue(article.body, { emitEvent: false });
         this.editArticleSummaryFormControl.setValue(article.summary, { emitEvent: false });
         this.editArticleTitleFormControl.setValue(article.title, { emitEvent: false });
       },
@@ -102,6 +102,10 @@ export class EditArticlePageComponent implements OnInit {
     console.log('delete article');
   }
 
+  sendMessage(message) {
+    this.messageService.show(message);
+  }
+
   /*
    *  Error Handling
    *
@@ -120,6 +124,7 @@ export class EditArticlePageComponent implements OnInit {
       } else if (error.status === NOT_FOUND) {
         this.messageService.show(ARTICLE_MISSING_ERROR_MESSAGE);
       } else {
+
         this.messageService.show(SERVER_ERROR_MESSAGE);
       }
     } else {

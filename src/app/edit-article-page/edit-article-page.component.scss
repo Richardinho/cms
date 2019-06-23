@@ -1,25 +1,21 @@
-
 @import '../../variables';
+
 .container {
   padding: $size-gutter;
-  display: grid;
-  column-gap: $size-gutter;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-areas: "menu menu" "etc ap" "esc ap" "ebc ap";
+  display: flex;
 }
 
-.menu {
-  display: flex;
-  grid-area: menu;
-  align-items: center;
-  height: 60px;
-  justify-content: space-between;
-  margin-bottom: $size-gutter;
+.edit-pane,
+.article-pane {
+  width: 50%;
+}
 
-  > div:last-child {
-    margin-left: $size-gutter;
-    flex-grow: 1;
-  }
+.edit-pane {
+  padding-right: 10px;
+}
+
+.article-pane {
+  padding-left: 10px;
 }
 
 .edit-title-container,
@@ -31,16 +27,7 @@
   margin-bottom: $size-gutter-small;
 }
 
-.edit-title-container {
-  grid-area: etc;
-}
-
-.edit-summary-container {
-  grid-area: esc;
-}
-
 .edit-body-container {
-  grid-area: ebc;
   margin-bottom: 0;
 }
 
@@ -52,7 +39,6 @@
   }
 }
 .article-pane {
-  grid-area: ap;
   background: $color-white;
   padding: $size-gutter;
   overflow-y: scroll;
