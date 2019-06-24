@@ -6,7 +6,7 @@
 * 06. warned if I try and navigate away from a page while I have unsaved changes
 * 07. access the site only if authorised (done)
 * 08. enable/disable comments
-* 09. delete an article (in-progress)
+* 09. delete an article from view article page(in-progress)
 * 10. publish an article
 * 11. create an article (done)
 * 12. edit an article (done)
@@ -15,4 +15,6 @@
 * 15. set the email address
 * 16. set the GitHub url
 * 17. Logout
+* 18. delete button on home page
+* 19. delete button on edit page
 
