@@ -71,7 +71,8 @@ describe('EditArticlePageComponent', () => {
         routerStub,
         authServiceStub, 
         articleServiceStub,
-        messageServiceStub);
+        messageServiceStub,
+        dialogServiceStub);
 
       component.ngOnInit();
     });
@@ -104,7 +105,8 @@ describe('EditArticlePageComponent', () => {
         routerStub,
         authServiceStub,
         articleServiceStub,
-        messageServiceStub
+        messageServiceStub,
+        dialogServiceStub,
       );
 
       component.ngOnInit();
@@ -130,7 +132,9 @@ describe('EditArticlePageComponent', () => {
         routerStub,
         authServiceStub,
         articleServiceStub,
-        messageServiceStub);
+        messageServiceStub,
+        dialogServiceStub,
+      );
 
       component.ngOnInit();
     });
@@ -152,7 +156,9 @@ describe('EditArticlePageComponent', () => {
         routerStub,
         authServiceStub,
         articleServiceStub,
-        messageServiceStub);
+        messageServiceStub,
+        dialogServiceStub,
+      );
 
       component.ngOnInit();
     });
@@ -174,7 +180,8 @@ describe('EditArticlePageComponent', () => {
         routerStub,
         authServiceStub,
         articleServiceStub,
-        messageServiceStub
+        messageServiceStub,
+        dialogServiceStub,
       );
 
       component.ngOnInit();
