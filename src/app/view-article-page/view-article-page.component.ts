@@ -1,12 +1,14 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ArticleService } from '../article.service';
 import { Component, OnInit } from '@angular/core';
-import { switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { switchMap, mergeMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { Article } from '../article';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
+import { DialogService } from '../auth/dialog.service';
 
+const CONFIRMATION_MESSAGE = 'Are you sure that you want to delete this article?';
 @Component({
   selector: 'app-view-article-page',
   templateUrl: './view-article-page.component.html',
@@ -21,7 +23,9 @@ export class ViewArticlePageComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private articleService: ArticleService) {}
+    private articleService: ArticleService,
+    private dialogService: DialogService,
+  ) {}
 
   ngOnInit() {
     this.route.paramMap.pipe(
@@ -33,6 +37,26 @@ export class ViewArticlePageComponent implements OnInit {
     ).subscribe(
       this.handleResponse.bind(this),
       this.handleError.bind(this));
+  }
+
+  deleteArticle() {
+    function handleSuccess() {
+      this.router.navigate(['/home']);
+    }
+
+    function handleError(error) {
+      console.log('error', error);
+    }
+
+    this.dialogService.confirm(CONFIRMATION_MESSAGE)
+      .subscribe((canDelete) => {
+        if (canDelete) {
+          this.articleService
+            .deleteArticle(this.articleId)
+            .subscribe(handleSuccess.bind(this), handleError);
+
+        }
+      });
   }
 
   handleResponse(article) {

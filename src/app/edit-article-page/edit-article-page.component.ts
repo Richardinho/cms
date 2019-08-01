@@ -8,6 +8,7 @@ import { Article } from '../article';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { MessageService } from '../message-service/message.service';
+import { DialogService } from '../auth/dialog.service';
 import {
   UNAUTHORIZED,
   NOT_FOUND,
@@ -31,6 +32,7 @@ export class EditArticlePageComponent implements OnInit {
     private authService: AuthService,
     private articleService: ArticleService,
     private messageService: MessageService,
+    private dialogService: DialogService,
   ) {}
     private articleId;
 
@@ -99,7 +101,24 @@ export class EditArticlePageComponent implements OnInit {
    */
 
   delete() {
-    console.log('delete article');
+    const CONFIRMATION_MESSAGE = 'ya sure ya wanna delete?';
+
+    function handleSuccess() {
+      this.router.navigate(['/home']);
+    }
+
+    function handleError(error) {
+      console.log('error', error);
+    }
+
+    this.dialogService.confirm(CONFIRMATION_MESSAGE)
+      .subscribe((canDelete) => {
+        if (canDelete) {
+          this.articleService
+            .deleteArticle(this.articleId)
+            .subscribe(handleSuccess.bind(this), handleError);
+        }
+      }, this.handleError.bind(this));
   }
 
   sendMessage(message) {

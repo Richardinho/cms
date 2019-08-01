@@ -25,6 +25,19 @@ export class ArticleService {
     private authService: AuthService
   ) {}
 
+  deleteArticle(articleId) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Basic ${this.authService.getToken()}`, 
+        'enctype': 'multipart/form-data'
+      })
+    }; 
+
+    const url = environment.blogDomain + `/index.php/api/article/${articleId}`;
+
+    return this.http.delete(url, httpOptions)
+  }
+
   create() {
     const formData = new FormData();
 

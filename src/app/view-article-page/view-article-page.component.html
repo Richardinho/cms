@@ -7,6 +7,10 @@
      data-test="edit-article-button"
      [routerLink]="['/edit-article', article?.id]">edit article</button>
 
+  <button
+     class="button"
+     (click)="deleteArticle()">delete article</button>
+
 </app-menu>
 
 <div class="cms-article-container" data-test="article-page" *ngIf="article">
