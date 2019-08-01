@@ -30,6 +30,7 @@ describe('EditArticlePageComponent', () => {
   let activatedRouteStub;
   let messageServiceStub;
   let authServiceStub;
+  let dialogServiceStub;
 
   beforeEach(() => {
     articleServiceStub = jasmine.createSpyObj('ArticleService', ['getArticle', 'updateArticle']);
@@ -37,6 +38,7 @@ describe('EditArticlePageComponent', () => {
     activatedRouteStub = new ActivatedRouteStub(mockParams);
     messageServiceStub = jasmine.createSpyObj('MessageService', ['show']);
     authServiceStub = jasmine.createSpyObj('AuthService', ['']);
+    dialogServiceStub = jasmine.createSpyObj('DialogService', ['']);
   });
 
   describe('saveEdit()', () => {
@@ -50,7 +52,8 @@ describe('EditArticlePageComponent', () => {
         routerStub,
         authServiceStub, 
         articleServiceStub,
-        messageServiceStub);
+        messageServiceStub,
+        dialogServiceStub);
 
       component.saveEdit();
       
@@ -180,4 +183,5 @@ describe('EditArticlePageComponent', () => {
         .toHaveBeenCalledWith(NETWORK_ERROR_MESSAGE);
     });
   });
+
 });

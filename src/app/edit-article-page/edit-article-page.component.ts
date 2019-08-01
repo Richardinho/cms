@@ -116,9 +116,15 @@ export class EditArticlePageComponent implements OnInit {
         if (canDelete) {
           this.articleService
             .deleteArticle(this.articleId)
-            .subscribe(handleSuccess.bind(this), handleError);
+            .subscribe(
+              handleSuccess.bind(this),
+              (error) => {
+                console.log('an error occurred', error);
+              });
         }
-      }, this.handleError.bind(this));
+      }, () => {
+        console.log('an error occurred');
+      });
   }
 
   sendMessage(message) {
@@ -137,6 +143,7 @@ export class EditArticlePageComponent implements OnInit {
   handleError(error) {
     if (error.status) {
       if (error.status === UNAUTHORIZED) {
+
         this.authService.redirectUrl = '/edit-article/' + this.articleId;
 
         this.router.navigate(['/login']);
