@@ -39,7 +39,10 @@ export class LoginPageComponent implements OnInit {
 
     const headers = new HttpHeaders({
       'enctype': 'multipart/form-data'
+
     });
+
+
 
     this.http.post<LoginResponseData>(url, formData, { headers })
       .subscribe(token => {

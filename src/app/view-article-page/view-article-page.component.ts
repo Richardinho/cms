@@ -27,6 +27,7 @@ export class ViewArticlePageComponent implements OnInit {
     private dialogService: DialogService,
   ) {}
 
+
   ngOnInit() {
     this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {

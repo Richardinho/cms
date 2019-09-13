@@ -17,6 +17,18 @@ export class HomePageComponent implements OnInit {
     private router: Router
   ) {}
 
+  publish(article) {
+    console.log('publish article', article);
+  }
+
+  unpublish(article) {
+    const unpublishedArticle = { ...article, published: false };
+    this.articleService.updateArticle(unpublishedArticle).subscribe((a) => {
+      console.log(a);
+      //  how to refresh page here?
+    });
+  }
+
   ngOnInit() {
     this.articleService.getArticles()
       .subscribe((data: Array<Article>) => {

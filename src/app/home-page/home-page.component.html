@@ -5,10 +5,27 @@
 <ul data-test="home-page" class="links" *ngIf="articles">
   <li *ngFor="let article of articles" class="link">
     <span>{{article.title}}</span>
-    <button
-       [routerLink]="['/view-article', article.id]"
-       class="button"
-       data-test="view-article-button">view article</button>
+    <span *ngIf="article.published">published</span>
+
+    <div class="button-panel">
+
+      <button
+        *ngIf="!article.published"
+        (click)="publish(article)"
+        class="button"
+        >publish</button>
+      
+      <button
+        *ngIf="article.published"
+        (click)="unpublish(article)"
+        class="button"
+        >unpublish</button>
+
+      <button
+         [routerLink]="['/view-article', article.id]"
+         class="button"
+         data-test="view-article-button">view article</button>
+    </div>
   </li>
 </ul>
 

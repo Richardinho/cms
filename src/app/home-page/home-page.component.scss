@@ -6,14 +6,17 @@
 .link {
   background: $color-light-blue;
   border-radius: $border-radius;
-  display: grid;
-  grid-template-columns: 1fr auto auto;
   margin-bottom: $size-gutter-small;
   padding: 20px;
+  display: flow-root;
 
   &:last-child {
     border-bottom: none;
   }
+}
+
+.button-panel {
+  float: right;
 }
 
 .button {
