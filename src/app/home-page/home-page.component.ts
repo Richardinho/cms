@@ -18,15 +18,57 @@ export class HomePageComponent implements OnInit {
   ) {}
 
   publish(article) {
-    console.log('publish article', article);
+    const articleToPublish = { ...article, published: true };
+    const articleId = article.id;
+
+    this.articleService
+      .updateArticle(articleToPublish)
+      .subscribe((returnedArticle: any) => {
+          this.articles = this.articles.map(item => {
+            if (item.id === article.id) {
+              return returnedArticle;;
+            }
+
+            return item;
+          });
+
+          if (!returnedArticle.published) {
+            alert('article was not published for some reason');
+          }
+      }, e => {
+        if (e.status && e.status === 401) {
+          this.router.navigate(['/login']);
+        } else {
+          this.errorMessage = 'Some error occurred';
+        }
+      });
   }
 
   unpublish(article) {
-    const unpublishedArticle = { ...article, published: false };
-    this.articleService.updateArticle(unpublishedArticle).subscribe((a) => {
-      console.log(a);
-      //  how to refresh page here?
-    });
+    const articleToUnpublish = { ...article, published: false };
+    const articleId = article.id;
+
+    this.articleService
+      .updateArticle(articleToUnpublish)
+      .subscribe((returnedArticle: any) => {
+          this.articles = this.articles.map(item => {
+            if (item.id === articleId) {
+              return returnedArticle;
+            }
+
+            return item;
+          });
+
+          if (returnedArticle.published) {
+            alert('article was not unpublished for some reason');
+          }
+      }, e => {
+        if (e.status && e.status === 401) {
+          this.router.navigate(['/login']);
+        } else {
+          this.errorMessage = 'Some error occurred';
+        }
+      });
   }
 
   ngOnInit() {

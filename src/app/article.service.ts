@@ -86,7 +86,18 @@ export class ArticleService {
 
     return this.http.post<any>(url, formData, httpOptions).pipe(
       map(data => {
-        return { data }
+        return data
+      }),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status) {
+          return throwError({
+            status: error.status
+          });
+        } else {
+          return throwError({
+            message: 'an error occurred'
+          });
+        }
       })
     );
   }

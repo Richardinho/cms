@@ -3,9 +3,11 @@
   ></app-menu>
 
 <ul data-test="home-page" class="links" *ngIf="articles">
-  <li *ngFor="let article of articles" class="link">
+  <li
+    *ngFor="let article of articles"
+    class="link">
+
     <span>{{article.title}}</span>
-    <span *ngIf="article.published">published</span>
 
     <div class="button-panel">
 
