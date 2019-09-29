@@ -13,6 +13,8 @@ import { environment } from '../environments/environment';
 export class ArticleService {
   unsavedArticles = {};
 
+  tagData: string[] = ['angular', 'javascript', 'css', 'react'];
+
   /*
    *  true if there is an article with unsaved changes in the app
    *  So that guards can access this information
@@ -55,51 +57,83 @@ export class ArticleService {
       .pipe(map(data => data.id));
   }
 
+  publishArticle(articleId) {
+    const formData = new FormData();
+    const url = environment.blogDomain + '/index.php/api/publish-article/' + articleId;
+
+    formData.append('published', true);
+
+    return this.post(url, formData);
+  }
+
+  unpublishArticle(articleId) {
+    const formData = new FormData();
+    const url = environment.blogDomain + '/index.php/api/unpublish-article/' + articleId;
+
+    formData.append('published', false);
+
+    return this.post(url, formData);
+  }
+
   updateArticle(article) {
     const formData = new FormData();
+    const selectedTags = [];
+
+    //  save article in local cache
+    this.unsavedArticles[article.id] = article;
+
+    const url = environment.blogDomain + '/index.php/api/article/' + article.id;
+
+    article.tags.forEach((tag, index) => {
+      if (tag && selectedTags.length <= 3) {
+        selectedTags.push(this.tagData[index]);
+      }
+    });
 
     formData.append('body', article.body);
     formData.append('title', article.title);
     formData.append('summary', article.summary);
     formData.append('published', article.published);
+    formData.append('tag1', selectedTags[0] ? selectedTags[0] : 'unknown')
+    formData.append('tag2', selectedTags[1] ? selectedTags[1] : 'unknown')
+    formData.append('tag3', selectedTags[2] ? selectedTags[2] : 'unknown')
 
+    return this.post(url, formData);
+  }
+
+  post(url, formData) {
     const token = this.authService.getToken();
 
-    //  store unsaved articles
-    this.unsavedArticles[article.id] = article;
-
     if (!token) {
+
       return throwError({
         message: 'You are not logged in. No JWT token in localStorage',
         status: 401,
       });
+
+    } else {
+
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': `Basic ${token}`, 
+          'enctype': 'multipart/form-data'
+        })
+      }; 
+
+      return this.http.post<any>(url, formData, httpOptions).pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status) {
+            return throwError({
+              status: error.status
+            });
+          } else {
+            return throwError({
+              message: 'an error occurred'
+            });
+          }
+        })
+      );
     }
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': `Basic ${this.authService.getToken()}`, 
-        'enctype': 'multipart/form-data'
-      })
-    }; 
-
-    const url = environment.blogDomain + '/index.php/api/article/' + article.id;
-
-    return this.http.post<any>(url, formData, httpOptions).pipe(
-      map(data => {
-        return data
-      }),
-      catchError((error: HttpErrorResponse) => {
-        if (error.status) {
-          return throwError({
-            status: error.status
-          });
-        } else {
-          return throwError({
-            message: 'an error occurred'
-          });
-        }
-      })
-    );
   }
 
   getArticles(): Observable<Array<Article>> {

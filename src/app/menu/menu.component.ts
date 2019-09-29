@@ -13,6 +13,7 @@ import {
   WARNING
 } from '../message-service/message.service';
 
+// where is the best place for this data? In the store?
 export const NOT_LOGGED_IN_MESSAGE = 'You are not logged in. Please log in before trying to create an article';
 export const ARTICLE_NOT_CREATED_MESSAGE = 'Your article was not created';
 export const SERVER_ERROR_MESSAGE = 'It\'s not you, it\'s use. Somer error occurred on our server';
@@ -40,11 +41,14 @@ export class MenuComponent {
 
 
   ngOnInit() {
+    // would be better if we just got this from the store (ngrx)
     this.authService.loggedInBus.subscribe(loggedIn => {
       this.isLoggedIn = loggedIn;
     });
   }
 
+  // it's not great that the menu component should be responsible for creating an article.
+  // this is where ngrx could be useful: to just dispatch an action here
   createArticle() {
 
     this.articleService

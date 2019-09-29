@@ -6,7 +6,10 @@ import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Article } from '../article';
 import { Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import {
+  FormArray,
+  FormControl,
+  FormGroup } from '@angular/forms';
 import { MessageService } from '../message-service/message.service';
 import { DialogService } from '../auth/dialog.service';
 import {
@@ -26,6 +29,7 @@ export const ARTICLE_MISSING_ERROR_MESSAGE = 'article is missing';
 export class EditArticlePageComponent implements OnInit {
   article: Article;
 
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -34,32 +38,65 @@ export class EditArticlePageComponent implements OnInit {
     private messageService: MessageService,
     private dialogService: DialogService,
   ) {}
-    private articleId;
 
-    private editArticleBodyFormControl: FormControl = new FormControl();
-    private editArticleTitleFormControl: FormControl = new FormControl();
-    private editArticleSummaryFormControl: FormControl = new FormControl();
+  private articleId;
+
+
+  private formGroup: FormGroup = new FormGroup({
+    body: new FormControl(),
+    title: new FormControl(),
+    summary: new FormControl(),
+    tags: new FormArray([], this.tagsValidator),
+  });
+
+  get mytags() :FormArray {
+    return this.formGroup.get('tags') as FormArray;
+  }
+
+  tagsValidator(control) {
+    const numberSelected = control.controls
+      .filter(ctrl => {
+        return ctrl.value;
+      })
+      .reduce((memo, selected) => {
+        return selected ? memo + 1 : memo;
+      }, 0);
+
+    if (numberSelected > 3) {
+      return {
+        error: "not allowed more than 3 selected"
+      };
+    }
+
+    return null;
+  }
 
 
   /*
    *  Fetch article from server
    */
 
-  ngOnInit() {
 
-    this.editArticleBodyFormControl.valueChanges.subscribe(val => {
+  ngOnInit() {
+    this.mytags.valueChanges.subscribe(val => {
+      this.articleService.hasUnsavedChanges = true;
+
+      this.article.tags = val;
+    });
+
+    this.formGroup.controls['body'].valueChanges.subscribe(val => {
       this.articleService.hasUnsavedChanges = true;
 
       this.article.body = val;
     });
 
-    this.editArticleTitleFormControl.valueChanges.subscribe(val => {
+    this.formGroup.controls['title'].valueChanges.subscribe(val => {
       this.articleService.hasUnsavedChanges = true;
 
       this.article.title = val;
     });
 
-    this.editArticleSummaryFormControl.valueChanges.subscribe(val => {
+    this.formGroup.controls['summary'].valueChanges.subscribe(val => {
       this.articleService.hasUnsavedChanges = true;
 
       this.article.summary = val;
@@ -73,9 +110,33 @@ export class EditArticlePageComponent implements OnInit {
       })).subscribe((article) => {
         this.article = article;
 
-        this.editArticleBodyFormControl.setValue(article.body, { emitEvent: false });
-        this.editArticleSummaryFormControl.setValue(article.summary, { emitEvent: false });
-        this.editArticleTitleFormControl.setValue(article.title, { emitEvent: false });
+        this.formGroup.patchValue({
+          body: article.body,
+          title: article.title,
+          summary: article.summary,
+        }, { emitEvent: false });
+
+        const tags = [];
+
+        if (article.tag1) {
+          tags.push(article.tag1);
+        }
+
+        if (article.tag2) {
+          tags.push(article.tag2);
+        }
+
+        if (article.tag3) {
+          tags.push(article.tag3);
+        }
+
+        this.articleService.tagData.forEach(tag => {
+          if (tags.includes(tag.toLowerCase())) {
+            this.mytags.push(new FormControl(true));
+          } else {
+            this.mytags.push(new FormControl(false));
+          }
+        });
       },
       this.handleError.bind(this));
   }

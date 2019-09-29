@@ -20,17 +20,15 @@
   data-test="edit-article-page"
   class="container">
 
-
-
   <ng-container *ngIf="article">
-    <div class="edit-pane">
+    <div [formGroup]="formGroup" class="edit-pane">
       <div class="edit-title-container">
         <label
           for="edit-title"
           class="edit-label">Title</label>
         <input
           id="edit-title"
-          [formControl]="editArticleTitleFormControl"
+          formControlName="title"
           class="edit-title-input"/>
       </div>
 
@@ -38,7 +36,7 @@
         <label for="edit-summary" class="edit-label">summary</label>
         <textarea
           id="edit-summary"
-          [formControl]="editArticleSummaryFormControl"
+          formControlName="summary"
           class="edit-summary-pane"></textarea>
       </div>
 
@@ -49,9 +47,34 @@
         <textarea 
           id="edit-body"
           data-test="edit-pane"
-          [formControl]="editArticleBodyFormControl"
+          formControlName="body"
           class="edit-body-pane"
           ></textarea>
+      </div>
+
+
+      <div class="select-tags-container">
+        <p class="select-tags-caption">Select up to 3 tags to associate with this article</p>
+
+        <div formArrayName="tags">
+          {{formGroup.status}}
+          <div class="checkbox"
+            *ngFor="let tag of mytags.controls; let i=index"
+            >
+            <label
+              [for]="i">{{articleService.tagData[i]}}</label>
+
+            <input
+              [id]="i"
+              [formControlName]="i"
+              type="checkbox"/>
+
+            <label
+              [for]="i"
+              class="box"></label>
+          </div>
+        </div>
+
       </div>
     </div>
 

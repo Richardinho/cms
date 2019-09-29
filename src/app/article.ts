@@ -3,4 +3,5 @@ export class Article {
   id: number;
   body: string;
   summary: string;
+  tags: string[];
 }
