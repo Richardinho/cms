@@ -57,20 +57,15 @@ export class ArticleService {
       .pipe(map(data => data.id));
   }
 
-  publishArticle(articleId) {
+  /*
+   *  updates published status of article on server
+   */
+
+  publish(articleId, publish) {
     const formData = new FormData();
-    const url = environment.blogDomain + '/index.php/api/publish-article/' + articleId;
+    const url = environment.blogDomain + '/index.php/api/publish/' + articleId;
 
-    formData.append('published', true);
-
-    return this.post(url, formData);
-  }
-
-  unpublishArticle(articleId) {
-    const formData = new FormData();
-    const url = environment.blogDomain + '/index.php/api/unpublish-article/' + articleId;
-
-    formData.append('published', false);
+    formData.append('published', publish);
 
     return this.post(url, formData);
   }
