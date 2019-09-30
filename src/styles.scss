@@ -34,3 +34,10 @@ html {
   padding: 10px 20px;
 }
 
+.button[disabled] {
+  background: linear-gradient(to top, lighten($base-color, 50%), lighten($base-color, 60%));
+  border: solid 1px lighten($base-color, 40%);
+  color: lighten(black, 40%);
+  cursor: not-allowed;
+}
+

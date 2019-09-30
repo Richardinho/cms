@@ -4,6 +4,7 @@
 
   <button
     *ngIf="hasUnsavedChanges"
+    [disabled]="formGroup.invalid"
     class="button"
     data-test="save-button"
     (click)="saveEdit()">Save&nbsp;edit</button>
@@ -55,9 +56,14 @@
 
       <div class="select-tags-container">
         <p class="select-tags-caption">Select up to 3 tags to associate with this article</p>
+        <p
+           class="select-tags-error-message"
+           [class.select-tags-error-message__hidden]="mytags.valid"
+           >
+           You may not select more than 3 tags.
+        </p>
 
         <div formArrayName="tags">
-          {{formGroup.status}}
           <div class="checkbox"
             *ngFor="let tag of mytags.controls; let i=index"
             >

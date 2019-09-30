@@ -1,5 +1,7 @@
 @import '../../variables';
 
+$error-color: orange;
+
 .container {
   padding: $size-gutter;
   display: flex;
@@ -30,6 +32,15 @@
 
 .select-tags-container {
   margin-bottom: 0;
+}
+
+.select-tags-error-message {
+  color: $error-color;
+  padding: 0 0 5px 0;
+}
+
+.select-tags-error-message__hidden {
+  visibility: hidden;
 }
 
 .button {
@@ -71,6 +82,10 @@
   vertical-align: middle;
 
   @include focus-input();
+
+  &.ng-invalid {
+    border-color: $error-color;
+  }
 }
 
 .edit-summary-pane {
@@ -92,9 +107,11 @@
   }
 
   > label:not(.box) {
-    margin-left: 10px;
     vertical-align: middle;
+    margin-right: 10px;
   }
+
+
 
   > label.box {
     background: white;
@@ -120,6 +137,7 @@
       border-radius: 0.08em;
     }
 
+
     &::after {
       left: 0.32em;
       top: 0.32em;
@@ -131,10 +149,22 @@
     > [type="checkbox"]:checked + label::after {
         content: "";
     }
+
   }
+
 
   > [type="checkbox"]:checked + label::after {
       content: "";
+  }
+
+  .ng-invalid > & {
+    label::before {
+      border-color: $error-color;
+    }
+
+    label::after {
+      background-color: $error-color;
+    }
   }
 }
 

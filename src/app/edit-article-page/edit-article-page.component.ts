@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 import {
   FormArray,
   FormControl,
-  FormGroup } from '@angular/forms';
+  FormGroup,
+  Validators } from '@angular/forms';
 import { MessageService } from '../message-service/message.service';
 import { DialogService } from '../auth/dialog.service';
 import {
@@ -20,6 +21,8 @@ import {
 export const SERVER_ERROR_MESSAGE = 'a server error occurred';
 export const NETWORK_ERROR_MESSAGE = 'a network error occurred';
 export const ARTICLE_MISSING_ERROR_MESSAGE = 'article is missing';
+
+const MAX_NUM_TAGS = 3;
 
 @Component({
   selector: 'app-edit-article-page',
@@ -43,9 +46,9 @@ export class EditArticlePageComponent implements OnInit {
 
 
   private formGroup: FormGroup = new FormGroup({
-    body: new FormControl(),
-    title: new FormControl(),
-    summary: new FormControl(),
+    body: new FormControl('', Validators.required),
+    title: new FormControl('', Validators.required),
+    summary: new FormControl('', Validators.required),
     tags: new FormArray([], this.tagsValidator),
   });
 
@@ -62,7 +65,7 @@ export class EditArticlePageComponent implements OnInit {
         return selected ? memo + 1 : memo;
       }, 0);
 
-    if (numberSelected > 3) {
+    if (numberSelected > MAX_NUM_TAGS) {
       return {
         error: "not allowed more than 3 selected"
       };
@@ -146,15 +149,18 @@ export class EditArticlePageComponent implements OnInit {
    */
 
   saveEdit() {
-    
-    this.articleService.updateArticle(this.article)
-      .subscribe(
-        () => {
-          this.articleService.hasUnsavedChanges = false;
+    if (this.formGroup.valid) {
+      this.articleService.updateArticle(this.article)
+        .subscribe(
+          () => {
+            this.articleService.hasUnsavedChanges = false;
 
-          this.messageService.show('article was saved');
-        },
-        this.handleError.bind(this));
+            this.messageService.show('article was saved');
+          },
+          this.handleError.bind(this));
+    } else {
+      // do what?
+    }
   }
 
   /*
