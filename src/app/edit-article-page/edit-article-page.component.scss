@@ -83,7 +83,7 @@ $error-color: orange;
 
   @include focus-input();
 
-  &.ng-invalid {
+  &.ng-invalid.ng-dirty {
     border-color: $error-color;
   }
 }

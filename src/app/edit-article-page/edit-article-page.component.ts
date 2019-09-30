@@ -52,28 +52,6 @@ export class EditArticlePageComponent implements OnInit {
     tags: new FormArray([], this.tagsValidator),
   });
 
-  get mytags() :FormArray {
-    return this.formGroup.get('tags') as FormArray;
-  }
-
-  tagsValidator(control) {
-    const numberSelected = control.controls
-      .filter(ctrl => {
-        return ctrl.value;
-      })
-      .reduce((memo, selected) => {
-        return selected ? memo + 1 : memo;
-      }, 0);
-
-    if (numberSelected > MAX_NUM_TAGS) {
-      return {
-        error: "not allowed more than 3 selected"
-      };
-    }
-
-    return null;
-  }
-
 
   /*
    *  Fetch article from server
@@ -81,27 +59,28 @@ export class EditArticlePageComponent implements OnInit {
 
 
   ngOnInit() {
-    this.mytags.valueChanges.subscribe(val => {
-      this.articleService.hasUnsavedChanges = true;
 
+    /*
+     *  when a form input changes, we tell the article service that there are unsaved changes
+     */
+
+    this.formGroup.valueChanges.subscribe(() => {
+      this.articleService.hasUnsavedChanges = true;
+    });
+
+    this.mytags.valueChanges.subscribe(val => {
       this.article.tags = val;
     });
 
     this.formGroup.controls['body'].valueChanges.subscribe(val => {
-      this.articleService.hasUnsavedChanges = true;
-
       this.article.body = val;
     });
 
     this.formGroup.controls['title'].valueChanges.subscribe(val => {
-      this.articleService.hasUnsavedChanges = true;
-
       this.article.title = val;
     });
 
     this.formGroup.controls['summary'].valueChanges.subscribe(val => {
-      this.articleService.hasUnsavedChanges = true;
-
       this.article.summary = val;
     });
 
@@ -111,13 +90,26 @@ export class EditArticlePageComponent implements OnInit {
         
         return this.articleService.getArticle(this.articleId);
       })).subscribe((article) => {
+
+        /*
+         *  Store article
+         */
+
         this.article = article;
+
+        /*
+         *  Store article into form controls
+         */
 
         this.formGroup.patchValue({
           body: article.body,
           title: article.title,
           summary: article.summary,
         }, { emitEvent: false });
+
+        /*
+         *  The tags are a little more tricky.
+         */
 
         const tags = [];
 
@@ -145,23 +137,20 @@ export class EditArticlePageComponent implements OnInit {
   }
 
   /*
-   *  When the user clicks the save button, save article to server
+   *  When the user clicks the save button, and the form is valid, save article to server
    */
 
   saveEdit() {
     if (this.formGroup.valid) {
       this.articleService.updateArticle(this.article)
         .subscribe(
-          () => {
-            this.articleService.hasUnsavedChanges = false;
-
-            this.messageService.show('article was saved');
-          },
+          this.afterEditSaved.bind(this),
           this.handleError.bind(this));
     } else {
       // do what?
     }
   }
+
 
   /*
    *  Delete the article
@@ -171,6 +160,8 @@ export class EditArticlePageComponent implements OnInit {
     const CONFIRMATION_MESSAGE = 'ya sure ya wanna delete?';
 
     function handleSuccess() {
+      this.articleService.hasUnsavedChanges = false;
+
       this.router.navigate(['/home']);
     }
 
@@ -194,8 +185,20 @@ export class EditArticlePageComponent implements OnInit {
       });
   }
 
-  sendMessage(message) {
-    this.messageService.show(message);
+
+  afterEditSaved() {
+
+    /*
+     *  Since we have saved changes to server it is safe to reset this flag to false
+     */
+
+    this.articleService.hasUnsavedChanges = false;
+
+    /*
+     *  We show a message to user telling them that their article was saved
+     */
+
+    this.messageService.show('article was saved');
   }
 
   /*
@@ -225,7 +228,30 @@ export class EditArticlePageComponent implements OnInit {
     }
   }
 
+  sendMessage(message) {
+    this.messageService.show(message);
+  }
+
   get hasUnsavedChanges() {
     return this.articleService.hasUnsavedChanges;
+  }
+
+  get mytags() :FormArray {
+    return this.formGroup.get('tags') as FormArray;
+  }
+
+  tagsValidator(control) {
+    const numberSelected = control
+      .controls
+      .filter(ctrl => ctrl.value)
+      .length; 
+
+    if (numberSelected > MAX_NUM_TAGS) {
+      return {
+        error: "not allowed more than 3 selected"
+      };
+    }
+
+    return null;
   }
 }
