@@ -15,8 +15,13 @@ interface LoginResponseData {
   styleUrls: ['./login-page.component.scss']
 })
 export class LoginPageComponent implements OnInit {
-  username = new FormControl('');
-  password = new FormControl('');
+
+  /*
+   *  model
+   */
+
+  public username: string = '';
+  public password: string = '';
 
   errorMessage: string;
 
@@ -34,15 +39,12 @@ export class LoginPageComponent implements OnInit {
 
     const formData = new FormData();
 
-    formData.append('username', this.username.value);
-    formData.append('password', this.password.value);
+    formData.append('username', this.username);
+    formData.append('password', this.password);
 
     const headers = new HttpHeaders({
       'enctype': 'multipart/form-data'
-
     });
-
-
 
     this.http.post<LoginResponseData>(url, formData, { headers })
       .subscribe(token => {
@@ -54,11 +56,7 @@ export class LoginPageComponent implements OnInit {
           this.router.navigate(['/home']);
         }
       }, (e) => {
-        if (e.status === 403) {
           this.errorMessage = 'Your submitted username and password were wrong';
-        } else {
-          this.errorMessage = 'Some other error occurred';
-        }
       });
   }
 }

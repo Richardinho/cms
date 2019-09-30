@@ -89,9 +89,10 @@ export class ArticleService {
     formData.append('title', article.title);
     formData.append('summary', article.summary);
     formData.append('published', article.published);
-    formData.append('tag1', selectedTags[0] ? selectedTags[0] : 'unknown')
-    formData.append('tag2', selectedTags[1] ? selectedTags[1] : 'unknown')
-    formData.append('tag3', selectedTags[2] ? selectedTags[2] : 'unknown')
+
+    selectedTags.forEach((tag, index) => {
+      formData.append(`tag${index + 1}`, tag);
+    });
 
     return this.post(url, formData);
   }

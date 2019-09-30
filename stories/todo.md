@@ -1,14 +1,10 @@
 # I want to be able to: 
-* 01. set the tags on an article (e.g. HTML, JS etc.)
 * 02. set the number of article links on different pages
 * 03. upload images to my CDN
 * 05. use the app on a mobile device
 * 08. enable/disable comments
-* 10. publish an article
-* 14. unpublish articles
 * 15. set the email address
 * 16. set the GitHub url
-* 20. Create home page link in header bar
 
 
 ## Done
@@ -20,4 +16,8 @@
 * 07. access the site only if authorised
 * 17. Logout
 * 06. warned if I try and navigate away from a page while I have unsaved changes
+* 10. publish an article
+* 14. unpublish articles
+* 20. Create home page link in header bar
+* 01. set the tags on an article (e.g. HTML, JS etc.)
 
