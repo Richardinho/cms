@@ -65,6 +65,7 @@ export class EditArticlePageComponent implements OnInit {
      */
 
     this.formGroup.valueChanges.subscribe(() => {
+      console.log('has unsaved changes is true');
       this.articleService.hasUnsavedChanges = true;
     });
 
@@ -132,6 +133,13 @@ export class EditArticlePageComponent implements OnInit {
             this.mytags.push(new FormControl(false));
           }
         });
+
+        /*
+         *  The previous sections will have triggered value updates which will have set 
+         *  the hasUnsavedChanges property to true so need to reset it now.
+         */
+
+        this.articleService.hasUnsavedChanges = false;
       },
       this.handleError.bind(this));
   }
