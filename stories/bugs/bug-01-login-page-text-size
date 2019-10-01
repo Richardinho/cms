@@ -1,0 +1,11 @@
+# Text in input fields on login page changes size
+
+## STR
+* navigate to login page
+* observe that text in input fields is small
+* when you click on the page (anywhere) the text becomes big
+
+## Expected behaviour
+* text should be a set size and not change
+
+
