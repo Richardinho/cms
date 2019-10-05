@@ -20,12 +20,21 @@ export class ArticleService {
    *  So that guards can access this information
    */
 
-  hasUnsavedChanges = false;
 
   constructor(
     private http: HttpClient,
     private authService: AuthService
   ) {}
+
+  hasUnsavedChanges(articleId) {
+    return !!this.unsavedArticles[articleId];
+  }
+
+  deleteUnsavedArticle(articleId) {
+    if (this.hasUnsavedChanges(articleId)) {
+      delete this.unsavedArticles[articleId];
+    }
+  }
 
   deleteArticle(articleId) {
     const httpOptions = {
@@ -170,7 +179,6 @@ export class ArticleService {
 
     if (this.unsavedArticles[id]) {
       const a = this.unsavedArticles[id];
-      delete this.unsavedArticles[id];
 
       return of(a);
     }

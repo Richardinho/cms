@@ -35,7 +35,6 @@ const routes: Routes = [
     path: 'edit-article/:id',
     component: EditArticlePageComponent,
     canActivate: [HomeGuard],
-    canDeactivate: [CanDeactivateEditArticleGuard]
   },
 
   {

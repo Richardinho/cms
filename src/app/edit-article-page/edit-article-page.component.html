@@ -3,7 +3,7 @@
   >
 
   <button
-    *ngIf="hasUnsavedChanges"
+    *ngIf="enableSaveButton"
     [disabled]="formGroup.invalid"
     class="button"
     data-test="save-button"

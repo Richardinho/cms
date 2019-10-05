@@ -32,7 +32,6 @@ const MAX_NUM_TAGS = 3;
 export class EditArticlePageComponent implements OnInit {
   article: Article;
 
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -44,7 +43,6 @@ export class EditArticlePageComponent implements OnInit {
 
   private articleId;
 
-
   private formGroup: FormGroup = new FormGroup({
     body: new FormControl('', Validators.required),
     title: new FormControl('', Validators.required),
@@ -52,22 +50,11 @@ export class EditArticlePageComponent implements OnInit {
     tags: new FormArray([], this.tagsValidator),
   });
 
-
   /*
    *  Fetch article from server
    */
 
-
   ngOnInit() {
-
-    /*
-     *  when a form input changes, we tell the article service that there are unsaved changes
-     */
-
-    this.formGroup.valueChanges.subscribe(() => {
-      console.log('has unsaved changes is true');
-      this.articleService.hasUnsavedChanges = true;
-    });
 
     this.mytags.valueChanges.subscribe(val => {
       this.article.tags = val;
@@ -88,7 +75,7 @@ export class EditArticlePageComponent implements OnInit {
     this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
         this.articleId = params.get('id');
-        
+
         return this.articleService.getArticle(this.articleId);
       })).subscribe((article) => {
 
@@ -133,15 +120,24 @@ export class EditArticlePageComponent implements OnInit {
             this.mytags.push(new FormControl(false));
           }
         });
-
-        /*
-         *  The previous sections will have triggered value updates which will have set 
-         *  the hasUnsavedChanges property to true so need to reset it now.
-         */
-
-        this.articleService.hasUnsavedChanges = false;
       },
-      this.handleError.bind(this));
+      (error) => {
+        if (error.status) {
+          if (error.status === UNAUTHORIZED) {
+
+            this.authService.redirectUrl = '/edit-article/' + this.articleId;
+
+            this.router.navigate(['/login']);
+          } else if (error.status === NOT_FOUND) {
+            this.messageService.show(ARTICLE_MISSING_ERROR_MESSAGE);
+          } else {
+
+            this.messageService.show(SERVER_ERROR_MESSAGE);
+          }
+        } else {
+          this.messageService.show(NETWORK_ERROR_MESSAGE);
+        }
+      })
   }
 
   /*
@@ -150,12 +146,29 @@ export class EditArticlePageComponent implements OnInit {
 
   saveEdit() {
     if (this.formGroup.valid) {
+
       this.articleService.updateArticle(this.article)
         .subscribe(
-          this.afterEditSaved.bind(this),
-          this.handleError.bind(this));
-    } else {
-      // do what?
+          () => {
+            this.articleService.deleteUnsavedArticle(this.articleId);
+            this.messageService.show('article was saved');
+          },
+          (error) => {
+            if (error.status) {
+              if (error.status === UNAUTHORIZED) {
+                this.authService.redirectUrl = '/edit-article/' + this.articleId;
+
+                this.router.navigate(['/login']);
+              } else if (error.status === NOT_FOUND) {
+                this.messageService.show(ARTICLE_MISSING_ERROR_MESSAGE);
+              } else {
+                this.messageService.show(SERVER_ERROR_MESSAGE);
+              }
+            } else {
+              this.messageService.show(NETWORK_ERROR_MESSAGE);
+            }
+
+          });
     }
   }
 
@@ -167,23 +180,17 @@ export class EditArticlePageComponent implements OnInit {
   delete() {
     const CONFIRMATION_MESSAGE = 'ya sure ya wanna delete?';
 
-    function handleSuccess() {
-      this.articleService.hasUnsavedChanges = false;
-
-      this.router.navigate(['/home']);
-    }
-
-    function handleError(error) {
-      console.log('error', error);
-    }
-
     this.dialogService.confirm(CONFIRMATION_MESSAGE)
       .subscribe((canDelete) => {
         if (canDelete) {
           this.articleService
             .deleteArticle(this.articleId)
             .subscribe(
-              handleSuccess.bind(this),
+              () => {
+                this.articleService.deleteUnsavedArticle(this.articleId);
+
+                this.router.navigate(['/home']);
+              },
               (error) => {
                 console.log('an error occurred', error);
               });
@@ -193,21 +200,6 @@ export class EditArticlePageComponent implements OnInit {
       });
   }
 
-
-  afterEditSaved() {
-
-    /*
-     *  Since we have saved changes to server it is safe to reset this flag to false
-     */
-
-    this.articleService.hasUnsavedChanges = false;
-
-    /*
-     *  We show a message to user telling them that their article was saved
-     */
-
-    this.messageService.show('article was saved');
-  }
 
   /*
    *  Error Handling
@@ -240,8 +232,9 @@ export class EditArticlePageComponent implements OnInit {
     this.messageService.show(message);
   }
 
-  get hasUnsavedChanges() {
-    return this.articleService.hasUnsavedChanges;
+  get enableSaveButton() {
+    console.log('dirty', this.formGroup.dirty);
+    return this.formGroup.dirty || this.articleService.hasUnsavedChanges(this.articleId);
   }
 
   get mytags() :FormArray {

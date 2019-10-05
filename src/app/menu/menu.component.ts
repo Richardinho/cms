@@ -71,6 +71,8 @@ export class MenuComponent {
   }
 
   logout() {
+    // user is explicitly logging out so we need to delete this
+    this.authService.redirectUrl = '';
     this.router.navigate(['/login']);
   }
 }
