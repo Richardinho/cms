@@ -1,0 +1,17 @@
+# Saving changes when timing out
+
+## STR
+* On **edit article page**, make a change
+* Wait sufficient time until you have time out
+* Click **save* button**
+* *Discard changes* popup appears
+* user is redirected to login page
+* After logging in, user is redirected to **edit article** page
+* Unsaved changes are still displayed
+* **Save Button** is hidden
+
+## Expected behaviour
+* The pop up should read *Your session has timed out. You will be redirected back to this page after you have logged in*
+* **Save Button** should not be hidden
+
+

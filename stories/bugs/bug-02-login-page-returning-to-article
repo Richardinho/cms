@@ -1,0 +1,11 @@
+# Returning to article from login page after logout
+
+## STR
+* Visit article page
+* click log-out button
+* login
+* you will find yourself back at article page
+
+## Expected Behaviour
+After logging out and logging back in, you should land on the home page.
+(It's only if your session times out and you log-in again that you should be returned to where you were).

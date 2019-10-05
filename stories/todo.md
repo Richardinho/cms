@@ -7,6 +7,7 @@
 * 16. set the GitHub url
 * 21. show dates on article. Date of creation and date of last edit
 * 22. show name of author on article. (obviously will always be me, but just to make that explicit)
+* 22. show name of author on article. (obviously will always be me, but just to make that explicit)
 
 
 ## Done
@@ -22,4 +23,8 @@
 * 17. Logout
 * 19. delete button on edit page
 * 20. Create home page link in header bar
+
+## Bugs
+* visited links have default color. Should be custom color.
+* When on edit article page and you time out with unsaved changes, when you return to the page after logging in, the save button should be active.
 
