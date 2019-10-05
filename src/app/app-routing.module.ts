@@ -7,7 +7,6 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { HomeGuard } from './auth/home.guard';
 import { GeneralGuard } from './auth/general.guard';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { CanDeactivateEditArticleGuard } from './auth/can-deactivate-edit-article.guard';
 
 const routes: Routes = [
   {
