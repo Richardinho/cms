@@ -6,6 +6,11 @@ import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Article } from '../article';
 import { Router } from '@angular/router';
+import { articleChanged } from './actions/article-changed.action';
+import { saveArticle } from './actions/save-article.action';
+import { Store, select, createSelector, State } from '@ngrx/store';
+import { selectArticle } from './selectors/article.selector';
+import { selectSaving } from './selectors/ui.selector';
 import {
   FormArray,
   FormControl,
@@ -24,6 +29,7 @@ export const ARTICLE_MISSING_ERROR_MESSAGE = 'article is missing';
 
 const MAX_NUM_TAGS = 3;
 
+
 @Component({
   selector: 'app-edit-article-page',
   templateUrl: './edit-article-page.component.html',
@@ -31,6 +37,8 @@ const MAX_NUM_TAGS = 3;
 })
 export class EditArticlePageComponent implements OnInit {
   article: Article;
+  article$: Observable<Article>;
+  saving$: Observable<boolean>;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,11 +47,16 @@ export class EditArticlePageComponent implements OnInit {
     private articleService: ArticleService,
     private messageService: MessageService,
     private dialogService: DialogService,
-  ) {}
+    private store: Store<{articles: any}>
+  ) {
+
+    this.saving$ = store.pipe(select(selectSaving));
+  }
 
   private articleId;
 
   private formGroup: FormGroup = new FormGroup({
+    id: new FormControl(''),
     body: new FormControl('', Validators.required),
     title: new FormControl('', Validators.required),
     summary: new FormControl('', Validators.required),
@@ -55,49 +68,24 @@ export class EditArticlePageComponent implements OnInit {
    */
 
   ngOnInit() {
-
-    this.mytags.valueChanges.subscribe(val => {
-      this.article.tags = val;
+    this.formGroup.valueChanges.subscribe(article => {
+      this.store.dispatch(articleChanged({ article }));
     });
 
-    this.formGroup.controls['body'].valueChanges.subscribe(val => {
-      this.article.body = val;
-    });
-
-    this.formGroup.controls['title'].valueChanges.subscribe(val => {
-      this.article.title = val;
-    });
-
-    this.formGroup.controls['summary'].valueChanges.subscribe(val => {
-      this.article.summary = val;
-    });
 
     this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
-        this.articleId = params.get('id');
+        this.articleId = '' + params.get('id');
 
+        this.article$ = this.store.pipe(select(selectArticle, { id: this.articleId }));
         return this.articleService.getArticle(this.articleId);
       })).subscribe((article) => {
-
-        /*
-         *  Store article
-         */
-
-        this.article = article;
-
-        /*
-         *  Store article into form controls
-         */
-
         this.formGroup.patchValue({
+          id: this.articleId,
           body: article.body,
           title: article.title,
           summary: article.summary,
         }, { emitEvent: false });
-
-        /*
-         *  The tags are a little more tricky.
-         */
 
         const tags = [];
 
@@ -140,38 +128,11 @@ export class EditArticlePageComponent implements OnInit {
       })
   }
 
-  /*
-   *  When the user clicks the save button, and the form is valid, save article to server
-   */
-
   saveEdit() {
     if (this.formGroup.valid) {
-
-      this.articleService.updateArticle(this.article)
-        .subscribe(
-          () => {
-            this.articleService.deleteUnsavedArticle(this.articleId);
-            this.messageService.show('article was saved');
-          },
-          (error) => {
-            if (error.status) {
-              if (error.status === UNAUTHORIZED) {
-                this.authService.redirectUrl = '/edit-article/' + this.articleId;
-
-                this.router.navigate(['/login']);
-              } else if (error.status === NOT_FOUND) {
-                this.messageService.show(ARTICLE_MISSING_ERROR_MESSAGE);
-              } else {
-                this.messageService.show(SERVER_ERROR_MESSAGE);
-              }
-            } else {
-              this.messageService.show(NETWORK_ERROR_MESSAGE);
-            }
-
-          });
+      this.store.dispatch(saveArticle({ id: this.articleId }));
     }
   }
-
 
   /*
    *  Delete the article
@@ -179,6 +140,7 @@ export class EditArticlePageComponent implements OnInit {
 
   delete() {
     const CONFIRMATION_MESSAGE = 'ya sure ya wanna delete?';
+    
 
     this.dialogService.confirm(CONFIRMATION_MESSAGE)
       .subscribe((canDelete) => {
@@ -233,8 +195,8 @@ export class EditArticlePageComponent implements OnInit {
   }
 
   get enableSaveButton() {
-    console.log('dirty', this.formGroup.dirty);
-    return this.formGroup.dirty || this.articleService.hasUnsavedChanges(this.articleId);
+    //return this.formGroup.dirty || this.articleService.hasUnsavedChanges(this.articleId);
+    return this.formGroup.dirty;
   }
 
   get mytags() :FormArray {

@@ -16,12 +16,11 @@
 
 </app-menu>
 
-
 <div
   data-test="edit-article-page"
   class="container">
 
-  <ng-container *ngIf="article">
+  <ng-container *ngIf="article$">
     <div [formGroup]="formGroup" class="edit-pane">
       <div class="edit-title-container">
         <label
@@ -85,17 +84,19 @@
     </div>
 
     <div class="article-pane">
-      <h2 class="article-header">{{article.title}}</h2>
+      <h2 class="article-header">{{(article$|async)?.title}}</h2>
 
+      Saving: {{ saving$ | async }}
       <div
         class="article-summary"
-        [innerHTML]="article.summary | markdownToHTML"
+        [innerHTML]="(article$|async)?.summary | markdownToHTML"
         ></div>
 
       <div
         class="article-content"
-        [innerHTML]="article.body | markdownToHTML"
+        [innerHTML]="(article$|async)?.body | markdownToHTML"
         ></div>
+
 
     </div>
   </ng-container>

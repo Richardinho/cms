@@ -16,6 +16,11 @@ import { MessageService } from './message-service/message.service';
 import { MessageWidgetComponent } from './message-widget/message-widget.component';
 import { MenuComponent } from './menu/menu.component';
 import { MenuService } from './menu-service/menu.service';
+import { articlesReducer } from './reducers/articles.reducer';
+import { uiReducer } from './reducers/ui.reducer';
+import { StoreModule } from '@ngrx/store';
+import { SaveArticleEffects } from './effects/save-article.effect';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -35,6 +40,11 @@ import { MenuService } from './menu-service/menu.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    StoreModule.forRoot({
+      articles: articlesReducer,
+      ui: uiReducer,
+    }),
+    EffectsModule.forRoot([SaveArticleEffects])
   ],
   providers: [
     AuthService,
