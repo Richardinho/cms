@@ -8,6 +8,7 @@ export interface Article {
   id: string;
   body: string;
   summary: string;
+  saved: boolean;
   published: boolean;
   tags: Array<{ name: string; value: boolean}>
 }

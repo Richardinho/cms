@@ -1,13 +1,15 @@
 import { createReducer, on } from '@ngrx/store';
 import { articleChanged }        from '../edit-article-page/actions/article-changed.action';
-import { getArticleResponse }    from '../edit-article-page/actions/get-article-response.action';
+import { articleSavedResponse }  from '../edit-article-page/actions/article-saved-response.action';
 import { deleteArticleResponse } from '../edit-article-page/actions/delete-article-response.action';
+import { getArticleResponse }    from '../edit-article-page/actions/get-article-response.action';
  
 import { Article, Articles } from '../article';
 import { tagData } from '../article.service';
 
 export const initialState = {
 };
+
 
 export const jsonToArticle = (json: any): Article => {
   const obj: any = {};
@@ -17,6 +19,7 @@ export const jsonToArticle = (json: any): Article => {
   obj.body = json.body;
   obj.summary = json.summary;
   obj.published = json.published;
+  obj.saved = true;
   obj.tags = [];
 
   obj.tags = tagData.map(tag => {
@@ -71,6 +74,7 @@ const _articlesReducer = createReducer(initialState,
   on(getArticleResponse, getArticleResponseReducer),
   on(articleChanged, articleChangedReducer),
   on(deleteArticleResponse, deleteArticleResponseReducer),
+  on(articleSavedResponse, getArticleResponseReducer),
 );
  
 export function articlesReducer(state, action) {

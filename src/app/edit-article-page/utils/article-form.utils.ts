@@ -43,6 +43,7 @@ export const createArticlePatchData = (formData, tagData): any => {
   obj.title = formData.title;
   obj.body = formData.body;
   obj.summary = formData.summary;
+  obj.saved = false;
   obj.tags = formData.tags.map((tag, index) => ({ name: tagData[index], value: tag }));
 
   return obj;

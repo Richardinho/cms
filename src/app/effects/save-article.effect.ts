@@ -27,7 +27,7 @@ export class SaveArticleEffects {
       mergeMap(([action, article]) => {
         return this.articleService.updateArticle(article)
           .pipe(
-            map(() => (articleSavedResponse())),
+            map(() => (articleSavedResponse({ articleJSON : article }))),
             catchError((error) => {
               if (error.status) {
                 if (error.status === UNAUTHORIZED) {

@@ -36,6 +36,7 @@ import { tagsValidator } from './utils/tags.validator';
 export class EditArticlePageComponent implements OnInit {
   article$: Observable<Article>;
   saving$: Observable<boolean>;
+  unsavedChanges: boolean = false;
   articles$;
 
   constructor(
@@ -61,10 +62,6 @@ export class EditArticlePageComponent implements OnInit {
 
   ngOnInit() {
     this.articles$ = this.store.pipe(select('articles'));
-    this.articles$.subscribe((articles) => {
-    
-      console.log(articles);
-    });
     this.saving$ = this.store.pipe(select(selectSaving));
 
     this.formGroup.valueChanges.subscribe(formArticle => {
@@ -82,6 +79,7 @@ export class EditArticlePageComponent implements OnInit {
     this.article$.subscribe(article => {
       if (article) {
         this.formGroup.patchValue(articleToFormGroup(article), { emitEvent: false });
+        this.unsavedChanges = !article.saved;
       }
     });
   }
@@ -97,7 +95,7 @@ export class EditArticlePageComponent implements OnInit {
   }
 
   get enableSaveButton() {
-    return this.formGroup.valid;
+    return this.unsavedChanges && this.formGroup.valid;
   }
 
   get mytags() :FormArray {
