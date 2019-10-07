@@ -54,7 +54,8 @@
 
 
       <div class="select-tags-container">
-        <p class="select-tags-caption">Select up to 3 tags to associate with this article</p>
+        <p class="select-tags-caption">Select up to 3 tags to associate with this article Richard</p>
+
         <p
            class="select-tags-error-message"
            [class.select-tags-error-message__hidden]="mytags.valid"
@@ -86,6 +87,7 @@
     <div class="article-pane">
       <h2 class="article-header">{{(article$|async)?.title}}</h2>
 
+      Form Validity: {{ formGroup.status }}
       Saving: {{ saving$ | async }}
       <div
         class="article-summary"

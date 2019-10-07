@@ -1,9 +1,15 @@
+/*
+ *  This is as the article is stored in the database, and as we receive it from the server
+ *  We need to convert it into a different form for display and form controls
+ */
+
 export interface Article {
   title: string;
   id: string;
   body: string;
   summary: string;
-  tags: string[];
+  published: boolean;
+  tags: Array<{ name: string; value: boolean}>
 }
 
 export interface Articles {
@@ -12,6 +18,7 @@ export interface Articles {
 
 export interface UI {
   saving: boolean;
+  id_of_article_under_edit: string;
 }
 
 export interface AppState {

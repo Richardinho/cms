@@ -3,8 +3,19 @@ import { AppState, Articles } from '../../article';
 
 export const selectArticles = (state: AppState) => state.articles;
 
-export const selectArticle = createSelector(
+export const selectId = (state: AppState) => { 
+  if (state && state.ui && state.ui.id_of_article_under_edit ) {
+    return state.ui.id_of_article_under_edit;
+  } else { 
+    return '';
+  }
+};
+
+export const selectArticleUnderEdit = createSelector(
   selectArticles,
-  (state: Articles, props) => state[props.id] 
+  selectId,
+  (articles: Articles, id: string) => {
+     return articles[id] 
+  }
 );
 

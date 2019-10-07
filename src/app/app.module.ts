@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { EffectsModule } from '@ngrx/effects';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,8 +20,10 @@ import { MenuService } from './menu-service/menu.service';
 import { articlesReducer } from './reducers/articles.reducer';
 import { uiReducer } from './reducers/ui.reducer';
 import { StoreModule } from '@ngrx/store';
-import { SaveArticleEffects } from './effects/save-article.effect';
-import { EffectsModule } from '@ngrx/effects';
+
+import { SaveArticleEffects } from   './effects/save-article.effect';
+import { GetArticleEffects } from    './effects/get-article.effect';
+import { DeleteArticleEffects } from './effects/delete-article.effect';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,7 @@ import { EffectsModule } from '@ngrx/effects';
       articles: articlesReducer,
       ui: uiReducer,
     }),
-    EffectsModule.forRoot([SaveArticleEffects])
+    EffectsModule.forRoot([DeleteArticleEffects, SaveArticleEffects, GetArticleEffects])
   ],
   providers: [
     AuthService,

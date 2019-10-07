@@ -7,13 +7,17 @@ import { AuthService } from './auth/auth.service';
 import { HttpErrorResponse, HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 
+import { articleToFormData } from './utils/article-to-form-data';
+
+export const tagData: string[] = ['angular', 'javascript', 'css', 'react', 'html-5'];
+
 @Injectable({
   providedIn: 'root'
 })
 export class ArticleService {
   unsavedArticles = {};
 
-  tagData: string[] = ['angular', 'javascript', 'css', 'react'];
+  tagData: string[] = tagData;
 
   /*
    *  true if there is an article with unsaved changes in the app
@@ -79,29 +83,9 @@ export class ArticleService {
     return this.post(url, formData);
   }
 
-  updateArticle(article) {
-    const formData = new FormData();
-    const selectedTags = [];
-
-    //  save article in local cache
-    this.unsavedArticles[article.id] = article;
-
+  updateArticle(article: Article) {
     const url = environment.blogDomain + '/index.php/api/article/' + article.id;
-
-    article.tags.forEach((tag, index) => {
-      if (tag && selectedTags.length <= 3) {
-        selectedTags.push(this.tagData[index]);
-      }
-    });
-
-    formData.append('body', article.body);
-    formData.append('title', article.title);
-    formData.append('summary', article.summary);
-    formData.append('published', article.published);
-
-    selectedTags.forEach((tag, index) => {
-      formData.append(`tag${index + 1}`, tag);
-    });
+    const formData: FormData = articleToFormData(article);
 
     return this.post(url, formData);
   }

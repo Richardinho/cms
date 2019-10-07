@@ -1,35 +1,46 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store, select } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of } from 'rxjs';
-import { map, mergeMap, catchError, concatMap, withLatestFrom } from 'rxjs/operators';
+import { tap, map, mergeMap, catchError, concatMap, withLatestFrom } from 'rxjs/operators';
+
 import { ArticleService } from '../article.service';
-import { saveArticle } from '../edit-article-page/actions/save-article.action';
-import { selectArticleUnderEdit } from '../edit-article-page/selectors/article.selector';
-import { articleSavedResponse } from '../edit-article-page/actions/article-saved-response.action';
+
 import { AppState } from '../article';
-import { Store, select } from '@ngrx/store';
+
+import { deleteArticle } from          '../edit-article-page/actions/delete-article.action';
+import { deleteArticleResponse } from '../edit-article-page/actions/delete-article-response.action';
+
+import { selectArticleUnderEdit } from '../edit-article-page/selectors/article.selector';
+
+
 import {
   UNAUTHORIZED,
   NOT_FOUND,
 } from '../status-code.constants';
 
 @Injectable()
-export class SaveArticleEffects {
-
-  saveArticle$ = createEffect(() =>
+export class DeleteArticleEffects {
+  redirect$ = createEffect(() => 
     this.actions$.pipe(
-      ofType(saveArticle),
+      ofType(deleteArticleResponse),
+      tap(() => {
+        this.router.navigate(['/']);
+      })
+    ), { dispatch: false });
+
+  deleteArticle$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteArticle),
       concatMap(action => of(action).pipe(
         withLatestFrom(this.store.pipe(select(selectArticleUnderEdit)))
       )),
       mergeMap(([action, article]) => {
-          console.log('merge map', article);
-        // broken because of tags
         if (article) {
-          debugger;
-          return this.articleService.updateArticle(article)
+          return this.articleService.deleteArticle(article.id)
             .pipe(
-              map(() => (articleSavedResponse())),
+              map(() => (deleteArticleResponse({ id: article.id }))),
               catchError((error) => {
                 if (error.status) {
                   if (error.status === UNAUTHORIZED) {
@@ -45,7 +56,6 @@ export class SaveArticleEffects {
                   //this.messageService.show(NETWORK_ERROR_MESSAGE);
                 }
 
-
                 return of({ type: '[Edit...] error occurred' })
               })
             )
@@ -58,6 +68,7 @@ export class SaveArticleEffects {
   constructor(
     private actions$: Actions,
     private articleService: ArticleService,
+    private router: Router,
     private store: Store<AppState>,
   ) {}
 }
