@@ -19,3 +19,8 @@ export const selectArticleUnderEdit = createSelector(
   }
 );
 
+export const selectArticle = createSelector(
+  selectArticles, 
+  (articles: Articles, props) => articles[props.id] 
+);
+

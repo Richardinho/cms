@@ -15,42 +15,67 @@ export const tagData: string[] = ['angular', 'javascript', 'css', 'react', 'html
   providedIn: 'root'
 })
 export class ArticleService {
-  unsavedArticles = {};
 
   tagData: string[] = tagData;
-
-  /*
-   *  true if there is an article with unsaved changes in the app
-   *  So that guards can access this information
-   */
-
 
   constructor(
     private http: HttpClient,
     private authService: AuthService
   ) {}
 
-  hasUnsavedChanges(articleId) {
-    return !!this.unsavedArticles[articleId];
-  }
+  getArticle(id: number | string) {
+    const url = environment.blogDomain + '/index.php/api/article/' + id;
 
-  deleteUnsavedArticle(articleId) {
-    if (this.hasUnsavedChanges(articleId)) {
-      delete this.unsavedArticles[articleId];
-    }
-  }
-
-  deleteArticle(articleId) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': `Basic ${this.authService.getToken()}`, 
-        'enctype': 'multipart/form-data'
       })
     }; 
 
-    const url = environment.blogDomain + `/index.php/api/article/${articleId}`;
+    return this.http.get<any>(url, httpOptions)
+      .pipe(
+        map((data) => {
+          return data;
+        }), 
+        catchError((error: HttpErrorResponse) => {
+          if (error.status) {
+            return throwError({
+              status: error.status
+            });
+          } else {
+            return throwError({
+              message: 'an error occurred'
+            });
+          }
+        })
+      );
+  }
 
-    return this.http.delete(url, httpOptions)
+  getArticles(): Observable<Array<Article>> {
+    const url = environment.blogDomain + '/index.php/api/articles/';
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Basic ${this.authService.getToken()}`, 
+      })
+    }; 
+
+    return this.http.get<any>(url, httpOptions).pipe(
+      map(data => {
+        return data.articles;
+      }),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status) {
+          return throwError({
+            status: error.status
+          });
+        } else {
+          return throwError({
+            message: 'an error occurred'
+          });
+        }
+      })
+    );
   }
 
   create() {
@@ -70,9 +95,25 @@ export class ArticleService {
       .pipe(map(data => data.id));
   }
 
-  /*
-   *  updates published status of article on server
-   */
+  updateArticle(article: Article) {
+    const url = environment.blogDomain + '/index.php/api/article/' + article.id;
+    const formData: FormData = articleToFormData(article);
+
+    return this._post(url, formData);
+  }
+
+  deleteArticle(articleId) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Basic ${this.authService.getToken()}`, 
+        'enctype': 'multipart/form-data'
+      })
+    }; 
+
+    const url = environment.blogDomain + `/index.php/api/article/${articleId}`;
+
+    return this.http.delete(url, httpOptions)
+  }
 
   publish(articleId, publish) {
     const formData = new FormData();
@@ -80,17 +121,10 @@ export class ArticleService {
 
     formData.append('published', publish);
 
-    return this.post(url, formData);
+    return this._post(url, formData);
   }
 
-  updateArticle(article: Article) {
-    const url = environment.blogDomain + '/index.php/api/article/' + article.id;
-    const formData: FormData = articleToFormData(article);
-
-    return this.post(url, formData);
-  }
-
-  post(url, formData) {
+  _post(url, formData) {
     const token = this.authService.getToken();
 
     if (!token) {
@@ -123,76 +157,5 @@ export class ArticleService {
         })
       );
     }
-  }
-
-  getArticles(): Observable<Array<Article>> {
-    const url = environment.blogDomain + '/index.php/api/articles/';
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': `Basic ${this.authService.getToken()}`, 
-      })
-    }; 
-
-    return this.http.get<any>(url, httpOptions).pipe(
-      map(data => {
-        return data.articles;
-      }),
-      catchError((error: HttpErrorResponse) => {
-        if (error.status) {
-          return throwError({
-            status: error.status
-          });
-        } else {
-          return throwError({
-            message: 'an error occurred'
-          });
-        }
-      })
-    );
-  }
-
-  getArticle(id: number | string) {
-    const url = environment.blogDomain + '/index.php/api/article/' + id;
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': `Basic ${this.authService.getToken()}`, 
-      })
-    }; 
-
-    // need to check store now
-    if (this.unsavedArticles[id]) {
-      const a = this.unsavedArticles[id];
-
-      return of(a);
-    }
-
-    /*
-     * possible errors:
-     * 1. network failure
-     * 2. server failure (500)
-     * 3. authentication failure  (413)
-     * 4. article not found
-     *
-     */
-
-    return this.http.get<any>(url, httpOptions)
-      .pipe(
-        map((data,foo) => {
-          return data;
-        }), 
-        catchError((error: HttpErrorResponse) => {
-          if (error.status) {
-            return throwError({
-              status: error.status
-            });
-          } else {
-            return throwError({
-              message: 'an error occurred'
-            });
-          }
-        })
-      );
   }
 }

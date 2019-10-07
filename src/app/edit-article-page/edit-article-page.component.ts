@@ -97,7 +97,7 @@ export class EditArticlePageComponent implements OnInit {
   }
 
   get enableSaveButton() {
-    return this.formGroup.dirty;
+    return this.formGroup.valid;
   }
 
   get mytags() :FormArray {
