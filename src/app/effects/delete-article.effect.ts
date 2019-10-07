@@ -14,7 +14,6 @@ import { deleteArticleResponse } from '../edit-article-page/actions/delete-artic
 
 import { selectArticleUnderEdit } from '../edit-article-page/selectors/article.selector';
 
-
 import {
   UNAUTHORIZED,
   NOT_FOUND,

@@ -64,7 +64,6 @@ export const articleChangedReducer = (state, action) => {
 };
 
 export const deleteArticleResponseReducer = (state, action) => {
-  console.log(action)
   delete state[action.id]
 
   return { ...state };
