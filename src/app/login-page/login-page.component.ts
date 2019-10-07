@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
@@ -28,10 +28,12 @@ export class LoginPageComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private route: ActivatedRoute,
     private authService: AuthService) {}
 
   ngOnInit() {
     this.authService.logOut();
+
   }
 
   onSubmit() {
@@ -49,9 +51,10 @@ export class LoginPageComponent implements OnInit {
     this.http.post<LoginResponseData>(url, formData, { headers })
       .subscribe(token => {
         this.authService.setToken(token.jwt_token);
+        const redirectUrl = this.route.snapshot.queryParamMap.get('afterLogin');
 
-        if (this.authService.redirectUrl) {
-          this.router.navigate([this.authService.redirectUrl]);
+        if (redirectUrl) {
+          this.router.navigate([redirectUrl]);
         } else {
           this.router.navigate(['/home']);
         }

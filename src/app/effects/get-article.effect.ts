@@ -19,6 +19,8 @@ export class GetArticleEffects {
     this.actions$.pipe(
       ofType(editArticleRequest),
       switchMap(action => {
+        // here need to check first if the article is already in the store. 
+        // If so, we don't need to go to the server!
         return this.articleService.getArticle(action.id)
           .pipe(
             map((articleJSON) => getArticleResponse({ articleJSON })),

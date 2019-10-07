@@ -21,8 +21,9 @@ import { articlesReducer } from './reducers/articles.reducer';
 import { uiReducer } from './reducers/ui.reducer';
 import { StoreModule } from '@ngrx/store';
 
-import { SaveArticleEffects } from   './effects/save-article.effect';
-import { GetArticleEffects } from    './effects/get-article.effect';
+import { SaveArticleEffects }   from './effects/save-article.effect';
+import { LogInEffects }         from './effects/login.effect';
+import { GetArticleEffects }    from './effects/get-article.effect';
 import { DeleteArticleEffects } from './effects/delete-article.effect';
 
 @NgModule({
@@ -47,7 +48,12 @@ import { DeleteArticleEffects } from './effects/delete-article.effect';
       articles: articlesReducer,
       ui: uiReducer,
     }),
-    EffectsModule.forRoot([DeleteArticleEffects, SaveArticleEffects, GetArticleEffects])
+    EffectsModule.forRoot([
+      DeleteArticleEffects,
+      SaveArticleEffects,
+      LogInEffects,
+      GetArticleEffects,
+    ])
   ],
   providers: [
     AuthService,

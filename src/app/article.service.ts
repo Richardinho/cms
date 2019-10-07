@@ -161,6 +161,7 @@ export class ArticleService {
       })
     }; 
 
+    // need to check store now
     if (this.unsavedArticles[id]) {
       const a = this.unsavedArticles[id];
 
