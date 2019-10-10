@@ -26,6 +26,7 @@ describe('articles.reducer', () => {
         body: 'article about tomatoes',
         summary: 'I like tomato',
         published: false,
+        saved: true,
         tags: [
           { name: 'angular', value: true },
           { name: 'javascript', value: true },
