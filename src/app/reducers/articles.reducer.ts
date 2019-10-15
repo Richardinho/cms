@@ -63,6 +63,10 @@ export const articleChangedReducer = (state, action) => {
   }
 };
 
+/*
+ *  deletes article out of cache
+ */
+
 export const deleteArticleResponseReducer = (state, action) => {
   delete state[action.id]
 

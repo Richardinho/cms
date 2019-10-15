@@ -5,6 +5,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of } from 'rxjs';
 import { tap, map, mergeMap, catchError, concatMap, withLatestFrom } from 'rxjs/operators';
 
+import { unauthorisedResponse }   from '../edit-article-page/actions/unauthorised-response.action';
 import { ArticleService } from '../article.service';
 
 import { AppState } from '../article';
@@ -43,9 +44,9 @@ export class DeleteArticleEffects {
               catchError((error) => {
                 if (error.status) {
                   if (error.status === UNAUTHORIZED) {
-                    //this.authService.redirectUrl = '/edit-article/' + this.articleId;
-
-                    //this.router.navigate(['/login']);
+                    return of(unauthorisedResponse({
+                      redirectUrl: action.redirectUrl + article.id
+                    }));
                   } else if (error.status === NOT_FOUND) {
                     //this.messageService.show(ARTICLE_MISSING_ERROR_MESSAGE);
                   } else {

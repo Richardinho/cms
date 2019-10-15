@@ -28,6 +28,5 @@ export class LogInEffects {
   constructor(
     private actions$: Actions,
     private router: Router,
-    private store: Store<AppState>,
   ) {}
 }

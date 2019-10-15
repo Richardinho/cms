@@ -94,8 +94,8 @@ export class EditArticlePageComponent implements OnInit {
     }
   }
 
-  delete() {
-    this.store.dispatch(deleteArticle());
+  deleteArticle() {
+    this.store.dispatch(deleteArticle({ redirectUrl: '/edit-article/'}));
   }
 
   get enableSaveButton() {

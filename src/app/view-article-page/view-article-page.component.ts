@@ -11,7 +11,7 @@ import { AuthService } from '../auth/auth.service';
 import { DialogService } from '../auth/dialog.service';
 import { articleRequest } from '../edit-article-page/actions/edit-article-request.action';
 import { navigateToEditPageRequest } from './actions/navigate-to-edit-page-request';
-import { deleteArticleRequest } from './actions/delete-article-request';
+import { deleteArticle } from '../edit-article-page/actions/delete-article.action';
 
 const CONFIRMATION_MESSAGE = 'Are you sure that you want to delete this article?';
 @Component({
@@ -31,9 +31,7 @@ export class ViewArticlePageComponent implements OnInit {
     private store: Store<AppState>
   ) {}
 
-
   ngOnInit() {
-
     this.article$ = this.store.pipe(select(selectArticleUnderEdit));
 
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -50,25 +48,10 @@ export class ViewArticlePageComponent implements OnInit {
   }
 
   deleteArticle() {
-    this.store.dispatch(deleteArticleRequest());
-    /*
-    function handleSuccess() {
-      this.router.navigate(['/home']);
-    }
-
-    function handleError(error) {
-      console.log('error', error);
-    }
-
     this.dialogService.confirm(CONFIRMATION_MESSAGE)
       .subscribe((canDelete) => {
         if (canDelete) {
-          this.articleService
-            .deleteArticle('')
-            .subscribe(handleSuccess.bind(this), handleError);
-
-        ,
-      });
-     */
+          this.store.dispatch(deleteArticle({ redirectUrl: '/view-article/'}));
+        }});
   }
 }
