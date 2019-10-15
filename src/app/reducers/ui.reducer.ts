@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { UI } from '../article';
+import { UI } from '../model';
 import { saveArticle } from '../edit-article-page/actions/save-article.action';
 import { articleSavedResponse } from '../edit-article-page/actions/article-saved-response.action';
 import { articleRequest } from '../edit-article-page/actions/edit-article-request.action';

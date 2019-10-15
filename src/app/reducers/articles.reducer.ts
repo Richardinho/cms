@@ -4,7 +4,7 @@ import { articleSavedResponse } from '../edit-article-page/actions/article-saved
 import { deleteArticleResponse } from '../edit-article-page/actions/delete-article-response.action';
 import { getArticleResponse } from '../edit-article-page/actions/get-article-response.action';
 
-import { Article, Articles } from '../article';
+import { Article, Articles } from '../model';
 import { tagData } from '../article.service';
 
 export const initialState = {

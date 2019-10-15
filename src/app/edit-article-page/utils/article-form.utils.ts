@@ -1,5 +1,5 @@
 import { FormArticle } from './form-article.interface';
-import { Article } from '../../article';
+import { Article } from '../../model';
 
 /*
  * functions for working with data relating to the Angular FormGroup in the edit-article component

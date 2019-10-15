@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { throwError, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { Article } from './article';
+import { Article } from './model';
 import { AuthService } from './auth/auth.service';
 import { HttpErrorResponse, HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';

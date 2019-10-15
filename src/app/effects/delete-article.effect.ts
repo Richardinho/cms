@@ -8,7 +8,7 @@ import { tap, map, mergeMap, catchError, concatMap, withLatestFrom } from 'rxjs/
 import { unauthorisedResponse } from '../edit-article-page/actions/unauthorised-response.action';
 import { ArticleService } from '../article.service';
 
-import { AppState } from '../article';
+import { AppState } from '../model';
 
 import { deleteArticle } from '../edit-article-page/actions/delete-article.action';
 import { deleteArticleResponse } from '../edit-article-page/actions/delete-article-response.action';

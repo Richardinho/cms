@@ -10,7 +10,7 @@ import { Store, select } from '@ngrx/store';
 
 import { ArticleService } from '../article.service';
 
-import { AppState, Article } from '../article';
+import { AppState, Article } from '../model';
 
 import { articleChanged } from './actions/article-changed.action';
 import { articleRequest } from './actions/edit-article-request.action';

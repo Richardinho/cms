@@ -4,7 +4,7 @@ import { Store, select, createSelector, State } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 import { switchMap, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { AppState, Article } from '../article';
+import { AppState, Article } from '../model';
 import { Router } from '@angular/router';
 import { selectArticleUnderEdit } from '../edit-article-page/selectors/article.selector';
 import { AuthService } from '../auth/auth.service';

@@ -4,7 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of } from 'rxjs';
 import { map, switchMap, catchError, concatMap, withLatestFrom } from 'rxjs/operators';
 
-import { AppState } from '../article';
+import { AppState } from '../model';
 
 import { ArticleService } from '../article.service';
 

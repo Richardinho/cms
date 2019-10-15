@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
-import { AppState } from '../article';
+import { AppState } from '../model';
 
 import { navigateAway } from './actions/navigate-away';
 import { requestArticleLinks } from './actions/request-article-links';

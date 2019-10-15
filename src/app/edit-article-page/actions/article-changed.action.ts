@@ -1,4 +1,4 @@
-import { Article } from '../../article';
+import { Article } from '../../model';
 import { createAction, props } from '@ngrx/store';
 
 export const articleChanged = createAction(

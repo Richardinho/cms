@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { tap, map, mergeMap, catchError, concatMap, withLatestFrom } from 'rxjs/operators';
-import { AppState } from '../../article';
+import { AppState } from '../../model';
 import { Store, select } from '@ngrx/store';
 
 import { navigateToEditPageRequest } from '../actions/navigate-to-edit-page-request';

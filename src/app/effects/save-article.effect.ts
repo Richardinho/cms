@@ -8,7 +8,7 @@ import { selectArticleUnderEdit } from '../edit-article-page/selectors/article.s
 import { articleSavedResponse } from '../edit-article-page/actions/article-saved-response.action';
 import { unauthorisedResponse } from '../edit-article-page/actions/unauthorised-response.action';
 import { genericError } from '../edit-article-page/actions/generic-error.action';
-import { AppState } from '../article';
+import { AppState } from '../model';
 import { Store, select } from '@ngrx/store';
 import {
   UNAUTHORIZED,
