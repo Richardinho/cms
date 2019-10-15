@@ -6,7 +6,6 @@
     *ngIf="enableSaveButton"
     [disabled]="formGroup.invalid"
     class="button"
-    data-test="save-button"
     (click)="saveEdit()">Save&nbsp;edit</button>
 
 
@@ -19,7 +18,6 @@
 </app-menu>
 
 <div
-  data-test="edit-article-page"
   class="container">
 
   <ng-container *ngIf="article$">

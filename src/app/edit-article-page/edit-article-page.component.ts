@@ -11,7 +11,6 @@ import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import { ArticleService } from '../article.service';
-import { AuthService } from '../auth/auth.service';
 
 import { AppState, Article } from '../article';
 import { FormArticle } from './utils/form-article.interface';
@@ -42,7 +41,6 @@ export class EditArticlePageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService,
     private articleService: ArticleService,
     private store: Store<AppState>
   ) {}
@@ -64,11 +62,19 @@ export class EditArticlePageComponent implements OnInit {
     this.articles$ = this.store.pipe(select('articles'));
     this.saving$ = this.store.pipe(select(selectSaving));
 
+    /*
+     *  Whenever a form input value changes, we update the store
+     */
+
     this.formGroup.valueChanges.subscribe(formArticle => {
       this.store.dispatch(articleChanged({
         articlePatchData: createArticlePatchData(formArticle, this.articleService.tagData),
       }));
     });
+
+    /*
+     * when parameters change, we make a request for data
+     */
 
     this.route.paramMap.subscribe((params: ParamMap) => {
       const id = params.get('id');
