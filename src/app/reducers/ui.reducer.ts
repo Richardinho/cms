@@ -1,15 +1,15 @@
 import { createReducer, on } from '@ngrx/store';
 import { UI } from '../article';
-import { saveArticle }             from '../edit-article-page/actions/save-article.action';
-import { articleSavedResponse }    from '../edit-article-page/actions/article-saved-response.action';
-import { articleRequest }          from '../edit-article-page/actions/edit-article-request.action';
-import { deleteArticleResponse }   from '../edit-article-page/actions/delete-article-response.action';
-import { navigateAway }            from '../home-page/actions/navigate-away';
-import { articleLinksResponse }    from '../home-page/actions/article-links-response';
-import { publishArticleResponse }  from '../home-page/actions/publish-article-response';
-import { updateLinks }             from './utils';
- 
-export const initialState :UI = {
+import { saveArticle } from '../edit-article-page/actions/save-article.action';
+import { articleSavedResponse } from '../edit-article-page/actions/article-saved-response.action';
+import { articleRequest } from '../edit-article-page/actions/edit-article-request.action';
+import { deleteArticleResponse } from '../edit-article-page/actions/delete-article-response.action';
+import { navigateAway } from '../home-page/actions/navigate-away';
+import { articleLinksResponse } from '../home-page/actions/article-links-response';
+import { publishArticleResponse } from '../home-page/actions/publish-article-response';
+import { updateLinks } from './utils';
+
+export const initialState: UI = {
   saving: false,
   id_of_article_under_edit: '',
   articleLinks: [],
@@ -21,7 +21,7 @@ export const initialState :UI = {
  */
 
 const articleRequestReducer = (state, action) => ({
-  ...state, 
+  ...state,
   id_of_article_under_edit: action.id
 });
 
@@ -45,7 +45,7 @@ const navigateAwayFromHomePageReducer = state => ({
 });
 
 const articleLinksResponseReducer = (state, action) => {
-  return { ...state, articleLinks: action.articleLinks };;
+  return { ...state, articleLinks: action.articleLinks };
 };
 
 
@@ -67,7 +67,7 @@ const _uiReducer = createReducer(initialState,
   on(articleLinksResponse, articleLinksResponseReducer),
   on(publishArticleResponse, publishArticleResponseReducer),
 );
- 
+
 export function uiReducer(state, action) {
   return _uiReducer(state, action);
 }

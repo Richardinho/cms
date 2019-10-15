@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of } from 'rxjs';
 import { tap, map, mergeMap, catchError, concatMap, withLatestFrom } from 'rxjs/operators';
-import { unauthorisedResponse }   from '../edit-article-page/actions/unauthorised-response.action';
+import { unauthorisedResponse } from '../edit-article-page/actions/unauthorised-response.action';
 import { AppState } from '../article';
 import { Store, select } from '@ngrx/store';
 import {
@@ -13,7 +13,7 @@ import {
 
 @Injectable()
 export class LogInEffects {
-  login = createEffect(() => 
+  login = createEffect(() =>
     this.actions$.pipe(
       ofType(unauthorisedResponse),
       tap(({ redirectUrl }) => {

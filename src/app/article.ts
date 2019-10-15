@@ -10,11 +10,11 @@ export interface Article {
   summary: string;
   saved: boolean;
   published: boolean;
-  tags: Array<{ name: string; value: boolean}>
+  tags: Array<{ name: string; value: boolean}>;
 }
 
 export interface Articles {
-  [id:string]: Article; 
+  [id: string]: Article;
 }
 
 export interface UI {

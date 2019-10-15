@@ -9,8 +9,8 @@ import { HomeGuard } from './home.guard';
 describe('HomeGuard', () => {
   let authServiceStub;
   let routerSpy;
-  let next;
-  let state;
+  const next;
+  const state;
   let guard;
   let result;
 

@@ -1,4 +1,5 @@
 import {
+  OnInit,
   Component,
   Input } from '@angular/core';
 import { MenuService } from '../menu-service/menu.service';
@@ -24,20 +25,20 @@ export const NETWORK_ERROR_MESSAGE = 'a network error occurred. Please check tha
   styleUrls: ['./menu.component.scss'],
   templateUrl: './menu.component.html'
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit {
   constructor(
-    private articleService :ArticleService,
-    private authService :AuthService,
-    private menuService :MenuService,
-    private router :Router,
-    private messageService :MessageService
+    private articleService: ArticleService,
+    private authService: AuthService,
+    private menuService: MenuService,
+    private router: Router,
+    private messageService: MessageService
   ) {}
 
 
-  public isLoggedIn: boolean = true;
-  
-  @Input() 
-  public showCreateArticleButton :boolean;
+  public isLoggedIn = true;
+
+  @Input()
+  public showCreateArticleButton: boolean;
 
 
   ngOnInit() {

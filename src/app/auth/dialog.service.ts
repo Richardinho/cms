@@ -11,5 +11,5 @@ export class DialogService {
     const confirmation = window.confirm(message || DEFAULT_MESSAGE);
 
     return of(confirmation);
-  };
+  }
 }

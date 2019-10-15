@@ -5,17 +5,17 @@ describe('articles.reducer', () => {
   describe('jsonToArticle()', () => {
     it('should create an article object from json', () => {
       const json: any = {
-        author: "Richard Hunter",
-        body: "article about tomatoes",
-        date_created: "Aug 01 2019 11:23 PM",
-        date_edited: "Oct 06 2019 07:34 PM",
-        id: "46",
+        author: 'Richard Hunter',
+        body: 'article about tomatoes',
+        date_created: 'Aug 01 2019 11:23 PM',
+        date_edited: 'Oct 06 2019 07:34 PM',
+        id: '46',
         published: false,
-        summary: "I like tomato",
-        tag1: "angular",
-        tag2: "javascript",
-        tag3: "react",
-        title: "Tomato soup", 
+        summary: 'I like tomato',
+        tag1: 'angular',
+        tag2: 'javascript',
+        tag3: 'react',
+        title: 'Tomato soup',
       };
 
       const article: Article = jsonToArticle(json);
@@ -35,6 +35,6 @@ describe('articles.reducer', () => {
           { name: 'html-5', value: false },
         ],
       });
-    })
+    });
   });
 });

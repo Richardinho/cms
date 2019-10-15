@@ -16,5 +16,5 @@ export class ActivatedRouteStub {
 
   setParamMap(params?: Params) {
     this.subject.next(convertToParamMap(params));
-  };
+  }
 }

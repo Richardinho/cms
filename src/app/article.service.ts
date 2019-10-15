@@ -28,15 +28,15 @@ export class ArticleService {
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': `Basic ${this.authService.getToken()}`, 
+        'Authorization': `Basic ${this.authService.getToken()}`,
       })
-    }; 
+    };
 
     return this.http.get<any>(url, httpOptions)
       .pipe(
         map((data) => {
           return data;
-        }), 
+        }),
         catchError((error: HttpErrorResponse) => {
           if (error.status) {
             return throwError({
@@ -56,9 +56,9 @@ export class ArticleService {
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': `Basic ${this.authService.getToken()}`, 
+        'Authorization': `Basic ${this.authService.getToken()}`,
       })
-    }; 
+    };
 
     return this.http.get<any>(url, httpOptions).pipe(
       map(data => {
@@ -85,10 +85,10 @@ export class ArticleService {
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': `Basic ${this.authService.getToken()}`, 
+        'Authorization': `Basic ${this.authService.getToken()}`,
         'enctype': 'multipart/form-data'
       })
-    }; 
+    };
 
     return this.http
       .put<any>(url, formData, httpOptions)
@@ -105,14 +105,14 @@ export class ArticleService {
   deleteArticle(articleId) {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': `Basic ${this.authService.getToken()}`, 
+        'Authorization': `Basic ${this.authService.getToken()}`,
         'enctype': 'multipart/form-data'
       })
-    }; 
+    };
 
     const url = environment.blogDomain + `/index.php/api/article/${articleId}`;
 
-    return this.http.delete(url, httpOptions)
+    return this.http.delete(url, httpOptions);
   }
 
   publish(articleId, publish) {
@@ -138,10 +138,10 @@ export class ArticleService {
 
       const httpOptions = {
         headers: new HttpHeaders({
-          'Authorization': `Basic ${token}`, 
+          'Authorization': `Basic ${token}`,
           'enctype': 'multipart/form-data'
         })
-      }; 
+      };
 
       return this.http.post<any>(url, formData, httpOptions).pipe(
         catchError((error: HttpErrorResponse) => {

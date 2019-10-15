@@ -2,7 +2,7 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { LoginPageComponent } from './login-page.component';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing'; 
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthService } from '../auth/auth.service';
 import { of, throwError } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -20,7 +20,7 @@ describe('LoginPageComponent', () => {
     routerStub = jasmine.createSpyObj('Router', ['navigate']);
     authServiceStub = jasmine.createSpyObj('AuthService', ['setToken', 'logOut']);
   });
-  
+
   describe('when the user submits a correct username and password', () => {
     beforeEach(() => {
       httpStub.post.and.returnValue(of({

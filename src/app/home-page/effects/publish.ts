@@ -8,11 +8,11 @@ import { AppState } from '../../article';
 
 import { ArticleService } from '../../article.service';
 
-import { articleRequest }   from '../../edit-article-page/actions/edit-article-request.action';
-import { getArticleResponse }   from '../../edit-article-page/actions/get-article-response.action';
-import { articleFoundInCache }  from '../../edit-article-page/actions/article-found-in-cache.action';
+import { articleRequest } from '../../edit-article-page/actions/edit-article-request.action';
+import { getArticleResponse } from '../../edit-article-page/actions/get-article-response.action';
+import { articleFoundInCache } from '../../edit-article-page/actions/article-found-in-cache.action';
 import { unauthorisedResponse } from '../../edit-article-page/actions/unauthorised-response.action';
-import { genericError }         from '../../edit-article-page/actions/generic-error.action';
+import { genericError } from '../../edit-article-page/actions/generic-error.action';
 
 import { selectArticle } from '../../edit-article-page/selectors/article.selector';
 import { articleLinksResponse } from '../actions/article-links-response';
@@ -38,7 +38,7 @@ export class PublishEffects {
             catchError((error) => {
               if (error.status) {
                 if (error.status === UNAUTHORIZED) {
-                  return of(unauthorisedResponse({ redirectUrl: '/' }))
+                  return of(unauthorisedResponse({ redirectUrl: '/' }));
                 } else {
                   return of(genericError({ message: 'Server error occurred' }));
                 }
@@ -46,7 +46,7 @@ export class PublishEffects {
                 return of(genericError({ message: 'Check your network' }));
               }
             })
-          )
+          );
       })
     ));
 

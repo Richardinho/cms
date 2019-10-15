@@ -35,7 +35,7 @@ import { tagsValidator } from './utils/tags.validator';
 export class EditArticlePageComponent implements OnInit {
   article$: Observable<Article>;
   saving$: Observable<boolean>;
-  unsavedChanges: boolean = false;
+  unsavedChanges = false;
   articles$;
 
   constructor(
@@ -108,7 +108,7 @@ export class EditArticlePageComponent implements OnInit {
     return this.unsavedChanges && this.formGroup.valid;
   }
 
-  get mytags() :FormArray {
+  get mytags(): FormArray {
     return this.formGroup.get('tags') as FormArray;
   }
 }

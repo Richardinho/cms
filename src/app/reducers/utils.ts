@@ -1,5 +1,5 @@
 export const updateLinks = (links, articleJSON) => {
-  //todo: write test for this
+  //  todo: write test for this
   const id = articleJSON.id;
   const published = articleJSON.published;
 

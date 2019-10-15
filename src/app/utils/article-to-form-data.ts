@@ -22,7 +22,7 @@ export const articleToFormData = (article: Article): FormData => {
     .slice(0, 3)
     .forEach((tag, index) => {
       formData.append(`tag${index + 1}`, tag.name);
-    }) 
+    });
 
   return formData;
 };

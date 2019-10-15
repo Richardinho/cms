@@ -6,11 +6,10 @@ import { FormControl } from '@angular/forms';
 import { environment } from '../../environments/environment';
 
 interface LoginResponseData {
-  jwt_token: string
+  jwt_token: string;
 }
 
 @Component({
-  selector: 'login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss']
 })
@@ -20,8 +19,8 @@ export class LoginPageComponent implements OnInit {
    *  model
    */
 
-  public username: string = '';
-  public password: string = '';
+  public username = '';
+  public password = '';
 
   errorMessage: string;
 

@@ -10,7 +10,7 @@ interface ArticleFormGroup {
   title: string;
   summary: string;
   body: string;
-  tags: boolean[]
+  tags: boolean[];
 }
 
 /*
@@ -32,7 +32,7 @@ export const articleToFormGroup = (article: Article): ArticleFormGroup => {
 
 /*
  *  Takes data from a form group and creates an object used for patching an Article.
- *  Note that this isn't the reverse of the above; We can't create an Article object as the previous 
+ *  Note that this isn't the reverse of the above; We can't create an Article object as the previous
  *  transformation removed information
  */
 

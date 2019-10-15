@@ -1,3 +1,4 @@
+import { OnInit } from '@angular/core';
 import {
   HostBinding,
   Component,
@@ -11,13 +12,13 @@ import { MessageService } from '../message-service/message.service';
   selector: 'app-messages',
   styleUrls: ['./message-widget.component.scss'],
 })
-export class MessageWidgetComponent {
+export class MessageWidgetComponent implements OnInit {
   @HostBinding('style.display') display = 'none';
 
   @HostBinding('style.backgroundColor') backgroundColor = '#98FB98';
   @HostBinding('style.boxShadow') boxShadow = '0 0 2px 3px blue';
 
-  //box-shadow: 0 0 2px 3px #98FB98;
+  // box-shadow: 0 0 2px 3px #98FB98;
   message = 'this is a test';
 
   constructor(private messageService: MessageService) {}
@@ -32,7 +33,7 @@ export class MessageWidgetComponent {
   }
 
   getBackgroundColor(mode) {
-    switch(mode) {
+    switch (mode) {
       case 'warning':
         return 'orange';
       case 'error':

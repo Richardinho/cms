@@ -3,11 +3,11 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of } from 'rxjs';
 import { tap, map, mergeMap, catchError, concatMap, withLatestFrom } from 'rxjs/operators';
 import { ArticleService } from '../article.service';
-import { saveArticle }            from '../edit-article-page/actions/save-article.action';
+import { saveArticle } from '../edit-article-page/actions/save-article.action';
 import { selectArticleUnderEdit } from '../edit-article-page/selectors/article.selector';
-import { articleSavedResponse }   from '../edit-article-page/actions/article-saved-response.action';
-import { unauthorisedResponse }   from '../edit-article-page/actions/unauthorised-response.action';
-import { genericError }           from '../edit-article-page/actions/generic-error.action';
+import { articleSavedResponse } from '../edit-article-page/actions/article-saved-response.action';
+import { unauthorisedResponse } from '../edit-article-page/actions/unauthorised-response.action';
+import { genericError } from '../edit-article-page/actions/generic-error.action';
 import { AppState } from '../article';
 import { Store, select } from '@ngrx/store';
 import {
@@ -33,7 +33,7 @@ export class SaveArticleEffects {
                 if (error.status === UNAUTHORIZED) {
                   const redirectUrl = '/edit-article/' + article.id;
 
-                  return of(unauthorisedResponse({ redirectUrl }))
+                  return of(unauthorisedResponse({ redirectUrl }));
                 } else {
                   return of(genericError({ message: 'Server error occurred' }));
                 }

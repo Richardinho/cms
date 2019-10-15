@@ -8,11 +8,11 @@ import { AppState } from '../article';
 
 import { ArticleService } from '../article.service';
 
-import { articleRequest }   from '../edit-article-page/actions/edit-article-request.action';
-import { getArticleResponse }   from '../edit-article-page/actions/get-article-response.action';
-import { articleFoundInCache }  from '../edit-article-page/actions/article-found-in-cache.action';
+import { articleRequest } from '../edit-article-page/actions/edit-article-request.action';
+import { getArticleResponse } from '../edit-article-page/actions/get-article-response.action';
+import { articleFoundInCache } from '../edit-article-page/actions/article-found-in-cache.action';
 import { unauthorisedResponse } from '../edit-article-page/actions/unauthorised-response.action';
-import { genericError }         from '../edit-article-page/actions/generic-error.action';
+import { genericError } from '../edit-article-page/actions/generic-error.action';
 
 import { selectArticle } from '../edit-article-page/selectors/article.selector';
 
@@ -41,7 +41,7 @@ export class GetArticleEffects {
             catchError((error) => {
               if (error.status) {
                 if (error.status === UNAUTHORIZED) {
-                  return of(unauthorisedResponse({ redirectUrl: action.redirectUrl }))
+                  return of(unauthorisedResponse({ redirectUrl: action.redirectUrl }));
                 } else {
                   return of(genericError({ message: 'Server error occurred' }));
                 }
@@ -49,7 +49,7 @@ export class GetArticleEffects {
                 return of(genericError({ message: 'Check your network' }));
               }
             })
-          )
+          );
       })
     ));
 

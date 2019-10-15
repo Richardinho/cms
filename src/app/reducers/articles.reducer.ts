@@ -1,9 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
-import { articleChanged }        from '../edit-article-page/actions/article-changed.action';
-import { articleSavedResponse }  from '../edit-article-page/actions/article-saved-response.action';
+import { articleChanged } from '../edit-article-page/actions/article-changed.action';
+import { articleSavedResponse } from '../edit-article-page/actions/article-saved-response.action';
 import { deleteArticleResponse } from '../edit-article-page/actions/delete-article-response.action';
-import { getArticleResponse }    from '../edit-article-page/actions/get-article-response.action';
- 
+import { getArticleResponse } from '../edit-article-page/actions/get-article-response.action';
+
 import { Article, Articles } from '../article';
 import { tagData } from '../article.service';
 
@@ -27,7 +27,7 @@ export const jsonToArticle = (json: any): Article => {
     const value = tag === json.tag1
       || tag === json.tag2
       || tag === json.tag3;
-  
+
     return {
       name,
       value
@@ -68,7 +68,7 @@ export const articleChangedReducer = (state, action) => {
  */
 
 export const deleteArticleResponseReducer = (state, action) => {
-  delete state[action.id]
+  delete state[action.id];
 
   return { ...state };
 };
@@ -79,7 +79,7 @@ const _articlesReducer = createReducer(initialState,
   on(deleteArticleResponse, deleteArticleResponseReducer),
   on(articleSavedResponse, getArticleResponseReducer),
 );
- 
+
 export function articlesReducer(state, action) {
   return _articlesReducer(state, action);
 }

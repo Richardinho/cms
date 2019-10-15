@@ -7,7 +7,7 @@ describe('article-changed.action', () => {
       articlePatchData: 'foo'
     };
 
-    const result: any = articleChanged({ articlePatchData: 'foo' })
+    const result: any = articleChanged({ articlePatchData: 'foo' });
 
     expect(result).toEqual(expected);
   });

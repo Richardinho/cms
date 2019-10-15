@@ -11,7 +11,7 @@ import { selectId } from '../../edit-article-page/selectors/article.selector';
 
 @Injectable()
 export class NavigationEffects {
-  navigateToEditPage$ = createEffect(() => 
+  navigateToEditPage$ = createEffect(() =>
     this.actions$.pipe(
       ofType(navigateToEditPageRequest),
       concatMap(action => of(action).pipe(

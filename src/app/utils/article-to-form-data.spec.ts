@@ -10,7 +10,7 @@ describe('formDataToObj()', () => {
       body: 'test body',
       summary: 'test summary',
       published: false,
-      saved: true, 
+      saved: true,
       tags: [
         { name: 'angular', value: true },
         { name: 'react', value: true },

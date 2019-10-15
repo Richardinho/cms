@@ -4,13 +4,13 @@ export const tagsValidator = (control) => {
   const numberSelected = control
     .controls
     .filter(ctrl => ctrl.value)
-    .length; 
+    .length;
 
   if (numberSelected > MAX_NUM_TAGS) {
     return {
-      error: "not allowed more than 3 selected"
+      error: 'not allowed more than 3 selected',
     };
   }
 
   return null;
-}
+};
