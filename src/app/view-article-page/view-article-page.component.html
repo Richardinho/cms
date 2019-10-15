@@ -4,29 +4,27 @@
 
   <button
     class="button"
-     data-test="edit-article-button"
-     [routerLink]="['/edit-article', article?.id]">edit article</button>
+    (click)="editArticle()">
+    edit article
+  </button>
 
   <button
      class="button"
      (click)="deleteArticle()">delete article</button>
-
 </app-menu>
 
-<div class="cms-article-container" data-test="article-page" *ngIf="article">
-
+<div class="cms-article-container">
   <div class="cms-content">
-    
-    <h2 class="article-header">{{article.title}}</h2>
+    <h2 class="article-header">{{(article$|async)?.title}}</h2>
 
     <div
       class="article-summary"
-      [innerHTML]="article.summary | markdownToHTML"
+      [innerHTML]="(article$|async)?.summary | markdownToHTML"
       ></div>
 
     <div
       class="article-content"
-      [innerHTML]="article.body | markdownToHTML"
+      [innerHTML]="(article$|async)?.body | markdownToHTML"
       ></div>
   </div>
 </div>

@@ -18,7 +18,7 @@ import { FormArticle } from './utils/form-article.interface';
 
 import { saveArticle } from './actions/save-article.action';
 import { articleChanged } from './actions/article-changed.action';
-import { editArticleRequest } from './actions/edit-article-request.action';
+import { articleRequest } from './actions/edit-article-request.action';
 import { deleteArticle } from './actions/delete-article.action';
 
 import { selectArticleUnderEdit } from './selectors/article.selector';
@@ -71,7 +71,11 @@ export class EditArticlePageComponent implements OnInit {
     });
 
     this.route.paramMap.subscribe((params: ParamMap) => {
-      this.store.dispatch(editArticleRequest({ id: params.get('id') }));
+      const id = params.get('id');
+
+      this.store.dispatch(articleRequest({
+        id,
+        redirectUrl: '/edit-article/' + id }));
     });
 
     this.article$ = this.store.pipe(select(selectArticleUnderEdit));

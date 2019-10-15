@@ -1,12 +1,17 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ArticleService } from '../article.service';
+import { Store, select, createSelector, State } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 import { switchMap, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { Article } from '../article';
+import { AppState, Article } from '../article';
 import { Router } from '@angular/router';
+import { selectArticleUnderEdit } from '../edit-article-page/selectors/article.selector';
 import { AuthService } from '../auth/auth.service';
 import { DialogService } from '../auth/dialog.service';
+import { articleRequest } from '../edit-article-page/actions/edit-article-request.action';
+import { navigateToEditPageRequest } from './actions/navigate-to-edit-page-request';
+import { deleteArticleRequest } from './actions/delete-article-request';
 
 const CONFIRMATION_MESSAGE = 'Are you sure that you want to delete this article?';
 @Component({
@@ -15,9 +20,7 @@ const CONFIRMATION_MESSAGE = 'Are you sure that you want to delete this article?
   styleUrls: ['./view-article-page.component.scss']
 })
 export class ViewArticlePageComponent implements OnInit {
-  article: Article;
-  errorMessage: string;
-  private articleId;
+  article$: Observable<Article>;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,22 +28,30 @@ export class ViewArticlePageComponent implements OnInit {
     private authService: AuthService,
     private articleService: ArticleService,
     private dialogService: DialogService,
+    private store: Store<AppState>
   ) {}
 
 
   ngOnInit() {
-    this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => {
-        this.articleId = params.get('id');
 
-        return this.articleService.getArticle(this.articleId);
-      })
-    ).subscribe(
-      this.handleResponse.bind(this),
-      this.handleError.bind(this));
+    this.article$ = this.store.pipe(select(selectArticleUnderEdit));
+
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      const id = params.get('id');
+
+      this.store.dispatch(articleRequest({
+        id,
+        redirectUrl: '/view-article/' + id }));
+    });
+  }
+
+  editArticle() {
+    this.store.dispatch(navigateToEditPageRequest());
   }
 
   deleteArticle() {
+    this.store.dispatch(deleteArticleRequest());
+    /*
     function handleSuccess() {
       this.router.navigate(['/home']);
     }
@@ -53,24 +64,11 @@ export class ViewArticlePageComponent implements OnInit {
       .subscribe((canDelete) => {
         if (canDelete) {
           this.articleService
-            .deleteArticle(this.articleId)
+            .deleteArticle('')
             .subscribe(handleSuccess.bind(this), handleError);
 
-        }
+        ,
       });
-  }
-
-  handleResponse(article) {
-    this.article = article; 
-  }
-
-  handleError(error) {
-    if (error.status && error.status === 401) {
-      this.authService.redirectUrl = '/view-article/' + this.articleId;
-
-      this.router.navigate(['/login']);
-    } else {
-      this.errorMessage = 'an error occurred';
-    }
+     */
   }
 }

@@ -8,7 +8,7 @@ import { AppState } from '../article';
 
 import { ArticleService } from '../article.service';
 
-import { editArticleRequest }   from '../edit-article-page/actions/edit-article-request.action';
+import { articleRequest }   from '../edit-article-page/actions/edit-article-request.action';
 import { getArticleResponse }   from '../edit-article-page/actions/get-article-response.action';
 import { articleFoundInCache }  from '../edit-article-page/actions/article-found-in-cache.action';
 import { unauthorisedResponse } from '../edit-article-page/actions/unauthorised-response.action';
@@ -26,7 +26,7 @@ export class GetArticleEffects {
 
   getArticle$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(editArticleRequest),
+      ofType(articleRequest),
       concatMap(action => of(action).pipe(
         withLatestFrom(this.store.pipe(select(selectArticle, { id : action.id })))
       )),
@@ -41,9 +41,7 @@ export class GetArticleEffects {
             catchError((error) => {
               if (error.status) {
                 if (error.status === UNAUTHORIZED) {
-                  const redirectUrl = '/edit-article/' + action.id;
-
-                  return of(unauthorisedResponse({ redirectUrl }))
+                  return of(unauthorisedResponse({ redirectUrl: action.redirectUrl }))
                 } else {
                   return of(genericError({ message: 'Server error occurred' }));
                 }

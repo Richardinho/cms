@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-export const editArticleRequest = createAction(
-  '[EditArticle Page] Edit Article Request',
-  props<{ id: string }>()
+export const articleRequest = createAction(
+  '[EditArticle Page] Article Request',
+  props<{ id: string, redirectUrl: string }>()
 );
