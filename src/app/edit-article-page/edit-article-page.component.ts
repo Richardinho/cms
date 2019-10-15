@@ -1,30 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import {
   FormArray,
   FormControl,
   FormGroup,
   Validators } from '@angular/forms';
-import { Store, select, createSelector, State } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Store, select } from '@ngrx/store';
 
 import { ArticleService } from '../article.service';
 
 import { AppState, Article } from '../article';
-import { FormArticle } from './utils/form-article.interface';
 
-import { saveArticle } from './actions/save-article.action';
 import { articleChanged } from './actions/article-changed.action';
 import { articleRequest } from './actions/edit-article-request.action';
 import { deleteArticle } from './actions/delete-article.action';
+import { saveArticle } from './actions/save-article.action';
 
 import { selectArticleUnderEdit } from './selectors/article.selector';
 import { selectSaving } from './selectors/ui.selector';
 
 import { createArticlePatchData, articleToFormGroup } from './utils/article-form.utils';
-
 import { tagsValidator } from './utils/tags.validator';
 
 @Component({
@@ -35,8 +31,8 @@ import { tagsValidator } from './utils/tags.validator';
 export class EditArticlePageComponent implements OnInit {
   article$: Observable<Article>;
   saving$: Observable<boolean>;
+  // todo: remove: get from store instead
   unsavedChanges = false;
-  articles$;
 
   constructor(
     private route: ActivatedRoute,
@@ -59,15 +55,17 @@ export class EditArticlePageComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.articles$ = this.store.pipe(select('articles'));
+    // todo: use this variable: e.g. have a spinner
     this.saving$ = this.store.pipe(select(selectSaving));
 
     /*
      *  Whenever a form input value changes, we update the store
      */
 
+    //  get tag data from somewhere else. e.g the store
     this.formGroup.valueChanges.subscribe(formArticle => {
       this.store.dispatch(articleChanged({
+
         articlePatchData: createArticlePatchData(formArticle, this.articleService.tagData),
       }));
     });
@@ -89,6 +87,7 @@ export class EditArticlePageComponent implements OnInit {
     this.article$.subscribe(article => {
       if (article) {
         this.formGroup.patchValue(articleToFormGroup(article), { emitEvent: false });
+        //  todo: get this from the store rather than putting on the component
         this.unsavedChanges = !article.saved;
       }
     });
@@ -101,6 +100,7 @@ export class EditArticlePageComponent implements OnInit {
   }
 
   deleteArticle() {
+    //  todo: get url path from constants file?
     this.store.dispatch(deleteArticle({ redirectUrl: '/edit-article/'}));
   }
 
