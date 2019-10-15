@@ -20,6 +20,7 @@ export interface Articles {
 export interface UI {
   saving: boolean;
   id_of_article_under_edit: string;
+  articleLinks: Array<any>;
 }
 
 export interface AppState {

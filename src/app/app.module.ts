@@ -26,6 +26,8 @@ import { LogInEffects }         from './effects/login.effect';
 import { GetArticleEffects }    from './effects/get-article.effect';
 import { DeleteArticleEffects } from './effects/delete-article.effect';
 import { NavigationEffects }    from './view-article-page/effects/navigation.effect';
+import { LoadArticleLinksEffects } from './home-page/effects/load-links';
+import { PublishEffects }          from './home-page/effects/publish';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,8 @@ import { NavigationEffects }    from './view-article-page/effects/navigation.eff
       LogInEffects,
       GetArticleEffects,
       NavigationEffects,
+      LoadArticleLinksEffects,
+      PublishEffects,
     ])
   ],
   providers: [

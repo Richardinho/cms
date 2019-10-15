@@ -49,6 +49,7 @@ export class MenuComponent {
 
   // it's not great that the menu component should be responsible for creating an article.
   // this is where ngrx could be useful: to just dispatch an action here
+  // todo: If the user tries to create an article when logged out, we should redirect them to the login page
   createArticle() {
 
     this.articleService

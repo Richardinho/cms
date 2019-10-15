@@ -1,66 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-import { Article } from '../article';
-import { ArticleService } from '../article.service';
-import { Router } from '@angular/router';
+import { Store, select } from '@ngrx/store';
+import { AppState } from '../article';
+import { navigateAway } from './actions/navigate-away';
+import { requestArticleLinks } from './actions/request-article-links';
+import { selectArticleLinks } from './selectors/select-article-links';
+import { requestPublishArticle } from './actions/request-publish-article';
 
 @Component({
-  selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
-  articles: Array<Article>;
-  errorMessage: string;
+  articles$;
 
   constructor(
-    private articleService: ArticleService,
-    private router: Router
+    private store: Store<AppState>
   ) {}
 
   ngOnInit() {
-    this.articleService.getArticles()
-      .subscribe((data: Array<Article>) => {
-        this.articles = data;
-      }, (e) => {
-
-        /*
-         * If user is forbidden to access this page, then we redirect to login page.
-         * Otherwise, we just show a generic error message
-         */
-
-        if (e.status && e.status === 401) {
-          this.router.navigate(['/login']);
-        } else {
-          this.errorMessage = 'Some error occurred';
-        }
-      });
+    this.store.dispatch(requestArticleLinks());
+    this.articles$ = this.store.pipe(select(selectArticleLinks));
   }
 
-  publish(article) {
-    this._publish(article.id, true);
+  publish(articleId) {
+    this.store.dispatch(requestPublishArticle({ id: articleId, publish: true }));
   }
 
-  unpublish(article) {
-    this._publish(article.id, false);
+  unpublish(articleId) {
+    this.store.dispatch(requestPublishArticle({ id: articleId, publish: false }));
   }
 
-  private _publish(articleId, publish) {
-    this.articleService
-      .publish(articleId, publish)
-      .subscribe((returnedArticle: any) => {
-          this.articles = this.articles.map(article => {
-            if (article.id === articleId) {
-              return returnedArticle;;
-            }
-
-            return article;
-          });
-      }, e => {
-        if (e.status && e.status === 401) {
-          this.router.navigate(['/login']);
-        } else {
-          this.errorMessage = 'Some error occurred';
-        }
-      });
+  ngOnDestroy() {
+    this.store.dispatch(navigateAway());
   }
 }

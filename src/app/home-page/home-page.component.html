@@ -2,9 +2,9 @@
   [showCreateArticleButton]="true"
   ></app-menu>
 
-<ul data-test="home-page" class="links" *ngIf="articles">
+<ul data-test="home-page" class="links">
   <li
-    *ngFor="let article of articles"
+    *ngFor="let article of articles$ | async"
     class="link">
 
     <span>{{article.title}}</span>
@@ -13,13 +13,13 @@
 
       <button
         *ngIf="!article.published"
-        (click)="publish(article)"
+        (click)="publish(article.id)"
         class="button"
         >publish</button>
       
       <button
         *ngIf="article.published"
-        (click)="unpublish(article)"
+        (click)="unpublish(article.id)"
         class="button"
         >unpublish</button>
 
