@@ -26,5 +26,6 @@ export interface UI {
 export interface AppState {
   articles: Articles;
   ui: UI;
+  jwt_token: string;
 }
 

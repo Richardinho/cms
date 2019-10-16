@@ -1,14 +1,12 @@
 
 <button
-  *ngIf="showCreateArticleButton"
   (click)="createArticle()"
   class="button">create article</button>
 
 
 <button
-    *ngIf="isLoggedIn"
     class="button"
-    (click)="logout()">logout</button>
+    (click)="logOut()">logout</button>
 <!-- buttons passed in by consumers of this component -->
 <ng-content></ng-content>
 

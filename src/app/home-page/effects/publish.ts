@@ -19,6 +19,7 @@ import { articleLinksResponse } from '../actions/article-links-response';
 import { requestArticleLinks } from '../actions/request-article-links';
 import { requestPublishArticle } from '../actions/request-publish-article';
 import { publishArticleResponse } from '../actions/publish-article-response';
+import { selectJWTToken } from '../../edit-article-page/selectors/article.selector';
 
 import {
   UNAUTHORIZED,
@@ -31,8 +32,11 @@ export class PublishEffects {
   publishArticle$ = createEffect(() =>
     this.actions$.pipe(
       ofType(requestPublishArticle),
-      switchMap((action) => {
-        return this.articleService.publish(action.id, action.publish)
+      concatMap(action => of(action).pipe(
+        withLatestFrom(this.store.pipe(select(selectJWTToken)))
+      )),
+      switchMap(([action, token]) => {
+        return this.articleService.publish(action.id, action.publish, token)
           .pipe(
             map((articleJSON) => publishArticleResponse({ articleJSON })),
             catchError((error) => {

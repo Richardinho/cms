@@ -23,12 +23,12 @@ export class ArticleService {
     private authService: AuthService
   ) {}
 
-  getArticle(id: number | string) {
+  getArticle(id: number | string, token: string) {
     const url = environment.blogDomain + '/index.php/api/article/' + id;
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': `Basic ${this.authService.getToken()}`,
+        'Authorization': `Basic ${token}`,
       })
     };
 
@@ -51,41 +51,25 @@ export class ArticleService {
       );
   }
 
-  getArticles(): Observable<Array<Article>> {
+  getArticles(token): Observable<Array<Article>> {
     const url = environment.blogDomain + '/index.php/api/articles/';
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': `Basic ${this.authService.getToken()}`,
-      })
-    };
-
-    return this.http.get<any>(url, httpOptions).pipe(
+    return this._get(url, token).pipe(
       map(data => {
         return data.articles;
       }),
-      catchError((error: HttpErrorResponse) => {
-        if (error.status) {
-          return throwError({
-            status: error.status
-          });
-        } else {
-          return throwError({
-            message: 'an error occurred'
-          });
-        }
-      })
     );
   }
 
-  create() {
+  createArticle(token) {
     const formData = new FormData();
 
     const url = environment.blogDomain + '/index.php/api/article/';
 
     const httpOptions = {
+      // should I used Basic here?
       headers: new HttpHeaders({
-        'Authorization': `Basic ${this.authService.getToken()}`,
+        'Authorization': `Basic ${token}`,
         'enctype': 'multipart/form-data'
       })
     };
@@ -95,17 +79,17 @@ export class ArticleService {
       .pipe(map(data => data.id));
   }
 
-  updateArticle(article: Article) {
+  updateArticle(article: Article, token) {
     const url = environment.blogDomain + '/index.php/api/article/' + article.id;
     const formData: FormData = articleToFormData(article);
 
-    return this._post(url, formData);
+    return this._post(url, formData, token);
   }
 
-  deleteArticle(articleId) {
+  deleteArticle(articleId, token) {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': `Basic ${this.authService.getToken()}`,
+        'Authorization': `Basic ${token}`,
         'enctype': 'multipart/form-data'
       })
     };
@@ -115,17 +99,26 @@ export class ArticleService {
     return this.http.delete(url, httpOptions);
   }
 
-  publish(articleId, publish) {
+  publish(articleId, publish, token) {
     const formData = new FormData();
     const url = environment.blogDomain + '/index.php/api/publish/' + articleId;
 
     formData.append('published', publish);
 
-    return this._post(url, formData);
+    return this._post(url, formData, token);
   }
 
-  _post(url, formData) {
-    const token = this.authService.getToken();
+  _get(url, token) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Basic ${token}`,
+      })
+    };
+
+    return this.http.get<any>(url, httpOptions);
+  }
+
+  _post(url, formData, token) {
 
     if (!token) {
 

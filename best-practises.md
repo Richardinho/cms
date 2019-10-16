@@ -11,4 +11,4 @@
  - utils
 
 2. Store as much state in the store and as little in the component
-3. Make actions as consistent as possible.
+3. Make actions as consistent as possible. scope by feature?

@@ -4,7 +4,7 @@ import { EMPTY, of } from 'rxjs';
 import { tap, map, mergeMap, catchError, concatMap, withLatestFrom } from 'rxjs/operators';
 import { ArticleService } from '../article.service';
 import { saveArticle } from '../edit-article-page/actions/save-article.action';
-import { selectArticleUnderEdit } from '../edit-article-page/selectors/article.selector';
+import { selectArticleUnderEditWithToken } from '../edit-article-page/selectors/article.selector';
 import { articleSavedResponse } from '../edit-article-page/actions/article-saved-response.action';
 import { unauthorisedResponse } from '../edit-article-page/actions/unauthorised-response.action';
 import { genericError } from '../edit-article-page/actions/generic-error.action';
@@ -22,16 +22,16 @@ export class SaveArticleEffects {
     this.actions$.pipe(
       ofType(saveArticle),
       concatMap(action => of(action).pipe(
-        withLatestFrom(this.store.pipe(select(selectArticleUnderEdit)))
+        withLatestFrom(this.store.pipe(select(selectArticleUnderEditWithToken)))
       )),
       mergeMap(([action, article]) => {
-        return this.articleService.updateArticle(article)
+        return this.articleService.updateArticle(article.article, article.token)
           .pipe(
-            map(() => (articleSavedResponse({ articleJSON : article }))),
+            map(() => (articleSavedResponse({ articleJSON : article.article }))),
             catchError((error) => {
               if (error.status) {
                 if (error.status === UNAUTHORIZED) {
-                  const redirectUrl = '/edit-article/' + article.id;
+                  const redirectUrl = '/edit-article/' + article.article.id;
 
                   return of(unauthorisedResponse({ redirectUrl }));
                 } else {

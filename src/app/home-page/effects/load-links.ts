@@ -1,22 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Store, select } from '@ngrx/store';
 import { of } from 'rxjs';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, switchMap, catchError, concatMap, withLatestFrom } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import { AppState } from '../../model';
 
 import { ArticleService } from '../../article.service';
 
-import { articleRequest } from '../../edit-article-page/actions/edit-article-request.action';
-import { getArticleResponse } from '../../edit-article-page/actions/get-article-response.action';
-import { articleFoundInCache } from '../../edit-article-page/actions/article-found-in-cache.action';
 import { unauthorisedResponse } from '../../edit-article-page/actions/unauthorised-response.action';
 import { genericError } from '../../edit-article-page/actions/generic-error.action';
 
-import { selectArticle } from '../../edit-article-page/selectors/article.selector';
 import { articleLinksResponse } from '../actions/article-links-response';
 import { requestArticleLinks } from '../actions/request-article-links';
+
+import { selectJWTToken } from '../../edit-article-page/selectors/article.selector';
 
 import {
   UNAUTHORIZED,
@@ -29,22 +27,34 @@ export class LoadArticleLinksEffects {
   loadArticleLinks$ = createEffect(() =>
     this.actions$.pipe(
       ofType(requestArticleLinks),
-      switchMap(() => {
-        return this.articleService.getArticles()
-          .pipe(
-            map((articleLinks) => articleLinksResponse({ articleLinks })),
-            catchError((error) => {
-              if (error.status) {
-                if (error.status === UNAUTHORIZED) {
-                  return of(unauthorisedResponse({ redirectUrl: '/' }));
+      concatMap(action => of(action).pipe(
+        withLatestFrom(this.store.pipe(select(selectJWTToken)))
+      )),
+      switchMap(([action, token]) => {
+        if(token) {
+          return this.articleService.getArticles(token)
+            .pipe(
+              map((articleLinks) => articleLinksResponse({ articleLinks })),
+              catchError((error) => {
+                if (error.status) {
+                  if (error.status === UNAUTHORIZED) {
+                    return of(unauthorisedResponse({ redirectUrl: '/' }));
+                  } else {
+                    return of(genericError({ message: 'Server error occurred' }));
+                  }
                 } else {
-                  return of(genericError({ message: 'Server error occurred' }));
+                  return of(genericError({ message: 'Check your network' }));
                 }
-              } else {
-                return of(genericError({ message: 'Check your network' }));
-              }
-            })
-          );
+              })
+            );
+        } else {
+
+          /*
+           *  on start up, the token will be empty so need to immediately redirect to home page
+           */
+
+          return of(unauthorisedResponse({ redirectUrl: '/' }));
+        }
       })
     ));
 

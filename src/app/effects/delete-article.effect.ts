@@ -13,7 +13,7 @@ import { AppState } from '../model';
 import { deleteArticle } from '../edit-article-page/actions/delete-article.action';
 import { deleteArticleResponse } from '../edit-article-page/actions/delete-article-response.action';
 
-import { selectArticleUnderEdit } from '../edit-article-page/selectors/article.selector';
+import { selectArticleUnderEditWithToken } from '../edit-article-page/selectors/article.selector';
 
 import {
   UNAUTHORIZED,
@@ -34,13 +34,16 @@ export class DeleteArticleEffects {
     this.actions$.pipe(
       ofType(deleteArticle),
       concatMap(action => of(action).pipe(
-        withLatestFrom(this.store.pipe(select(selectArticleUnderEdit)))
+        withLatestFrom(this.store.pipe(select(selectArticleUnderEditWithToken)))
       )),
-      mergeMap(([action, article]) => {
+      mergeMap(([action, { article, token }]) => {
         if (article) {
-          return this.articleService.deleteArticle(article.id)
+          //todo: deconstruct this
+          const id = article.id;
+
+          return this.articleService.deleteArticle(id, token)
             .pipe(
-              map(() => (deleteArticleResponse({ id: article.id }))),
+              map(() => (deleteArticleResponse({ id: id }))),
               catchError((error) => {
                 if (error.status) {
                   if (error.status === UNAUTHORIZED) {

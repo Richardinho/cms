@@ -1,20 +1,23 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of } from 'rxjs';
-import { map, switchMap, catchError, concatMap, withLatestFrom } from 'rxjs/operators';
+import { switchMap, tap, map, mergeMap, catchError, concatMap, withLatestFrom } from 'rxjs/operators';
 
 import { AppState } from '../model';
 
 import { ArticleService } from '../article.service';
 
+//  need to fix a lot of these imports
 import { articleRequest } from '../edit-article-page/actions/edit-article-request.action';
 import { getArticleResponse } from '../edit-article-page/actions/get-article-response.action';
 import { articleFoundInCache } from '../edit-article-page/actions/article-found-in-cache.action';
 import { unauthorisedResponse } from '../edit-article-page/actions/unauthorised-response.action';
 import { genericError } from '../edit-article-page/actions/generic-error.action';
 
-import { selectArticleWithToken } from '../edit-article-page/selectors/article.selector';
+import { selectJWTToken } from '../edit-article-page/selectors/article.selector';
+import { createArticleRequest, createArticleResponse } from '../actions/create-article.action';
 
 import {
   UNAUTHORIZED,
@@ -22,22 +25,27 @@ import {
 } from '../status-code.constants';
 
 @Injectable()
-export class GetArticleEffects {
+export class CreateArticleEffects {
 
-  getArticle$ = createEffect(() =>
+  navigateToEditPage$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(createArticleResponse),
+      tap(({id}) => {
+        this.router.navigate(['/edit-article', id]);
+      })
+    );
+  }, { dispatch: false });
+
+  createArticle$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(articleRequest),
+      ofType(createArticleRequest),
       concatMap(action => of(action).pipe(
-        withLatestFrom(this.store.pipe(select(selectArticleWithToken, { id : action.id })))
+        withLatestFrom(this.store.pipe(select(selectJWTToken)))
       )),
-      switchMap(([action, article]) => {
-        if (article.article) {
-          return of(articleFoundInCache({id: action.id}));
-        }
-
-        return this.articleService.getArticle(action.id, article.token)
+      switchMap(([action, token]) => {
+        return this.articleService.createArticle(token)
           .pipe(
-            map((articleJSON) => getArticleResponse({ articleJSON })),
+            map((id) => createArticleResponse({ id })),
             catchError((error) => {
               if (error.status) {
                 //  if we are unauthorised, we will dispatch an unauthorised response which results
@@ -59,6 +67,7 @@ export class GetArticleEffects {
     private actions$: Actions,
     private articleService: ArticleService,
     private store: Store<AppState>,
+    private router: Router,
   ) {}
 }
 
