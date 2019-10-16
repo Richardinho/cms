@@ -17,7 +17,6 @@ import { environment } from '../environments/environment';
 import { MessageService } from './message-service/message.service';
 import { MessageWidgetComponent } from './message-widget/message-widget.component';
 import { MenuComponent } from './menu/menu.component';
-import { MenuService } from './menu-service/menu.service';
 import { articlesReducer } from './reducers/articles.reducer';
 import { uiReducer } from './reducers/ui.reducer';
 import { logInReducer } from './reducers/logged-in.reducer';
@@ -70,7 +69,6 @@ import { CreateArticleEffects } from './effects/create-article.effect';
   providers: [
     AuthorisationService,
     MessageService,
-    MenuService,
   ],
   bootstrap: [AppComponent]
 })
