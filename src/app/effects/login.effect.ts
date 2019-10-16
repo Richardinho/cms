@@ -1,32 +1,25 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of } from 'rxjs';
-import { tap, map, switchMap, mergeMap, catchError, concatMap, withLatestFrom } from 'rxjs/operators';
-import { unauthorisedResponse } from '../edit-article-page/actions/unauthorised-response.action';
-import { logInRequest, logInResponse } from '../actions/log-in.action';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store, select } from '@ngrx/store';
+import { tap, map, switchMap, catchError } from 'rxjs/operators';
+
 import { AppState } from '../model';
 import { AuthorisationService } from '../services/authorisation.service';
-import { Store, select } from '@ngrx/store';
-import {
-  UNAUTHORIZED,
-  NOT_FOUND,
-} from '../status-code.constants';
-import { articleRequest } from '../edit-article-page/actions/edit-article-request.action';
-import { getArticleResponse } from '../edit-article-page/actions/get-article-response.action';
-import { articleFoundInCache } from '../edit-article-page/actions/article-found-in-cache.action';
-import { genericError } from '../edit-article-page/actions/generic-error.action';
 
-import { selectArticle } from '../edit-article-page/selectors/article.selector';
+import { unauthorisedResponse } from '../edit-article-page/actions/unauthorised-response.action';
+import { logInRequest, logInResponse } from '../actions/log-in.action';
+import { genericError } from '../edit-article-page/actions/generic-error.action';
 import { logOut } from '../actions/log-in.action';
 
+import { UNAUTHORIZED } from '../status-code.constants';
 
 @Injectable()
 export class LogInEffects {
 
   /*
    *  when the user clicks to log out we navigate back to home page
-   *
    */
 
   logOut$ = createEffect(() => {
@@ -96,8 +89,6 @@ export class LogInEffects {
       tap((action) => this.router.navigate([action.redirectUrl])),
     )
   }, { dispatch: false });
-
-
 
   constructor(
     private actions$: Actions,

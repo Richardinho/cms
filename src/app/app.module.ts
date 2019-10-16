@@ -10,7 +10,6 @@ import { ViewArticlePageComponent } from './view-article-page/view-article-page.
 import { EditArticlePageComponent } from './edit-article-page/edit-article-page.component';
 import { MarkdownToHTMLPipe } from './pipes/markdown-to-html.pipe';
 import { LoginPageComponent } from './login-page/login-page.component';
-import { AuthService } from './auth/auth.service';
 // rearrange these imports in a more logical order
 import { AuthorisationService } from './services/authorisation.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -69,7 +68,6 @@ import { CreateArticleEffects } from './effects/create-article.effect';
     ])
   ],
   providers: [
-    AuthService,
     AuthorisationService,
     MessageService,
     MenuService,

@@ -10,6 +10,7 @@ export const logInResponse = createAction(
   props<{ redirectUrl: string; jwt_token: string }>()
 );
 
+//  should this go here or somewhere else?
 export const logOut = createAction(
   '[Log Out] Log Out'
 );

@@ -5,13 +5,13 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of } from 'rxjs';
 import { tap, map, mergeMap, catchError, concatMap, withLatestFrom } from 'rxjs/operators';
 
-import { unauthorisedResponse } from '../edit-article-page/actions/unauthorised-response.action';
 import { ArticleService } from '../article.service';
 
 import { AppState } from '../model';
 
 import { deleteArticle } from '../edit-article-page/actions/delete-article.action';
 import { deleteArticleResponse } from '../edit-article-page/actions/delete-article-response.action';
+import { unauthorisedResponse } from '../edit-article-page/actions/unauthorised-response.action';
 
 import { selectArticleUnderEditWithToken } from '../edit-article-page/selectors/article.selector';
 
@@ -38,7 +38,7 @@ export class DeleteArticleEffects {
       )),
       mergeMap(([action, { article, token }]) => {
         if (article) {
-          //todo: deconstruct this
+          //todo: destructure this
           const id = article.id;
 
           return this.articleService.deleteArticle(id, token)

@@ -16,10 +16,7 @@ import { genericError } from '../edit-article-page/actions/generic-error.action'
 
 import { selectArticleWithToken } from '../edit-article-page/selectors/article.selector';
 
-import {
-  UNAUTHORIZED,
-  NOT_FOUND,
-} from '../status-code.constants';
+import { UNAUTHORIZED } from '../status-code.constants';
 
 @Injectable()
 export class GetArticleEffects {

@@ -7,7 +7,6 @@ import { FormControl } from '@angular/forms';
 
 import { environment } from '../../environments/environment';
 
-import { AuthService } from '../auth/auth.service';
 
 import { logInRequest } from '../actions/log-in.action';
 
@@ -31,10 +30,10 @@ export class LoginPageComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private store: Store<AppState>,
-    private authService: AuthService) {}
+    ) {}
 
   ngOnInit() {
-    this.authService.logOut();
+    //this.authService.logOut();
   }
 
   onSubmit() {

@@ -1,19 +1,20 @@
-import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { EMPTY, of } from 'rxjs';
-import { tap, map, mergeMap, catchError, concatMap, withLatestFrom } from 'rxjs/operators';
-import { ArticleService } from '../article.service';
-import { saveArticle } from '../edit-article-page/actions/save-article.action';
-import { selectArticleUnderEditWithToken } from '../edit-article-page/selectors/article.selector';
-import { articleSavedResponse } from '../edit-article-page/actions/article-saved-response.action';
-import { unauthorisedResponse } from '../edit-article-page/actions/unauthorised-response.action';
-import { genericError } from '../edit-article-page/actions/generic-error.action';
-import { AppState } from '../model';
+import { of } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import {
-  UNAUTHORIZED,
-  NOT_FOUND,
-} from '../status-code.constants';
+import { map, mergeMap, catchError, concatMap, withLatestFrom } from 'rxjs/operators';
+
+import { AppState } from '../model';
+
+import { ArticleService } from '../article.service';
+
+import { saveArticle } from '../edit-article-page/actions/save-article.action';
+import { articleSavedResponse } from '../edit-article-page/actions/article-saved-response.action';
+import { genericError } from '../edit-article-page/actions/generic-error.action';
+import { unauthorisedResponse } from '../edit-article-page/actions/unauthorised-response.action';
+
+import { selectArticleUnderEditWithToken } from '../edit-article-page/selectors/article.selector';
+import { UNAUTHORIZED } from '../status-code.constants';
 
 @Injectable()
 export class SaveArticleEffects {
@@ -45,6 +46,7 @@ export class SaveArticleEffects {
       })
     )
   );
+
   constructor(
     private actions$: Actions,
     private articleService: ArticleService,

@@ -7,7 +7,6 @@ import { Observable, of } from 'rxjs';
 import { AppState, Article } from '../model';
 import { Router } from '@angular/router';
 import { selectArticleUnderEdit } from '../edit-article-page/selectors/article.selector';
-import { AuthService } from '../auth/auth.service';
 import { DialogService } from '../auth/dialog.service';
 import { articleRequest } from '../edit-article-page/actions/edit-article-request.action';
 import { navigateToEditPageRequest } from './actions/navigate-to-edit-page-request';
@@ -25,7 +24,6 @@ export class ViewArticlePageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService,
     private articleService: ArticleService,
     private dialogService: DialogService,
     private store: Store<AppState>
