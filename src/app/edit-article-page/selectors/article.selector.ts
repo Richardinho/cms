@@ -20,6 +20,11 @@ export const selectArticleUnderEdit = createSelector(
   }
 );
 
+export const selectUnsavedChanges = createSelector(
+  selectArticleUnderEdit,
+  article => article && !article.saved,
+);
+
 /*
  *  article id is not provided as parameter: we need to find that in the store
  */

@@ -3,7 +3,7 @@
   >
 
   <button
-    *ngIf="enableSaveButton"
+    *ngIf="unsavedChanges$ | async"
     [disabled]="formGroup.invalid"
     class="button"
     (click)="saveEdit()">Save&nbsp;edit</button>
@@ -13,7 +13,7 @@
     class="button"
     (click)="deleteArticle()">Delete&nbsp;article</button>
 
-  <span *ngIf="unsavedChanges">Warning: These changes have not been saved to the server.</span>
+  <span *ngIf="unsavedChanges$ | async">Warning: These changes have not been saved to the server.</span>
 
 </app-menu>
 

@@ -19,6 +19,7 @@ import { saveArticle } from './actions/save-article.action';
 
 import { selectArticleUnderEdit } from './selectors/article.selector';
 import { selectSaving } from './selectors/ui.selector';
+import { selectUnsavedChanges } from './selectors/article.selector';
 
 import { createArticlePatchData, articleToFormGroup } from './utils/article-form.utils';
 import { tagsValidator } from './utils/tags.validator';
@@ -31,8 +32,7 @@ import { tagsValidator } from './utils/tags.validator';
 export class EditArticlePageComponent implements OnInit {
   article$: Observable<Article>;
   saving$: Observable<boolean>;
-  // todo: remove: get from store instead
-  unsavedChanges = false;
+  unsavedChanges$: Observable<boolean>;
 
   constructor(
     private route: ActivatedRoute,
@@ -57,6 +57,7 @@ export class EditArticlePageComponent implements OnInit {
   ngOnInit() {
     // todo: use this variable: e.g. have a spinner
     this.saving$ = this.store.pipe(select(selectSaving));
+    this.unsavedChanges$ = this.store.pipe(select(selectUnsavedChanges));
 
     /*
      *  Whenever a form input value changes, we update the store
@@ -86,9 +87,9 @@ export class EditArticlePageComponent implements OnInit {
 
     this.article$.subscribe(article => {
       if (article) {
-        this.formGroup.patchValue(articleToFormGroup(article), { emitEvent: false });
-        //  todo: get this from the store rather than putting on the component
-        this.unsavedChanges = !article.saved;
+        this.formGroup
+          .patchValue(articleToFormGroup(article),
+            { emitEvent: false });
       }
     });
   }
@@ -100,12 +101,7 @@ export class EditArticlePageComponent implements OnInit {
   }
 
   deleteArticle() {
-    //  todo: get url path from constants file?
     this.store.dispatch(deleteArticle({ redirectUrl: '/edit-article/'}));
-  }
-
-  get enableSaveButton() {
-    return this.unsavedChanges && this.formGroup.valid;
   }
 
   get mytags(): FormArray {
