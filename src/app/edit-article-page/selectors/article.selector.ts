@@ -20,6 +20,12 @@ export const selectArticleUnderEdit = createSelector(
   }
 );
 
+export const selectArticlesWithJWTToken = createSelector(
+  selectJWTToken,
+  selectArticles, 
+  (token: string, articles: Articles) => ({token, articles})
+);
+
 export const selectUnsavedChanges = createSelector(
   selectArticleUnderEdit,
   article => article && !article.saved,

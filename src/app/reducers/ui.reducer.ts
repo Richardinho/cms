@@ -44,8 +44,28 @@ const navigateAwayFromHomePageReducer = state => ({
   articleLinks: [],
 });
 
+/*
+ *  If we have unsaved changes in our cache for articles, merge these changes into the links brought down from 
+ *  the server.
+ */
+
+const updateLinksWithLocalData = (articles, links) => {
+  return links.map(link => {
+    const article = articles[link.id]
+
+    if (article) {
+      return { ...link, title: article.title, saved: article.saved };
+    }
+
+    return { ...link, saved: true };
+  });
+};
+
 const articleLinksResponseReducer = (state, action) => {
-  return { ...state, articleLinks: action.articleLinks };
+  return {
+    ...state,
+    articleLinks: updateLinksWithLocalData(action.articles, action.articleLinks)
+  };
 };
 
 

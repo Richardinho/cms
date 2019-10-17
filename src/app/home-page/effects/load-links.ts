@@ -14,7 +14,7 @@ import { genericError } from '../../edit-article-page/actions/generic-error.acti
 import { articleLinksResponse } from '../actions/article-links-response';
 import { requestArticleLinks } from '../actions/request-article-links';
 
-import { selectJWTToken } from '../../edit-article-page/selectors/article.selector';
+import { selectArticlesWithJWTToken } from '../../edit-article-page/selectors/article.selector';
 
 import {
   UNAUTHORIZED,
@@ -28,13 +28,13 @@ export class LoadArticleLinksEffects {
     this.actions$.pipe(
       ofType(requestArticleLinks),
       concatMap(action => of(action).pipe(
-        withLatestFrom(this.store.pipe(select(selectJWTToken)))
+        withLatestFrom(this.store.pipe(select(selectArticlesWithJWTToken)))
       )),
-      switchMap(([action, token]) => {
+      switchMap(([action, { articles, token }]) => {
         if(token) {
           return this.articleService.getArticles(token)
             .pipe(
-              map((articleLinks) => articleLinksResponse({ articleLinks })),
+              map((articleLinks) => articleLinksResponse({ articleLinks, articles })),
               catchError((error) => {
                 if (error.status) {
                   if (error.status === UNAUTHORIZED) {

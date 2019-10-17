@@ -1,4 +1,5 @@
 @import '../../styles';
+@import '../../variables';
 .links {
   padding: 20px;
 }
@@ -14,6 +15,11 @@
     border-bottom: none;
   }
 }
+
+.link.unsaved {
+  background: lighten($unsaved-color, 30%);
+}
+
 
 .button-panel {
   float: right;
