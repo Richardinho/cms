@@ -12,6 +12,7 @@ import { unauthorisedResponse } from '../edit-article-page/actions/unauthorised-
 import { logInRequest, logInResponse } from '../actions/log-in.action';
 import { genericError } from '../edit-article-page/actions/generic-error.action';
 import { logOut } from '../actions/log-in.action';
+import { sessionExpired } from '../edit-article-page/actions/session-expired.action';
 
 import { UNAUTHORIZED } from '../status-code.constants';
 
@@ -86,13 +87,27 @@ export class LogInEffects {
   logInResponse$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(logInResponse),
-      tap((action) => this.router.navigate([action.redirectUrl])),
+      tap((action) => {
+        const token = action.jwt_token;
+        const segments = token.split('.');
+        const payload = JSON.parse(atob(segments[1]));
+        const expiry = payload.exp * 1000;
+        const currentTime = (new Date()).valueOf();
+
+        setTimeout(() => {
+          this.store.dispatch(sessionExpired());
+          alert('Your log-in session has expired. You will have to log in before saving anything to the server');
+        }, expiry - currentTime);
+
+        this.router.navigate([action.redirectUrl]);
+      }),
     )
   }, { dispatch: false });
 
   constructor(
     private actions$: Actions,
     private router: Router,
+    private store: Store<AppState>,
     private authorisationService: AuthorisationService,
   ) {}
 }

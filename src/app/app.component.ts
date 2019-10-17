@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { AppState } from './model';
+import { loggedInSelector } from './logged-in.selector';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +10,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'cms';
+  loggedIn$;
 
-  constructor() {}
+  ngOnInit() {
+    this.loggedIn$ = this.store.select(loggedInSelector);
+  }
+
+  constructor(private store: Store<AppState>) {}
 }

@@ -2,6 +2,10 @@
   <div class="header">
     <h2 class="app-title">
       <a [routerLink]="['/']">Richard's CMS</a>
+      &nbsp;
+      <span *ngIf="loggedIn$ | async; else elseBlock">You are logged in</span>
+
+      <ng-template #elseBlock>You are not logged in</ng-template>
     </h2>
 
     <app-messages></app-messages>
