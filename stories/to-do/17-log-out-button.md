@@ -1,4 +1,4 @@
-# #17  As a user, I want to be able to log out 
+# Story 17: As a user, I want to be able to log out 
 
 The user should be able to click a button to log out. They should be redirected to login page
 
