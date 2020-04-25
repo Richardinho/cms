@@ -3,6 +3,11 @@
  *  We need to convert it into a different form for display and form controls
  */
 
+interface Tag {
+  name: string;
+  value: boolean;
+}
+
 export interface Article {
   title: string;
   id: string;
@@ -10,7 +15,7 @@ export interface Article {
   summary: string;
   saved: boolean;
   published: boolean;
-  tags: Array<{ name: string; value: boolean}>;
+  tags: Array<Tag>;
 }
 
 export interface Articles {

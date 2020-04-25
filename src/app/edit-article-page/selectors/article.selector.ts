@@ -5,6 +5,7 @@ export const selectArticles = (state: AppState) => state.articles;
 export const selectJWTToken = (state: AppState) => state.jwt_token;
 
 export const selectId = (state: AppState) => {
+// todo: use get() from lodash library here
   if (state && state.ui && state.ui.id_of_article_under_edit ) {
     return state.ui.id_of_article_under_edit;
   } else {

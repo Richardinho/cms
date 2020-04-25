@@ -11,6 +11,7 @@ export const initialState = {
 };
 
 
+// todo: replace with createArticleFactory(json?: any): Article
 export const jsonToArticle = (json: any): Article => {
   const obj: any = {};
 

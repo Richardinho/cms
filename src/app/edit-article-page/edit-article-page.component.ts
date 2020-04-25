@@ -55,7 +55,7 @@ export class EditArticlePageComponent implements OnInit {
   });
 
   ngOnInit() {
-    // todo: use this variable: e.g. have a spinner
+    //hello todo: use this variable: e.g. have a spinner
     this.saving$ = this.store.pipe(select(selectSaving));
     this.unsavedChanges$ = this.store.pipe(select(selectUnsavedChanges));
 

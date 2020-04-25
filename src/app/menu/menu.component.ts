@@ -19,6 +19,7 @@ export class MenuComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
   ) {}
+
   ngOnInit() {}
 
   @Input()
