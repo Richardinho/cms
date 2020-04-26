@@ -1,4 +1,6 @@
-# Story 18: I want to be able to delete articles on the Home Page
+# Story 18: Delete Article buttons on Home Page
+
+As a user, I want to be able to delete articles from the home page
 
 **GIVEN** the user is on the home page<br/>
 **WHEN** they click on a delete button on an article link<br/>
