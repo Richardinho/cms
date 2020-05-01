@@ -1,0 +1,17 @@
+<div [formGroup]="formGroup" class="input-container">
+  <label class="label" for="git-hub-url">github url</label>
+  <input
+    formControlName="githubUrl"
+    class="input" id="git-hub-url"/>
+</div>
+
+<hr class="horizontal-rule"/>
+
+<div class="button-container">
+  <div class="spinner">
+    <spinner-component *ngIf="showLoader$ | async" ></spinner-component>
+  </div>
+
+  <button [disabled]="showLoader$ | async" (click)="update()" class="button">update</button>
+  <button [disabled]="showLoader$ | async"class="button">cancel</button>
+</div>

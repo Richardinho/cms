@@ -8,11 +8,13 @@ import { navigateAway } from '../home-page/actions/navigate-away';
 import { articleLinksResponse } from '../home-page/actions/article-links-response';
 import { publishArticleResponse } from '../home-page/actions/publish-article-response';
 import { updateLinks } from './utils';
+import { updateMetadataRequest, updateMetadataResponse } from '../configuration-page/actions/update-metadata.action';
 
 export const initialState: UI = {
   saving: false,
   id_of_article_under_edit: '',
   articleLinks: [],
+  loading: false,
 };
 
 
@@ -86,6 +88,8 @@ const _uiReducer = createReducer(initialState,
   on(navigateAway, navigateAwayFromHomePageReducer),
   on(articleLinksResponse, articleLinksResponseReducer),
   on(publishArticleResponse, publishArticleResponseReducer),
+  on(updateMetadataRequest, state => ({ ...state, loading: true })),
+  on(updateMetadataResponse, state => ({ ...state, loading: false })),
 );
 
 export function uiReducer(state, action) {

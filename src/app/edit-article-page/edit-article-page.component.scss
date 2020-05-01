@@ -4,30 +4,29 @@ $error-color: orange;
 
 .container {
   padding: $size-gutter;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: $half-unit * 2;
 }
 
 .edit-pane,
 .article-pane {
-  width: 50%;
+  border: solid 1px $color-border;
 }
 
 .edit-pane {
-  padding-right: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: $half-unit;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
 }
 
 .article-pane {
   padding-left: 10px;
-}
-
-.edit-title-container,
-.edit-body-container,
-.edit-summary-container,
-.select-tags-container {
-  border-radius: $border-radius;
-  background: $color-light-blue;
-  padding: $size-gutter-small;
-  margin-bottom: $size-gutter-small;
 }
 
 .select-tags-container {
@@ -54,7 +53,6 @@ $error-color: orange;
   background: $color-white;
   padding: $size-gutter;
   overflow-y: scroll;
-  border-radius: $border-radius;
 }
 
 .select-tags-caption {
@@ -66,26 +64,6 @@ $error-color: orange;
 .edit-label {
   display: block;
   font-size: 18px;
-  padding: $size-gutter-small 0;
-}
-
-.edit-title-input,
-.edit-summary-pane,
-.edit-body-pane {
-  font-family: courier;
-  border: none;
-  background: lighten($base-color, 70%);
-  width: 100%;
-  border: solid 2px lighten($base-color, 30%);
-  padding: $size-gutter-small;
-  border-radius: $border-radius;
-  vertical-align: middle;
-
-  @include focus-input();
-
-  &.ng-invalid.ng-dirty {
-    border-color: $error-color;
-  }
 }
 
 .edit-summary-pane {
@@ -95,6 +73,10 @@ $error-color: orange;
 .edit-body-pane {
   resize: vertical;
   min-height: 200px;
+}
+
+textarea {
+  resize: vertical;
 }
 
 .checkbox {
@@ -110,8 +92,6 @@ $error-color: orange;
     vertical-align: middle;
     margin-right: 10px;
   }
-
-
 
   > label.box {
     background: white;

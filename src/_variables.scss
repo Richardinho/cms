@@ -1,3 +1,4 @@
+$half-unit: 4px;
 $border-radius: 4px;
 $size-gutter: 20px;
 $size-gutter-small: 10px;
@@ -6,14 +7,57 @@ $size-gutter-small: 10px;
   colors
 */
 
-$base-color: #2e4d65;
+$base-color: lighten(grey, 15%);
 $unsaved-color: yellow;
 $color-white: white;
-$color-light-blue: lighten($base-color, 60%);
+
+$color-shadow: darken($base-color, 10%);
+$color-background: lighten($base-color, 15%);
+$color-border: darken($base-color, 4%);
+$color-light-blue: lighten($base-color, 30%);
+$color-highlight: lighten($base-color, 30%);
+
+.swatches   {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  background: white;
+}
+
+.swatch {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  color: white;
+}
+
+.color-base {
+  background: $base-color;
+}
+
+.color-light-blue {
+  background: $color-light-blue;
+}
+
+.color-border {
+  background: $color-border;
+}
+
+.color-background {
+  background: $color-background;
+}
+
+.color-shadow {
+  background: $color-shadow;
+}
+
+.color-highlight {
+  background: $color-highlight;
+}
 
 @mixin focus-input() {
   &:focus {
-    box-shadow: 0 0 0px 4px lighten($base-color, 80%);
+    box-shadow: 0 0 0px 2px lighten($base-color, 80%);
     outline: none;
   }
 }

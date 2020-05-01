@@ -37,12 +37,12 @@ label {
 }
 
 input {
-  border-radius: $border-radius;
+  outline: none;
   border: none;
   display: inline-block;
-  font-size: 20px;
   height: 40px;
   padding: 0 $size-gutter-small;
-
-  @include focus-input();
+}
+input:focus {
+  box-shadow: 0 0 0 4px orange;
 }

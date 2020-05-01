@@ -18,6 +18,10 @@ export interface Article {
   tags: Array<Tag>;
 }
 
+export interface Metadata {
+  github_url: string;
+}
+
 export interface Articles {
   [id: string]: Article;
 }
@@ -26,11 +30,13 @@ export interface UI {
   saving: boolean;
   id_of_article_under_edit: string;
   articleLinks: Array<any>;
+  loading: boolean;
 }
 
 export interface AppState {
   articles: Articles;
   ui: UI;
   jwt_token: string;
+  metadata: Metadata;
 }
 

@@ -19,18 +19,24 @@ import { MessageWidgetComponent } from './message-widget/message-widget.componen
 import { MenuComponent } from './menu/menu.component';
 import { articlesReducer } from './reducers/articles.reducer';
 import { uiReducer } from './reducers/ui.reducer';
+import { metadataReducer } from './reducers/metadata.reducer';
 import { logInReducer } from './reducers/logged-in.reducer';
 import { StoreModule } from '@ngrx/store';
 
+import { SpinnerComponent } from './configuration-page/spinner';
 import { SaveArticleEffects } from './effects/save-article.effect';
 import { LogInEffects } from './effects/login.effect';
 import { GetArticleEffects } from './effects/get-article.effect';
 import { DeleteArticleEffects } from './effects/delete-article.effect';
+import { GetMetadataEffect } from './configuration-page/effects/get-metadata.effect';
+import { PutMetadataEffect } from './configuration-page/effects/put-metadata.effect';
 import { NavigationEffects } from './view-article-page/effects/navigation.effect';
 import { LoadArticleLinksEffects } from './home-page/effects/load-links';
 import { PublishEffects } from './home-page/effects/publish';
 import { CreateArticleEffects } from './effects/create-article.effect';
+import { ConfigurationPageComponent } from './configuration-page/configuration-page.component';
 
+import { MetadataService } from './services/metadata.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +48,8 @@ import { CreateArticleEffects } from './effects/create-article.effect';
     PageNotFoundComponent,
     MessageWidgetComponent,
     MenuComponent,
+    ConfigurationPageComponent,
+    SpinnerComponent,
   ],
   imports: [
     FormsModule,
@@ -54,6 +62,7 @@ import { CreateArticleEffects } from './effects/create-article.effect';
       ui: uiReducer,
       // change name of this reducer
       jwt_token: logInReducer,
+      metadata: metadataReducer,
     }),
     EffectsModule.forRoot([
       DeleteArticleEffects,
@@ -64,12 +73,15 @@ import { CreateArticleEffects } from './effects/create-article.effect';
       LoadArticleLinksEffects,
       PublishEffects,
       CreateArticleEffects,
+      GetMetadataEffect,
+      PutMetadataEffect,
     ])
   ],
   providers: [
     AuthorisationService,
     MessageService,
+    MetadataService,
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

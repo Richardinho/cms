@@ -6,7 +6,7 @@ export const logInRequest = createAction(
 );
 
 export const logInResponse = createAction(
-  '[Log In] Log In Response',
+ '[Log In] Log In Response',
   props<{ redirectUrl: string; jwt_token: string }>()
 );
 

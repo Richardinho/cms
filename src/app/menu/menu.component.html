@@ -6,9 +6,12 @@
   class="button">create article</button>
 
 
+
 <button
     class="button"
     (click)="logOut()">logout</button>
+
+<button class="button" [routerLink]="['/configuration']">configuration</button>
 <!-- buttons passed in by consumers of this component -->
 <ng-content></ng-content>
 

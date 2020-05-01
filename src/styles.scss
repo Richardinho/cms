@@ -3,11 +3,11 @@
 /* You can add global styles to this file, and also import other style files */
 html, body {
   margin: 0;
-  font-family: helvetica;
+  font-family: courier;
 }
 
 body {
-  background: lighten($base-color, 44%);
+  background: $color-background;
 }
 
 html {
@@ -18,26 +18,37 @@ html {
   box-sizing: inherit;
 }
 
-.button {
-  appearance: none;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background: linear-gradient(to top, lighten($base-color, 30%), lighten($base-color, 40%));
-  border-radius: 5px;
-  border: solid 1px lighten($base-color, 20%);
-  color: lighten(black, 15%);
-  cursor: pointer;
-  display: inline-block;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 1;
-  padding: 10px 20px;
+.label {
+  text-transform: lowercase;
+  line-height: 20px;
+  margin: $half-unit;
+  &:after {
+    content: ':'
+  }
 }
 
-.button[disabled] {
-  background: linear-gradient(to top, lighten($base-color, 50%), lighten($base-color, 60%));
-  border: solid 1px lighten($base-color, 40%);
-  color: lighten(black, 40%);
-  cursor: not-allowed;
+.input { 
+  margin: $half-unit;
+  font-family: courier;
+  border: solid 1px $color-border;
+  padding: $size-gutter-small;
+  border-top: solid 4px $color-shadow;
+  border-left: solid 4px $color-shadow;
+  border-bottom: solid 4px $color-highlight;
+  border-right: solid 4px $color-highlight;
+  outline: none;
+  vertical-align: middle;
+
+  &.ng-invalid.ng-dirty {
+  }
 }
+
+.horizontal-rule {
+  margin: $half-unit ($half-unit * 2);
+  padding: 0;
+  border: none;
+  border-top: solid 1px $color-border;
+}
+
+
 

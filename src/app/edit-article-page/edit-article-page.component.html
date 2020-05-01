@@ -22,33 +22,33 @@
 
   <ng-container *ngIf="article$">
     <div [formGroup]="formGroup" class="edit-pane">
-      <div class="edit-title-container">
+      <div class="input-container">
         <label
           for="edit-title"
-          class="edit-label">Title</label>
+          class="label">Title</label>
         <input
           id="edit-title"
           formControlName="title"
-          class="edit-title-input"/>
+          class="input"/>
       </div>
 
-      <div class="edit-summary-container">
-        <label for="edit-summary" class="edit-label">summary</label>
+      <div class="input-container">
+        <label for="edit-summary" class="label">summary</label>
         <textarea
           id="edit-summary"
           formControlName="summary"
-          class="edit-summary-pane"></textarea>
+          class="input"></textarea>
       </div>
 
-      <div class="edit-body-container">
+      <div class="input-container">
         <label
           for="edit-body"
-          class="edit-label">body text</label>
+          class="label">body text</label>
         <textarea 
           id="edit-body"
           data-test="edit-pane"
           formControlName="body"
-          class="edit-body-pane"
+          class="input"
           ></textarea>
       </div>
 
