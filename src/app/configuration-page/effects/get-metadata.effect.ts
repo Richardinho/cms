@@ -7,7 +7,7 @@ import { AppState } from '../../model';
 import { genericError } from '../../edit-article-page/actions/generic-error.action';
 import { metadataRequest, metadataResponse } from '../actions/metadata.action';
 import { MetadataService } from '../../services/metadata.service';
-import {selectJWTToken} from '../../edit-article-page/selectors/article.selector';
+import { selectJWTToken } from '../../edit-article-page/selectors/article.selector';
 import { UNAUTHORIZED } from '../../status-code.constants';
 import { unauthorisedResponse } from '../../edit-article-page/actions/unauthorised-response.action';
 

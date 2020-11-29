@@ -41,6 +41,7 @@ const deleteArticleReducer = (state, action) => ({
  *  reset article links when navigating from home page
  */
 
+// what's the point of this? 
 const navigateAwayFromHomePageReducer = state => ({
   ...state,
   articleLinks: [],

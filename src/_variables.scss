@@ -16,6 +16,7 @@ $color-background: lighten($base-color, 15%);
 $color-border: darken($base-color, 4%);
 $color-light-blue: lighten($base-color, 30%);
 $color-highlight: lighten($base-color, 30%);
+$error-color: crimson;
 
 .swatches   {
   display: flex;

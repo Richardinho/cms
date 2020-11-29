@@ -1,0 +1,52 @@
+@import '../../../variables';
+
+:host {
+  font-size: 20px;
+  line-height: 30px;
+}
+
+input[type="checkbox"] {
+  position: absolute;
+  left: -9999px;
+}
+
+.label {
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+
+.box {
+  background: white;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  height: 1em;
+  width: 1em;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px darken($base-color, 30%);
+}
+.box:after {
+  content: '';
+}
+
+[type="checkbox"]:checked + .box:after {
+  position: absolute;
+  left: 0;
+  border-radius: 50%;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: darken($base-color, 10%);
+  transform: scale(0.7);
+}
+
+.ng-invalid {
+  label::before {
+    border-color: $error-color;
+  }
+
+  label::after {
+    background-color: $error-color;
+  }
+}

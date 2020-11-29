@@ -8,7 +8,6 @@
     class="button"
     (click)="saveEdit()">Save&nbsp;edit</button>
 
-
   <button
     class="button"
     (click)="deleteArticle()">Delete&nbsp;article</button>
@@ -67,17 +66,10 @@
           <div class="checkbox"
             *ngFor="let tag of mytags.controls; let i=index"
             >
-            <label
-              [for]="i">{{articleService.tagData[i]}}</label>
-
-            <input
-              [id]="i"
+            <cms-checkbox
               [formControlName]="i"
-              type="checkbox"/>
-
-            <label
-              [for]="i"
-              class="box"></label>
+              cbId={{i}}
+              label={{articleService.tagData[i]}}></cms-checkbox>
           </div>
         </div>
 
@@ -96,7 +88,6 @@
         class="article-content"
         [innerHTML]="(article$|async)?.body | markdownToHTML"
         ></div>
-
 
     </div>
   </ng-container>

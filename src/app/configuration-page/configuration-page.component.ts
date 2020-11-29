@@ -26,7 +26,7 @@ export class ConfigurationPageComponent implements OnInit {
     private store: Store<AppState>,
   ) {}
 
-  private formGroup: FormGroup = new FormGroup({
+  public formGroup: FormGroup = new FormGroup({
     githubUrl: new FormControl('lalala'),
   });
 

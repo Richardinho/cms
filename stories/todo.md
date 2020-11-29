@@ -4,7 +4,6 @@
 * 05. use the app on a mobile device
 * 08. enable/disable comments
 * 15. set the email address
-* 16. set the GitHub url
 * 21. show dates on article. Date of creation and date of last edit
 * 22. show name of author on article. (obviously will always be me, but just to make that explicit)
 * 22. show name of author on article. (obviously will always be me, but just to make that explicit)
@@ -20,6 +19,7 @@
 * 12. edit an article
 * 13. view an article
 * 14. unpublish articles
+* 16. set the GitHub url
 * 17. Logout
 * 19. delete button on edit page
 * 20. Create home page link in header bar

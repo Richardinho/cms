@@ -35,8 +35,11 @@ import { LoadArticleLinksEffects } from './home-page/effects/load-links';
 import { PublishEffects } from './home-page/effects/publish';
 import { CreateArticleEffects } from './effects/create-article.effect';
 import { ConfigurationPageComponent } from './configuration-page/configuration-page.component';
+import { StylesPageComponent } from './styles-page/styles-page.component';
 
 import { MetadataService } from './services/metadata.service';
+import {CheckboxComponent} from './components/checkbox/checkbox.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +53,8 @@ import { MetadataService } from './services/metadata.service';
     MenuComponent,
     ConfigurationPageComponent,
     SpinnerComponent,
+    StylesPageComponent,
+    CheckboxComponent,
   ],
   imports: [
     FormsModule,

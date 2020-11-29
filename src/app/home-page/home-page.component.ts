@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 
 import { AppState } from '../model';
 
-import { navigateAway } from './actions/navigate-away';
+//import { navigateAway } from './actions/navigate-away';
 import { requestArticleLinks } from './actions/request-article-links';
 
 import { selectArticleLinks } from './selectors/select-article-links';
@@ -34,6 +34,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.store.dispatch(navigateAway());
+    //this.store.dispatch(navigateAway());
   }
 }

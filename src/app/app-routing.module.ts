@@ -7,6 +7,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ViewArticlePageComponent } from './view-article-page/view-article-page.component';
 import { ConfigurationPageComponent } from './configuration-page/configuration-page.component';
+import { StylesPageComponent } from './styles-page/styles-page.component';
 
 const routes: Routes = [
   {
@@ -34,9 +35,13 @@ const routes: Routes = [
     component: ConfigurationPageComponent,
   },
   {
+    path: 'styles',
+    component: StylesPageComponent,
+  },
+  {
     path: '**',
     component: PageNotFoundComponent,
-  }
+  },
 ];
 
 @NgModule({
