@@ -1,37 +1,59 @@
-<div>Styles page</div>
 
-<h2>Buttons</h2>
-<button class="button">hello world</button>
-<button class="button">another button</button>
+<section>
+	<h2>Colors</h2>
 
-<h2>Checkboxes</h2>
+	<ul class="color-swatches">
+		<li class="color-background">background</li>
+		<li class="color-base">base</li>
+		<li class="color-border">border</li>
+		<li class="color-highlight">highlight</li>
+		<li class="color-light-blue">light blue?</li>
+		<li class="color-shadow">shadow</li>
+	</ul>
+</section>
 
-<form #form="ngForm">
-  <cms-checkbox cbId="foo" [ngModel]="true" name="foo" label="this is foo"></cms-checkbox>
-  <cms-checkbox cbId="bar" [ngModel]="false" name="bar" label="this is bar"></cms-checkbox>
-</form>
 
-<pre>
-{{ form.value | json }}
-</pre>
+<section>
+	<h2>Buttons</h2>
+	<button class="button">hello world</button>
+	<button class="button">another button</button>
+</section>
 
-<form>
-  <cms-checkbox [formControl]="blahFormControl" cbId="blah" label="this is reactive form control"></cms-checkbox>
-</form>
-<pre>
-{{ blahFormControl.value | json }}
-</pre>
+<section>
+	<h2>Checkboxes</h2>
 
-<div [formGroup]="formGroup">
-  <div formArrayName="tags">
-    <div class="checkbox"
-      *ngFor="let tag of mytags.controls; let i=index"
-      >
-      <cms-checkbox [formControlName]="i" cbId={{i}} label="ssssfsfsf"></cms-checkbox>
-    </div>
-  </div>
-</div>
+	<form #form="ngForm">
+		<cms-checkbox cbId="foo" [ngModel]="true" name="foo" label="this is foo"></cms-checkbox>
+		<cms-checkbox cbId="bar" [ngModel]="false" name="bar" label="this is bar"></cms-checkbox>
+	</form>
 
-<pre>
-{{ formGroup.value | json }}
-</pre>
+	<pre>
+	{{ form.value | json }}
+	</pre>
+</section>
+
+
+<section>
+	<form>
+		<cms-checkbox [formControl]="blahFormControl" cbId="blah" label="this is reactive form control"></cms-checkbox>
+	</form>
+	<pre>
+	{{ blahFormControl.value | json }}
+	</pre>
+</section>
+
+<section>
+	<div [formGroup]="formGroup">
+		<div formArrayName="tags">
+			<div class="checkbox"
+				*ngFor="let tag of mytags.controls; let i=index"
+				>
+				<cms-checkbox [formControlName]="i" cbId={{i}} label="ssssfsfsf"></cms-checkbox>
+			</div>
+		</div>
+	</div>
+
+	<pre>
+	{{ formGroup.value | json }}
+	</pre>
+</section>

@@ -1,4 +1,5 @@
 @import '../variables';
+
 .container {
   display: grid;
 }
@@ -13,8 +14,12 @@
   padding: 20px;
 }
 
+.app-title {
+	color: $color-text;
+}
+
 .app-title a {
-  color: inherit;
+	color: inherit;
   text-decoration: none;
 
   &:hover {

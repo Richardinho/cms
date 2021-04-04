@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  blogDomain: 'http://october.richardhunter.co.uk',
+	blogDomain: 'http://localhost:80'
 };
 
 /*

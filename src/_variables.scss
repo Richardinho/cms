@@ -7,16 +7,19 @@ $size-gutter-small: 10px;
   colors
 */
 
-$base-color: lighten(grey, 15%);
+//$base-color: lighten(grey, 15%);
+$base-color: limegreen;
 $unsaved-color: yellow;
 $color-white: white;
 
 $color-shadow: darken($base-color, 10%);
 $color-background: lighten($base-color, 15%);
+$color-light-background: lighten($base-color, 45%);
 $color-border: darken($base-color, 4%);
 $color-light-blue: lighten($base-color, 30%);
 $color-highlight: lighten($base-color, 30%);
 $error-color: crimson;
+$color-text: #333;
 
 .swatches   {
   display: flex;
@@ -32,29 +35,6 @@ $error-color: crimson;
   color: white;
 }
 
-.color-base {
-  background: $base-color;
-}
-
-.color-light-blue {
-  background: $color-light-blue;
-}
-
-.color-border {
-  background: $color-border;
-}
-
-.color-background {
-  background: $color-background;
-}
-
-.color-shadow {
-  background: $color-shadow;
-}
-
-.color-highlight {
-  background: $color-highlight;
-}
 
 @mixin focus-input() {
   &:focus {
