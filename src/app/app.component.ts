@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AppState } from './model';
 import { loggedInSelector } from './logged-in.selector';
 import { Store, select } from '@ngrx/store';
+import { logOut } from './actions/log-in.action';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +13,14 @@ export class AppComponent {
   title = 'cms';
   loggedIn$;
 
+  constructor(private store: Store<AppState>) {}
+
   ngOnInit() {
     this.loggedIn$ = this.store.select(loggedInSelector);
   }
 
-  constructor(private store: Store<AppState>) {}
+  logOut() {
+    this.store.dispatch(logOut());
+  }
+
 }

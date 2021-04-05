@@ -1,0 +1,23 @@
+<div class="container">
+	<div [formGroup]="formGroup" class="edit-pane">
+		<div class="input-container">
+			<label
+				for="edit-body"
+				class="label">body text</label>
+			<textarea 
+				id="edit-body"
+				data-test="edit-pane"
+				formControlName="body"
+				class="input"
+				></textarea>
+		</div>
+	</div>
+
+	<div class="article-pane">
+		<div
+			class="article-content"
+			[innerHTML]="(article$|async)?.body | markdownToHTML"
+			></div>
+
+	</div>
+</div>

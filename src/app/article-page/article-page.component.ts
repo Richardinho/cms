@@ -10,10 +10,10 @@ import { selectArticleLinks } from './selectors/select-article-links';
 import { requestPublishArticle } from './actions/request-publish-article';
 
 @Component({
-  templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.scss']
+  templateUrl: './article-page.component.html',
+  styleUrls: ['./article-page.component.scss']
 })
-export class HomePageComponent implements OnInit, OnDestroy {
+export class ArticlePageComponent implements OnInit, OnDestroy {
   articles$;
 
   constructor(

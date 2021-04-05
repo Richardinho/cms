@@ -1,15 +1,11 @@
 <div class="container">
-  <div class="header">
-    <h2 class="app-title">
-      <a [routerLink]="['/']">Richard's CMS</a>
-      &nbsp;
-      <span *ngIf="loggedIn$ | async; else elseBlock">You are logged in</span>
-
-      <ng-template #elseBlock>You are not logged in</ng-template>
-    </h2>
-
-    <app-messages></app-messages>
-  </div>
+	<div class="header" *ngIf="loggedIn$ | async">
+		<button class="button" [routerLink]="['/']">Menu</button>
+		<button
+			class="button"
+			(click)="logOut()">logout</button>
+			<app-messages></app-messages>
+	</div>
 
   <div class="content">
     <router-outlet></router-outlet>

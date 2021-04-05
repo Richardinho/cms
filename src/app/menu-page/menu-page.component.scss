@@ -1,0 +1,27 @@
+@import "../../variables";
+
+:host {
+	display: flex;
+	flex-direction: column;
+}
+
+h2 {
+	text-align: center;
+	line-height: 50px;
+	font-size: 30px;
+}
+
+ul {
+	margin: auto;
+	display: flex;
+	gap: 10px;
+	flex-direction: column;
+
+	li {
+		border-radius: $border-radius;
+		text-align: center;
+		padding: 10px 24px;
+		font-size: 24px;
+		background: $color-light-blue;
+	}
+}

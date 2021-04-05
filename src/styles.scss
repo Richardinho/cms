@@ -8,6 +8,7 @@ html, body {
 
 body {
   background: $color-background;
+	color: $color-text;
 }
 
 html {
@@ -34,10 +35,7 @@ html {
   font-family: courier;
   border: solid 1px $color-border;
   padding: $size-gutter-small;
-  border-top: solid 4px $color-shadow;
-  border-left: solid 4px $color-shadow;
-  border-bottom: solid 4px $color-highlight;
-  border-right: solid 4px $color-highlight;
+  border: solid 1px $color-shadow;
   outline: none;
   vertical-align: middle;
 

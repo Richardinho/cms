@@ -4,7 +4,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomePageComponent } from './home-page/home-page.component';
+import { ArticlePageComponent } from './article-page/article-page.component';
+import { IntroPageComponent } from './intro-page/intro-page.component';
+import { MenuPageComponent } from './menu-page/menu-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ViewArticlePageComponent } from './view-article-page/view-article-page.component';
 import { EditArticlePageComponent } from './edit-article-page/edit-article-page.component';
@@ -16,7 +18,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { environment } from '../environments/environment';
 import { MessageService } from './message-service/message.service';
 import { MessageWidgetComponent } from './message-widget/message-widget.component';
-import { MenuComponent } from './menu/menu.component';
 import { articlesReducer } from './reducers/articles.reducer';
 import { uiReducer } from './reducers/ui.reducer';
 import { metadataReducer } from './reducers/metadata.reducer';
@@ -31,8 +32,8 @@ import { DeleteArticleEffects } from './effects/delete-article.effect';
 import { GetMetadataEffect } from './configuration-page/effects/get-metadata.effect';
 import { PutMetadataEffect } from './configuration-page/effects/put-metadata.effect';
 import { NavigationEffects } from './view-article-page/effects/navigation.effect';
-import { LoadArticleLinksEffects } from './home-page/effects/load-links';
-import { PublishEffects } from './home-page/effects/publish';
+import { LoadArticleLinksEffects } from './article-page/effects/load-links';
+import { PublishEffects } from './article-page/effects/publish';
 import { CreateArticleEffects } from './effects/create-article.effect';
 import { ConfigurationPageComponent } from './configuration-page/configuration-page.component';
 import { StylesPageComponent } from './styles-page/styles-page.component';
@@ -43,14 +44,15 @@ import {CheckboxComponent} from './components/checkbox/checkbox.component';
 @NgModule({
   declarations: [
     AppComponent,
-    HomePageComponent,
+    ArticlePageComponent,
+		IntroPageComponent,
+		MenuPageComponent,
     ViewArticlePageComponent,
     EditArticlePageComponent,
     MarkdownToHTMLPipe,
     LoginPageComponent,
     PageNotFoundComponent,
     MessageWidgetComponent,
-    MenuComponent,
     ConfigurationPageComponent,
     SpinnerComponent,
     StylesPageComponent,

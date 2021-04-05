@@ -1,20 +1,14 @@
-<app-menu
-  [showCreateArticleButton]="false"
-  >
+<button
+	*ngIf="unsavedChanges$ | async"
+	[disabled]="formGroup.invalid"
+	class="button"
+	(click)="saveEdit()">Save&nbsp;edit</button>
 
-  <button
-    *ngIf="unsavedChanges$ | async"
-    [disabled]="formGroup.invalid"
-    class="button"
-    (click)="saveEdit()">Save&nbsp;edit</button>
+<button
+	class="button"
+	(click)="deleteArticle()">Delete&nbsp;article</button>
 
-  <button
-    class="button"
-    (click)="deleteArticle()">Delete&nbsp;article</button>
-
-  <span *ngIf="unsavedChanges$ | async">Warning: These changes have not been saved to the server.</span>
-
-</app-menu>
+<span *ngIf="unsavedChanges$ | async">Warning: These changes have not been saved to the server.</span>
 
 <div
   class="container">

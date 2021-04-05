@@ -1,8 +1,9 @@
-<app-menu
-  [showCreateArticleButton]="true"
-  ></app-menu>
 
-<ul data-test="home-page" class="links">
+<button
+	(click)="createArticle()"
+	class="button">create article</button>
+
+<ul data-test="article-page" class="links">
 
   <li
     *ngFor="let article of articles$ | async"
@@ -31,6 +32,11 @@
          [routerLink]="['/view-article', article.id]"
          class="button"
          data-test="view-article-button">view article</button>
+
+			<button
+				[routerLink]="['/edit-article', article.id]"
+				class="button"
+				>edit article</button>
     </div>
   </li>
 </ul>

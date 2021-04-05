@@ -7,7 +7,6 @@ $size-gutter-small: 10px;
   colors
 */
 
-//$base-color: lighten(grey, 15%);
 $base-color: limegreen;
 $unsaved-color: yellow;
 $color-white: white;
@@ -20,21 +19,6 @@ $color-light-blue: lighten($base-color, 30%);
 $color-highlight: lighten($base-color, 30%);
 $error-color: crimson;
 $color-text: #333;
-
-.swatches   {
-  display: flex;
-  flex-direction: row;
-  padding: 10px;
-  background: white;
-}
-
-.swatch {
-  width: 100px;
-  height: 100px;
-  margin: 10px;
-  color: white;
-}
-
 
 @mixin focus-input() {
   &:focus {

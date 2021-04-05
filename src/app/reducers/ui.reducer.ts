@@ -4,9 +4,9 @@ import { saveArticle } from '../edit-article-page/actions/save-article.action';
 import { articleSavedResponse } from '../edit-article-page/actions/article-saved-response.action';
 import { articleRequest } from '../edit-article-page/actions/edit-article-request.action';
 import { deleteArticleResponse } from '../edit-article-page/actions/delete-article-response.action';
-import { navigateAway } from '../home-page/actions/navigate-away';
-import { articleLinksResponse } from '../home-page/actions/article-links-response';
-import { publishArticleResponse } from '../home-page/actions/publish-article-response';
+import { navigateAway } from '../article-page/actions/navigate-away';
+import { articleLinksResponse } from '../article-page/actions/article-links-response';
+import { publishArticleResponse } from '../article-page/actions/publish-article-response';
 import { updateLinks } from './utils';
 import { updateMetadataRequest, updateMetadataResponse } from '../configuration-page/actions/update-metadata.action';
 

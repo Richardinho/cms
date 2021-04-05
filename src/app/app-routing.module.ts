@@ -2,22 +2,32 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { EditArticlePageComponent } from './edit-article-page/edit-article-page.component';
-import { HomePageComponent } from './home-page/home-page.component';
+import { MenuPageComponent } from './menu-page/menu-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ViewArticlePageComponent } from './view-article-page/view-article-page.component';
 import { ConfigurationPageComponent } from './configuration-page/configuration-page.component';
 import { StylesPageComponent } from './styles-page/styles-page.component';
+import { ArticlePageComponent } from './article-page/article-page.component';
+import { IntroPageComponent } from './intro-page/intro-page.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomePageComponent,
+    component: MenuPageComponent,
   },
   {
     path: 'home',
-    component: HomePageComponent,
+    component: MenuPageComponent,
   },
+	{
+		path: 'intro',
+		component: IntroPageComponent,
+	},
+	{
+		path: 'article-list',
+		component: ArticlePageComponent,
+	},
   {
     path: 'view-article/:id',
     component: ViewArticlePageComponent,
@@ -31,7 +41,7 @@ const routes: Routes = [
     component: LoginPageComponent,
   },
   {
-    path: 'configuration',
+    path: 'metadata',
     component: ConfigurationPageComponent,
   },
   {
