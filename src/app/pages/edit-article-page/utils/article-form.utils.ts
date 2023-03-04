@@ -11,6 +11,7 @@ interface ArticleFormGroup {
   summary: string;
   body: string;
   tags: boolean[];
+  published: boolean;
 }
 
 /*
@@ -25,7 +26,8 @@ export const articleToFormGroup = (article: Article): ArticleFormGroup => {
   obj.title = article.title;
   obj.summary = article.summary;
   obj.body = article.body;
-  obj.tags = article.tags.map(tag => tag.value);
+  obj.tags = article.tags.map((tag) => tag.value);
+  obj.published = article.published;
 
   return obj as ArticleFormGroup;
 };
@@ -44,7 +46,11 @@ export const createArticlePatchData = (formData, tagData): any => {
   obj.body = formData.body;
   obj.summary = formData.summary;
   obj.saved = false;
-  obj.tags = formData.tags.map((tag, index) => ({ name: tagData[index], value: tag }));
+  obj.published = formData.published;
+  obj.tags = formData.tags.map((tag, index) => ({
+    name: tagData[index],
+    value: tag,
+  }));
 
   return obj;
 };

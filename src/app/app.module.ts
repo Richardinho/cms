@@ -46,7 +46,6 @@ import { SaveArticleEffects } from './effects/save-article.effect';
 import { GetArticleEffects } from './effects/get-article.effect';
 import { LogInEffects } from './effects/login.effect';
 import { GetIntroEffects } from './effects/intro.effect';
-import { PublishEffects } from './effects/publish';
 import { LoadArticleLinksEffects } from './effects/load-links';
 import { ProjectsEffects } from './effects/projects.effect';
 
@@ -100,11 +99,9 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
       GetArticleEffects,
       NavigationEffects,
       LoadArticleLinksEffects,
-      PublishEffects,
       CreateArticleEffects,
       GetMetadataEffect,
       PutMetadataEffect,
-      ProjectsEffects,
     ]),
   ],
   providers: [AuthorisationService, MessageService, MetadataService],

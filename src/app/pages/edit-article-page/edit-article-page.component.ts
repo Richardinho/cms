@@ -39,11 +39,16 @@ export class EditArticlePageComponent implements OnInit {
     private store: Store<AppState>
   ) {}
 
+  get formValue() {
+    return this.formGroup.value;
+  }
+
   private formGroup: FormGroup = new FormGroup({
     id: new FormControl(''),
     body: new FormControl('', Validators.required),
     title: new FormControl('', Validators.required),
     summary: new FormControl('', Validators.required),
+    published: new FormControl(false),
     tags: new FormArray(
       [
         new FormControl(true),

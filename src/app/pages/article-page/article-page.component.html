@@ -15,22 +15,6 @@
 
       <div class="button-panel">
         <button
-          *ngIf="!article.published"
-          (click)="publish(article.id)"
-          class="button"
-        >
-          publish
-        </button>
-
-        <button
-          *ngIf="article.published"
-          (click)="unpublish(article.id)"
-          class="button"
-        >
-          unpublish
-        </button>
-
-        <button
           [routerLink]="['/view-article', article.id]"
           class="button"
           data-test="view-article-button"
