@@ -1,17 +1,14 @@
-<div class="container" >
-	<div class="header"  *ngIf="loggedIn$ | async">
+<div class="container">
+  <div class="header" *ngIf="loggedIn$ | async">
+    <a class="link" routerLink="/">Menu</a>
 
-		<a class="link" routerLink="/">Menu</a>
+    <div class="right-aligned">
+      <button class="button" (click)="logOut()">logout</button>
+    </div>
+    <app-messages></app-messages>
+  </div>
 
-		<div class="right-aligned">
-			<button
-					class="button"
-					(click)="logOut()">logout</button>
-		</div>
-		<app-messages></app-messages>
-	</div>
-
-	<div class="content">
-		<router-outlet></router-outlet>
-	</div>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
 </div>

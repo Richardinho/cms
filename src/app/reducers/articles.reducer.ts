@@ -9,7 +9,6 @@ import { tagData } from '../services/article.service';
 
 export const initialState = {};
 
-
 // todo: replace with createArticleFactory(json?: any): Article
 export const jsonToArticle = (json: any): Article => {
   const obj: any = {};
@@ -22,48 +21,47 @@ export const jsonToArticle = (json: any): Article => {
   obj.saved = true;
   obj.tags = [];
 
-  obj.tags = tagData.map((tag:any) => {
+  obj.tags = tagData.map((tag: any) => {
     const name = tag;
-    const value = tag === json.tag1
-      || tag === json.tag2
-      || tag === json.tag3;
+    const value = tag === json.tag1 || tag === json.tag2 || tag === json.tag3;
 
     return {
       name,
-      value
+      value,
     };
   });
 
   return obj as Article;
 };
 
-export const getArticleResponseReducer = (state:any, action:any): Articles => {
+export const getArticleResponseReducer = (
+  state: any,
+  action: any
+): Articles => {
   const article: Article = jsonToArticle(action.articleJSON);
 
   if (article && article.id) {
-		return {...state, [article.id]: article };
+    return { ...state, [article.id]: article };
   }
 
   return { ...state };
 };
 
-export const articleChangedReducer = (state:any, action:any) => {
+export const articleChangedReducer = (state: any, action: any) => {
   const articlePatchData = action.articlePatchData;
 
   const article = state[articlePatchData.id];
 
   if (article) {
+    const updatedArticle: Article = {
+      ...article,
+      ...articlePatchData,
+    } as Article;
 
-		const updatedArticle: Article = {
-			...article,
-			...articlePatchData
-		} as Article;
-
-		return {
-			...state,
-			[articlePatchData.id]: updatedArticle
-		}; 
-
+    return {
+      ...state,
+      [articlePatchData.id]: updatedArticle,
+    };
   } else {
     return state;
   }
@@ -73,26 +71,27 @@ export const articleChangedReducer = (state:any, action:any) => {
  *  deletes article out of cache
  */
 
-export const deleteArticleResponseReducer = (state:any, action:any) => {
-	return Object.keys(state).reduce((memo, key) => {
-		if (key === action.id) {
-			return memo;
-		}
+export const deleteArticleResponseReducer = (state: any, action: any) => {
+  return Object.keys(state).reduce((memo, key) => {
+    if (key === action.id) {
+      return memo;
+    }
 
-		return {
-			...memo,
-			[key]: state[key]
-		};
-	}, {});
+    return {
+      ...memo,
+      [key]: state[key],
+    };
+  }, {});
 };
 
-const _articlesReducer = createReducer(initialState,
+const _articlesReducer = createReducer(
+  initialState,
   on(getArticleResponse, getArticleResponseReducer),
   on(articleChanged, articleChangedReducer),
   on(deleteArticleResponse, deleteArticleResponseReducer),
-  on(articleSavedResponse, getArticleResponseReducer),
+  on(articleSavedResponse, getArticleResponseReducer)
 );
 
-export function articlesReducer(state: any, action:any) {
+export function articlesReducer(state: any, action: any) {
   return _articlesReducer(state, action);
 }

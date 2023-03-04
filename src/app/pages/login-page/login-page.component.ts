@@ -7,7 +7,6 @@ import { FormControl } from '@angular/forms';
 
 import { environment } from '../../../environments/environment';
 
-
 import { logInRequest } from '../../actions/log-in.action';
 
 interface LoginResponseData {
@@ -16,10 +15,9 @@ interface LoginResponseData {
 
 @Component({
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss']
+  styleUrls: ['./login-page.component.scss'],
 })
 export class LoginPageComponent implements OnInit {
-
   public username = '';
   public password = '';
 
@@ -29,19 +27,23 @@ export class LoginPageComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private route: ActivatedRoute,
-    private store: Store<AppState>,
-    ) {}
+    private store: Store<AppState>
+  ) {}
 
   ngOnInit() {
     //this.authService.logOut();
   }
 
   onSubmit() {
-    const redirectUrl = this.route.snapshot.queryParamMap.get('afterLogin') || '/';
+    const redirectUrl =
+      this.route.snapshot.queryParamMap.get('afterLogin') || '/';
 
-    this.store.dispatch(logInRequest({
-      redirectUrl,
-      username: this.username,
-      password: this.password }));
+    this.store.dispatch(
+      logInRequest({
+        redirectUrl,
+        username: this.username,
+        password: this.password,
+      })
+    );
   }
 }

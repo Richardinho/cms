@@ -4,8 +4,8 @@ import { introNotSavedToServer } from '../actions/intro-request.action';
 import { saveIntro } from '../actions/save-intro.action';
 
 const initialState = {
-	body: '',
-	saved: true,
+  body: '',
+  saved: true,
 };
 
 /*
@@ -14,13 +14,12 @@ const initialState = {
  */
 
 export const introChangedReducer = (state: any, action: any) => {
-	return {
-		...state,
-		body: action.body,
-		saved: action.saved,
-	};
+  return {
+    ...state,
+    body: action.body,
+    saved: action.saved,
+  };
 };
-
 
 /*
  * If intro is not saved due to server error or network down, then we
@@ -28,29 +27,27 @@ export const introChangedReducer = (state: any, action: any) => {
  */
 
 export const introNotSavedReducer = (state: any, action: any) => {
-	return {
-		...state,
-		saved: false,
-	};
+  return {
+    ...state,
+    saved: false,
+  };
 };
-
-
 
 // when the request to save the intro is made (not when it is actually saved)
 export const introSaveRequestReducer = (state: any, action: any) => {
-	return {
-		...state,
-		saved: true,
-	};
-}
+  return {
+    ...state,
+    saved: true,
+  };
+};
 
 const _introReducer = createReducer(
-	initialState,
-	on(introChanged, introChangedReducer),
-	on(saveIntro, introSaveRequestReducer),
-	on(introNotSavedToServer, introNotSavedReducer)
+  initialState,
+  on(introChanged, introChangedReducer),
+  on(saveIntro, introSaveRequestReducer),
+  on(introNotSavedToServer, introNotSavedReducer)
 );
 
 export function introReducer(state: any, action: any) {
-	return _introReducer(state, action);
-} 
+  return _introReducer(state, action);
+}

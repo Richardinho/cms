@@ -15,7 +15,7 @@ export class StylesPageComponent {
       new FormControl(true),
       new FormControl(true),
       new FormControl(false),
-		]),
+    ]),
   });
 
   get mytags(): FormArray {

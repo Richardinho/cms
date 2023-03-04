@@ -22,42 +22,42 @@ const routes: Routes = [
   {
     path: '',
     component: MenuPageComponent,
-		canActivate: [AppGuard],
+    canActivate: [AppGuard],
   },
-	{
-		path: 'intro',
-		component: IntroPageComponent,
-		canActivate: [AppGuard],
-	},
-	{
-		path: 'article-list',
-		component: ArticlePageComponent,
-		canActivate: [AppGuard],
-	},
+  {
+    path: 'intro',
+    component: IntroPageComponent,
+    canActivate: [AppGuard],
+  },
+  {
+    path: 'article-list',
+    component: ArticlePageComponent,
+    canActivate: [AppGuard],
+  },
   {
     path: 'view-article/:id',
     component: ViewArticlePageComponent,
-		canActivate: [AppGuard],
+    canActivate: [AppGuard],
   },
   {
     path: 'edit-article/:id',
     component: EditArticlePageComponent,
-		canActivate: [AppGuard],
+    canActivate: [AppGuard],
   },
   {
     path: 'metadata',
     component: ConfigurationPageComponent,
-		canActivate: [AppGuard],
+    canActivate: [AppGuard],
   },
-	{
-		path: 'projects',
-		component: ProjectsPageComponent,
-		canActivate: [AppGuard],
-	},
+  {
+    path: 'projects',
+    component: ProjectsPageComponent,
+    canActivate: [AppGuard],
+  },
   {
     path: 'styles',
     component: StylesPageComponent,
-		canActivate: [AppGuard],
+    canActivate: [AppGuard],
   },
   {
     path: '**',
@@ -67,6 +67,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

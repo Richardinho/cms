@@ -2,7 +2,13 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { of } from 'rxjs';
-import { map, switchMap, catchError, concatMap, withLatestFrom } from 'rxjs/operators';
+import {
+  map,
+  switchMap,
+  catchError,
+  concatMap,
+  withLatestFrom,
+} from 'rxjs/operators';
 import { AppState } from '../model';
 
 import { genericError } from '../actions/generic-error.action';
@@ -18,16 +24,15 @@ export class GetMetadataEffect {
   constructor(
     private actions$: Actions,
     private metadataService: MetadataService,
-    private store: Store<AppState>,
+    private store: Store<AppState>
   ) {}
 
-  getMetadata$ = createEffect(() => 
-
+  getMetadata$ = createEffect(() =>
     this.actions$.pipe(
       ofType(metadataRequest),
-      concatMap(action => of(action).pipe(
-        withLatestFrom(this.store.pipe(select(selectJWTToken)))
-      )),
+      concatMap((action) =>
+        of(action).pipe(withLatestFrom(this.store.pipe(select(selectJWTToken))))
+      ),
       switchMap(([action, token]) => {
         return this.metadataService.getMetadata(token).pipe(
           map((metadata: any) => metadataResponse({ metadata: metadata })),
@@ -39,10 +44,13 @@ export class GetMetadataEffect {
                 return of(genericError({ message: 'Server error occurred' }));
               }
             } else {
-              return of(genericError({ message: "some generic error happened"}));
+              return of(
+                genericError({ message: 'some generic error happened' })
+              );
             }
           })
-        )
+        );
       })
-    ));
+    )
+  );
 }

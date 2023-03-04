@@ -10,7 +10,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 
-
 import { ArticlePageComponent } from './pages/article-page/article-page.component';
 import { ConfigurationPageComponent } from './pages/configuration-page/configuration-page.component';
 import { EditArticlePageComponent } from './pages/edit-article-page/edit-article-page.component';
@@ -56,11 +55,11 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 
 @NgModule({
   declarations: [
-		IntroPageComponent,
-		ProjectEditFormComponent,
-		MenuPageComponent,
-		PageNotFoundComponent,
-		ProjectsPageComponent,
+    IntroPageComponent,
+    ProjectEditFormComponent,
+    MenuPageComponent,
+    PageNotFoundComponent,
+    ProjectsPageComponent,
     AppComponent,
     ArticlePageComponent,
     CheckboxComponent,
@@ -75,20 +74,20 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
   ],
   imports: [
     ReactiveFormsModule,
-		FormsModule,
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     StoreModule.forRoot({
       articles: articlesReducer,
-			intro: introReducer,
+      intro: introReducer,
       ui: uiReducer,
       // change name of this reducer
       jwt_token: logInReducer,
       metadata: metadataReducer,
-			projects: projectsReducer,
+      projects: projectsReducer,
     }),
-		StoreDevtoolsModule.instrument({
+    StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
       autoPause: true, // Pauses recording actions and state changes when the extension window is not open
@@ -97,7 +96,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
       DeleteArticleEffects,
       SaveArticleEffects,
       LogInEffects,
-			GetIntroEffects,
+      GetIntroEffects,
       GetArticleEffects,
       NavigationEffects,
       LoadArticleLinksEffects,
@@ -105,14 +104,10 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
       CreateArticleEffects,
       GetMetadataEffect,
       PutMetadataEffect,
-			ProjectsEffects,
-    ])
+      ProjectsEffects,
+    ]),
   ],
-  providers: [
-    AuthorisationService,
-    MessageService,
-    MetadataService,
-  ],
-  bootstrap: [AppComponent]
+  providers: [AuthorisationService, MessageService, MetadataService],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

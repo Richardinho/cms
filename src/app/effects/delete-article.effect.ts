@@ -3,7 +3,14 @@ import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of } from 'rxjs';
-import { tap, map, mergeMap, catchError, concatMap, withLatestFrom } from 'rxjs/operators';
+import {
+  tap,
+  map,
+  mergeMap,
+  catchError,
+  concatMap,
+  withLatestFrom,
+} from 'rxjs/operators';
 
 import { ArticleService } from '../services/article.service';
 
@@ -15,55 +22,60 @@ import { unauthorisedResponse } from '../actions/unauthorised-response.action';
 
 import { selectArticleUnderEditWithToken } from '../selectors/article.selector';
 
-import {
-  UNAUTHORIZED,
-  NOT_FOUND,
-} from '../status-code.constants';
+import { UNAUTHORIZED, NOT_FOUND } from '../status-code.constants';
 
 @Injectable()
 export class DeleteArticleEffects {
-  redirect$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(deleteArticleResponse),
-      tap(() => {
-        this.router.navigate(['/']);
-      })
-    ), { dispatch: false });
+  redirect$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(deleteArticleResponse),
+        tap(() => {
+          this.router.navigate(['/']);
+        })
+      ),
+    { dispatch: false }
+  );
 
   deleteArticle$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteArticle),
-      concatMap(action => of(action).pipe(
-        withLatestFrom(this.store.pipe(select(selectArticleUnderEditWithToken)))
-      )),
+      concatMap((action) =>
+        of(action).pipe(
+          withLatestFrom(
+            this.store.pipe(select(selectArticleUnderEditWithToken))
+          )
+        )
+      ),
       mergeMap(([action, { article, token }]) => {
         if (article) {
           //todo: destructure this
           const id = article.id;
 
-          return this.articleService.deleteArticle(id, token)
-            .pipe(
-              map(() => (deleteArticleResponse({ id: id }))),
-              catchError((error) => {
-                if (error.status) {
-                  if (error.status === UNAUTHORIZED) {
-                    return of(unauthorisedResponse({
-                      redirectUrl: action.redirectUrl + article.id
-                    }));
-                  } else if (error.status === NOT_FOUND) {
-                    // this.messageService.show(ARTICLE_MISSING_ERROR_MESSAGE);
-                  } else {
-                    // this.messageService.show(SERVER_ERROR_MESSAGE);
-                  }
+          return this.articleService.deleteArticle(id, token).pipe(
+            map(() => deleteArticleResponse({ id: id })),
+            catchError((error) => {
+              if (error.status) {
+                if (error.status === UNAUTHORIZED) {
+                  return of(
+                    unauthorisedResponse({
+                      redirectUrl: action.redirectUrl + article.id,
+                    })
+                  );
+                } else if (error.status === NOT_FOUND) {
+                  // this.messageService.show(ARTICLE_MISSING_ERROR_MESSAGE);
                 } else {
-                  // this.messageService.show(NETWORK_ERROR_MESSAGE);
+                  // this.messageService.show(SERVER_ERROR_MESSAGE);
                 }
+              } else {
+                // this.messageService.show(NETWORK_ERROR_MESSAGE);
+              }
 
-                return of({ type: '[Edit...] error occurred' });
-              })
-            );
+              return of({ type: '[Edit...] error occurred' });
+            })
+          );
         } else {
-          return of({ type: '[Error] error occurred'});
+          return of({ type: '[Error] error occurred' });
         }
       })
     )
@@ -72,7 +84,6 @@ export class DeleteArticleEffects {
     private actions$: Actions,
     private articleService: ArticleService,
     private router: Router,
-    private store: Store<AppState>,
+    private store: Store<AppState>
   ) {}
 }
-

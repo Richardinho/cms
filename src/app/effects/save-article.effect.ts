@@ -2,7 +2,13 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { map, mergeMap, catchError, concatMap, withLatestFrom } from 'rxjs/operators';
+import {
+  map,
+  mergeMap,
+  catchError,
+  concatMap,
+  withLatestFrom,
+} from 'rxjs/operators';
 
 import { AppState } from '../model';
 
@@ -18,17 +24,22 @@ import { UNAUTHORIZED } from '../status-code.constants';
 
 @Injectable()
 export class SaveArticleEffects {
-
   saveArticle$ = createEffect(() =>
     this.actions$.pipe(
       ofType(saveArticle), // when type is 'saveArticle'
-      concatMap(action => of(action).pipe( // combine this action with article from store and JWT
-        withLatestFrom(this.store.pipe(select(selectArticleUnderEditWithToken)))
-      )),
+      concatMap((action) =>
+        of(action).pipe(
+          // combine this action with article from store and JWT
+          withLatestFrom(
+            this.store.pipe(select(selectArticleUnderEditWithToken))
+          )
+        )
+      ),
       mergeMap(([action, article]) => {
-        return this.articleService.updateArticle(article.article, article.token)
+        return this.articleService
+          .updateArticle(article.article, article.token)
           .pipe(
-            map(() => (articleSavedResponse({ articleJSON : article.article }))),
+            map(() => articleSavedResponse({ articleJSON: article.article })),
             catchError((error) => {
               if (error.status) {
                 if (error.status === UNAUTHORIZED) {
@@ -50,7 +61,6 @@ export class SaveArticleEffects {
   constructor(
     private actions$: Actions,
     private articleService: ArticleService,
-    private store: Store<AppState>,
+    private store: Store<AppState>
   ) {}
 }
-

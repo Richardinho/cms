@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpErrorResponse, HttpHeaders, HttpClient } from '@angular/common/http';
+import {
+  HttpErrorResponse,
+  HttpHeaders,
+  HttpClient,
+} from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { throwError, of } from 'rxjs';
@@ -11,55 +15,57 @@ import { articleToFormData } from '../utils/article-to-form-data';
 
 // todo: this should probably live in store? For example, I should be able to
 // configure this within the CMS: add, remove tags etc.
-export const tagData: string[] = [ 'angular', 'css', 'html-5', 'javascript', 'react' ];
+export const tagData: string[] = [
+  'angular',
+  'css',
+  'html-5',
+  'javascript',
+  'react',
+];
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ArticleService {
-
   tagData: string[] = tagData;
 
-  constructor(
-    private http: HttpClient,
-  ) {}
+  constructor(private http: HttpClient) {}
 
   getArticle(id: number | string, token: string) {
     const url = environment.blogDomain + '/index.php/api/article/' + id;
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': `Basic ${token}`,
-      })
+        Authorization: `Basic ${token}`,
+      }),
     };
 
-    return this.http.get<any>(url, httpOptions)
-      .pipe(
-        map((data) => {
-          return data;
-        }),
-        catchError((error: HttpErrorResponse) => {
-          if (error.status) {
-            return throwError({
-              status: error.status
-            });
-          } else {
-            return throwError({
-              message: 'an error occurred'
-            });
-          }
-        })
-      );
+    return this.http.get<any>(url, httpOptions).pipe(
+      map((data) => {
+        return data;
+      }),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status) {
+          return throwError({
+            status: error.status,
+          });
+        } else {
+          return throwError({
+            message: 'an error occurred',
+          });
+        }
+      })
+    );
   }
 
   getArticles(token: any): Observable<Array<Article>> {
-		console.log('get articles');
+    console.log('get articles');
     const url = environment.blogDomain + '/index.php/api/articles/';
 
     return this._get(url, token).pipe(
-      map(data => {
+      map((data) => {
         return data.articles;
-      }),
+      })
     );
   }
 
@@ -71,14 +77,14 @@ export class ArticleService {
     const httpOptions = {
       // should I used Basic here?
       headers: new HttpHeaders({
-        'Authorization': `Basic ${token}`,
-        'enctype': 'multipart/form-data'
-      })
+        Authorization: `Basic ${token}`,
+        enctype: 'multipart/form-data',
+      }),
     };
 
     return this.http
       .put<any>(url, formData, httpOptions)
-      .pipe(map(data => data.id));
+      .pipe(map((data) => data.id));
   }
 
   updateArticle(article: Article, token: any) {
@@ -91,9 +97,9 @@ export class ArticleService {
   deleteArticle(articleId: any, token: any) {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': `Basic ${token}`,
-        'enctype': 'multipart/form-data'
-      })
+        Authorization: `Basic ${token}`,
+        enctype: 'multipart/form-data',
+      }),
     };
 
     const url = environment.blogDomain + `/index.php/api/article/${articleId}`;
@@ -101,8 +107,8 @@ export class ArticleService {
     return this.http.delete(url, httpOptions);
   }
 
-  publish(articleId: any, publish: any, token:any) {
-		console.log('publish', articleId, publish, token);
+  publish(articleId: any, publish: any, token: any) {
+    console.log('publish', articleId, publish, token);
     const formData = new FormData();
     const url = environment.blogDomain + '/index.php/api/publish/' + articleId;
 
@@ -114,40 +120,36 @@ export class ArticleService {
   _get(url: any, token: any) {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': `Basic ${token}`,
-      })
+        Authorization: `Basic ${token}`,
+      }),
     };
 
     return this.http.get<any>(url, httpOptions);
   }
 
   _post(url: any, formData: any, token: any) {
-
     if (!token) {
-
       return throwError({
         message: 'You are not logged in. No JWT token in localStorage',
         status: 401,
       });
-
     } else {
-
       const httpOptions = {
         headers: new HttpHeaders({
-          'Authorization': `Basic ${token}`,
-          'enctype': 'multipart/form-data'
-        })
+          Authorization: `Basic ${token}`,
+          enctype: 'multipart/form-data',
+        }),
       };
 
       return this.http.post<any>(url, formData, httpOptions).pipe(
         catchError((error: HttpErrorResponse) => {
           if (error.status) {
             return throwError({
-              status: error.status
+              status: error.status,
             });
           } else {
             return throwError({
-              message: 'an error occurred'
+              message: 'an error occurred',
             });
           }
         })

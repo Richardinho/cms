@@ -14,30 +14,30 @@ import { createArticleRequest } from '../../actions/create-article.action';
 // change name to ArticleLinksPageComponent
 @Component({
   templateUrl: './article-page.component.html',
-  styleUrls: ['./article-page.component.scss']
+  styleUrls: ['./article-page.component.scss'],
 })
 export class ArticlePageComponent implements OnInit, OnDestroy {
   articles$: any;
 
-  constructor(
-    private store: Store<AppState>
-  ) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-		// dispatch action to request links
+    // dispatch action to request links
     this.store.dispatch(requestArticleLinks());
 
-		// configure stream of links from store
+    // configure stream of links from store
     this.articles$ = this.store.pipe(select(selectArticleLinks));
   }
 
   publish(articleId: any) {
-    this.store.dispatch(requestPublishArticle({ id: articleId, publish: true }));
+    this.store.dispatch(
+      requestPublishArticle({ id: articleId, publish: true })
+    );
   }
 
   unpublish(articleId: any) {
-		const metadata = { id: articleId, publish: false };
-		const action = requestPublishArticle(metadata);
+    const metadata = { id: articleId, publish: false };
+    const action = requestPublishArticle(metadata);
     this.store.dispatch(action);
   }
 
@@ -45,8 +45,8 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
     //this.store.dispatch(navigateAway());
   }
 
-	createArticle() {
-		const action = createArticleRequest();
-		this.store.dispatch(action);
-	}
+  createArticle() {
+    const action = createArticleRequest();
+    this.store.dispatch(action);
+  }
 }

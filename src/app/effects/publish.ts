@@ -2,7 +2,13 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { of } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, switchMap, catchError, concatMap, withLatestFrom } from 'rxjs/operators';
+import {
+  map,
+  switchMap,
+  catchError,
+  concatMap,
+  withLatestFrom,
+} from 'rxjs/operators';
 
 import { AppState } from '../model';
 
@@ -22,22 +28,19 @@ import { requestPublishArticle } from '../actions/request-publish-article';
 import { selectArticle } from '../selectors/article.selector';
 import { selectJWTToken } from '../selectors/article.selector';
 
-import {
-  UNAUTHORIZED,
-  NOT_FOUND,
-} from '../status-code.constants';
+import { UNAUTHORIZED, NOT_FOUND } from '../status-code.constants';
 
 @Injectable()
 export class PublishEffects {
-
   publishArticle$ = createEffect(() =>
     this.actions$.pipe(
       ofType(requestPublishArticle),
-      concatMap(action => of(action).pipe(
-        withLatestFrom(this.store.pipe(select(selectJWTToken)))
-      )),
+      concatMap((action) =>
+        of(action).pipe(withLatestFrom(this.store.pipe(select(selectJWTToken))))
+      ),
       switchMap(([action, token]) => {
-        return this.articleService.publish(action.id, action.publish, token)
+        return this.articleService
+          .publish(action.id, action.publish, token)
           .pipe(
             map((articleJSON) => publishArticleResponse({ articleJSON })),
             catchError((error) => {
@@ -53,12 +56,12 @@ export class PublishEffects {
             })
           );
       })
-    ));
+    )
+  );
 
   constructor(
     private actions$: Actions,
     private articleService: ArticleService,
-    private store: Store<AppState>,
+    private store: Store<AppState>
   ) {}
 }
-

@@ -4,7 +4,8 @@ import {
   Component,
   Input,
   Output,
-  EventEmitter } from '@angular/core';
+  EventEmitter,
+} from '@angular/core';
 import { MessageService } from '../../services/message.service';
 
 @Component({
@@ -24,7 +25,7 @@ export class MessageWidgetComponent implements OnInit {
   constructor(private messageService: MessageService) {}
 
   ngOnInit() {
-    this.messageService.showMessage.subscribe(data => {
+    this.messageService.showMessage.subscribe((data) => {
       this.display = data.show ? 'block' : 'none';
       this.backgroundColor = this.getBackgroundColor(data.mode);
       this.boxShadow = ` 0 2px 3px ${this.backgroundColor}`;

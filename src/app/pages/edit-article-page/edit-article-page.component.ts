@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import {
-  FormArray,
-  FormControl,
-  FormGroup,
-  Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 
@@ -20,13 +16,16 @@ import { selectArticleUnderEdit } from '../../selectors/article.selector';
 import { selectSaving } from '../../selectors/ui.selector';
 import { selectUnsavedChanges } from '../../selectors/article.selector';
 
-import { createArticlePatchData, articleToFormGroup } from './utils/article-form.utils';
+import {
+  createArticlePatchData,
+  articleToFormGroup,
+} from './utils/article-form.utils';
 import { tagsValidator } from './utils/tags.validator';
 
 @Component({
   selector: 'app-edit-article-page',
   templateUrl: './edit-article-page.component.html',
-  styleUrls: ['./edit-article-page.component.scss']
+  styleUrls: ['./edit-article-page.component.scss'],
 })
 export class EditArticlePageComponent implements OnInit {
   article$: Observable<Article>;
@@ -45,12 +44,15 @@ export class EditArticlePageComponent implements OnInit {
     body: new FormControl('', Validators.required),
     title: new FormControl('', Validators.required),
     summary: new FormControl('', Validators.required),
-    tags: new FormArray([
-      new FormControl(true),
-      new FormControl(true),
-      new FormControl(true),
-      new FormControl(false),
-      ], tagsValidator),
+    tags: new FormArray(
+      [
+        new FormControl(true),
+        new FormControl(true),
+        new FormControl(true),
+        new FormControl(false),
+      ],
+      tagsValidator
+    ),
   });
 
   ngOnInit() {
@@ -63,35 +65,43 @@ export class EditArticlePageComponent implements OnInit {
      */
 
     //  todo: get tag data from somewhere else. e.g the store
-    this.formGroup.valueChanges.subscribe(formArticle => {
-      this.store.dispatch(articleChanged({
-        articlePatchData: createArticlePatchData(formArticle, this.articleService.tagData),
-      }));
+    this.formGroup.valueChanges.subscribe((formArticle) => {
+      this.store.dispatch(
+        articleChanged({
+          articlePatchData: createArticlePatchData(
+            formArticle,
+            this.articleService.tagData
+          ),
+        })
+      );
     });
 
     /*
      * when parameters change, we make a request for data
-		 * todo: Could simplify this by just getting a snapshot of the params and then
-		 * dispatching the action. i.e. I don't have to subscribe to paramMap
+     * todo: Could simplify this by just getting a snapshot of the params and then
+     * dispatching the action. i.e. I don't have to subscribe to paramMap
      */
 
     this.route.paramMap.subscribe((params: ParamMap) => {
       const id = params.get('id');
 
-      this.store.dispatch(articleRequest({
-        id,
-        redirectUrl: '/edit-article/' + id }));
+      this.store.dispatch(
+        articleRequest({
+          id,
+          redirectUrl: '/edit-article/' + id,
+        })
+      );
     });
 
-		//  fetch article from store
+    //  fetch article from store
     this.article$ = this.store.pipe(select(selectArticleUnderEdit));
 
-		// when article in store is updated, update form group
-    this.article$.subscribe(article => {
+    // when article in store is updated, update form group
+    this.article$.subscribe((article) => {
       if (article) {
-        this.formGroup
-          .patchValue(articleToFormGroup(article),
-            { emitEvent: false });
+        this.formGroup.patchValue(articleToFormGroup(article), {
+          emitEvent: false,
+        });
       }
     });
   }
