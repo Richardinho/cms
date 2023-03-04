@@ -10,7 +10,6 @@ import { ProjectsPageComponent } from './pages/projects-page/projects-page.compo
 import { MenuPageComponent } from './pages/menu-page/menu-page.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { StylesPageComponent } from './pages/styles-page/styles-page.component';
-import { ViewArticlePageComponent } from './pages/view-article-page/view-article-page.component';
 
 import { AppGuard } from './AppGuard';
 
@@ -32,11 +31,6 @@ const routes: Routes = [
   {
     path: 'article-list',
     component: ArticlePageComponent,
-    canActivate: [AppGuard],
-  },
-  {
-    path: 'view-article/:id',
-    component: ViewArticlePageComponent,
     canActivate: [AppGuard],
   },
   {

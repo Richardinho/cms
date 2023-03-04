@@ -18,7 +18,6 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { MenuPageComponent } from './pages/menu-page/menu-page.component';
 import { ProjectsPageComponent } from './pages/projects-page/projects-page.component';
 import { StylesPageComponent } from './pages/styles-page/styles-page.component';
-import { ViewArticlePageComponent } from './pages/view-article-page/view-article-page.component';
 
 import { MarkdownToHTMLPipe } from './pipes/markdown-to-html.pipe';
 import { AuthorisationService } from './services/authorisation.service';
@@ -69,7 +68,6 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
     MessageWidgetComponent,
     SpinnerComponent,
     StylesPageComponent,
-    ViewArticlePageComponent,
   ],
   imports: [
     ReactiveFormsModule,
