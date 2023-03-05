@@ -39,7 +39,9 @@ export class SaveArticleEffects {
         return this.articleService
           .updateArticle(article.article, article.token)
           .pipe(
-            map(() => articleSavedResponse({ articleJSON: article.article })),
+            map((articleJSON) => {
+              return articleSavedResponse({ articleJSON });
+            }),
             catchError((error) => {
               if (error.status) {
                 if (error.status === UNAUTHORIZED) {

@@ -39,16 +39,7 @@
         </div>
 
         <div class="select-tags-container">
-          <p class="select-tags-caption">
-            Select up to 3 tags to associate with this article Richard
-          </p>
-
-          <p
-            class="select-tags-error-message"
-            [class.select-tags-error-message__hidden]="mytags.valid"
-          >
-            You may not select more than 3 tags.
-          </p>
+          <p class="select-tags-caption">tags</p>
 
           <div formArrayName="tags">
             <div
@@ -57,11 +48,17 @@
             >
               <cms-checkbox
                 [formControlName]="i"
-                cbId="{{i}}"
-                label="{{articleService.tagData[i]}}"
+                [cbId]="i"
+                [label]="articleService.tagData[i]"
               ></cms-checkbox>
             </div>
           </div>
+          <p
+            class="select-tags-error-message"
+            [class.select-tags-error-message__hidden]="mytags.valid"
+          >
+            You may not select more than 3 tags.
+          </p>
         </div>
       </div>
 

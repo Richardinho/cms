@@ -69,7 +69,6 @@ export class EditArticlePageComponent implements OnInit {
      *  Whenever a form input value changes, we update the store
      */
 
-    //  todo: get tag data from somewhere else. e.g the store
     this.formGroup.valueChanges.subscribe((formArticle) => {
       this.store.dispatch(
         articleChanged({
