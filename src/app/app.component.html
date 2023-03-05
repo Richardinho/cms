@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="header" *ngIf="loggedIn$ | async">
+  <div class="header" *ngIf="loggedIn$ | async; else elseBlock">
     <a class="link" routerLink="/">Menu</a>
 
     <div class="right-aligned">
@@ -7,6 +7,10 @@
     </div>
     <app-messages></app-messages>
   </div>
+
+  <ng-template #elseBlock>
+    <div class="header"></div>
+  </ng-template>
 
   <div class="content">
     <router-outlet></router-outlet>

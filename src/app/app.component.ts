@@ -8,19 +8,19 @@ import { logOut } from './actions/log-in.action';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   title = 'cms';
   loggedIn$: any;
 
   constructor(private store: Store<AppState>) {}
-	
+
   ngOnInit() {
     this.loggedIn$ = this.store.select(loggedInSelector);
   }
 
-	logOut() {
+  logOut() {
     this.store.dispatch(logOut());
-	}
+  }
 }
