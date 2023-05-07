@@ -10,12 +10,13 @@ import { selectArticleLinks } from '../../selectors/select-article-links';
 import { requestArticleLinks } from '../../actions/request-article-links';
 import { createArticleRequest } from '../../actions/create-article.action';
 
-// change name to ArticleLinksPageComponent
+// TODO: change name to ArticleLinksPageComponent
 @Component({
   templateUrl: './article-page.component.html',
   styleUrls: ['./article-page.component.scss'],
 })
 export class ArticlePageComponent implements OnInit {
+  // TODO: give this a type
   articles$: any;
 
   constructor(private store: Store<AppState>) {}
@@ -27,6 +28,7 @@ export class ArticlePageComponent implements OnInit {
   }
 
   createArticle() {
+    // TODO: inline action
     const action = createArticleRequest();
     this.store.dispatch(action);
   }

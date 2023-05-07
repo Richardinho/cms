@@ -11,12 +11,13 @@ import { selectMetadata } from '../../selectors/metadata.selector';
 import { selectShowLoader } from '../../selectors/show-loader.selector';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
-// should it be called MetadataPageComponent?
+// TODO: should it be called MetadataPageComponent?
 @Component({
   templateUrl: './configuration-page.component.html',
   styleUrls: ['./configuration-page.component.scss'],
 })
 export class ConfigurationPageComponent implements OnInit {
+  // TODO: put a type on Observable
   metadata$: Observable<any>;
   showLoader$: Observable<boolean>;
 
@@ -30,21 +31,19 @@ export class ConfigurationPageComponent implements OnInit {
     const metadata = {
       metadata: { github_url: this.formGroup.value.githubUrl },
     };
+    // TODO: inline action
     const action = updateMetadataRequest(metadata);
     this.store.dispatch(action);
   }
 
   ngOnInit() {
-    // configure loader component
     this.showLoader$ = this.store.pipe(select(selectShowLoader));
 
-    // when metadata in store is updated, update form
     this.metadata$ = this.store.pipe(select(selectMetadata));
     this.metadata$.subscribe((metadata) => {
       this.formGroup.patchValue({ githubUrl: metadata.github_url });
     });
 
-    //  dispatch action to request metadata from server
     this.store.dispatch(metadataRequest());
   }
 }

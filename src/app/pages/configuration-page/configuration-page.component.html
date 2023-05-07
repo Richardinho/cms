@@ -1,19 +1,17 @@
 <div class="button-container">
-  <button [disabled]="showLoader$ | async" (click)="update()" class="button">update</button>
+  <button [disabled]="showLoader$ | async" (click)="update()" class="button">
+    update
+  </button>
   <div class="spinner">
-    <spinner-component *ngIf="showLoader$ | async" ></spinner-component>
+    <spinner-component *ngIf="showLoader$ | async"></spinner-component>
   </div>
-
 </div>
 
 <div class="content">
-	<div [formGroup]="formGroup" class="input-container">
-		<label class="label" for="git-hub-url">github url</label>
-		<input
-				formControlName="githubUrl"
-				class="input" id="git-hub-url"/>
-	</div>
+  <div [formGroup]="formGroup" class="input-container">
+    <label class="label" for="git-hub-url">github url</label>
+    <input formControlName="githubUrl" class="input" id="git-hub-url" />
+  </div>
 
-	<hr class="horizontal-rule"/>
+  <hr class="horizontal-rule" />
 </div>
-
