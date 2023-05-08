@@ -1,5 +1,7 @@
 <div class="cta-bar">
-  <button class="button" (click)="saveEdit()">Save&nbsp;edit</button>
+  <button class="button" [disabled]="disableSave$ | async" (click)="saveEdit()">
+    Save&nbsp;edit
+  </button>
 </div>
 
 <div class="outer-container">

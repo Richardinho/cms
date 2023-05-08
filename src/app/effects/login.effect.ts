@@ -76,6 +76,9 @@ export class LogInEffects {
               if (error.status) {
                 if (error.status === UNAUTHORIZED) {
                   // actually, what this should signal that an error message should be displayed on the login page
+
+                  // this goes back to the login page, but we are already on the login page
+                  // so what should we do?
                   return of(
                     unauthorisedResponse({ redirectUrl: action.redirectUrl })
                   );

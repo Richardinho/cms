@@ -4,9 +4,7 @@ import { Store, select } from '@ngrx/store';
 import { AppState, Article } from '../../model';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
-
 import { environment } from '../../../environments/environment';
-
 import { logInRequest } from '../../actions/log-in.action';
 
 interface LoginResponseData {
@@ -21,7 +19,7 @@ export class LoginPageComponent implements OnInit {
   public username = '';
   public password = '';
 
-  errorMessage: string = 'ss';
+  errorMessage: string = '';
 
   constructor(
     private http: HttpClient,

@@ -1,21 +1,30 @@
+//  Angular
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+
+//  rxjs
 import { Observable } from 'rxjs';
+import { map, combineLatest, startWith } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 
+//  services
 import { ArticleService } from '../../services/article.service';
 
+//  model
 import { AppState, Article } from '../../model';
 
+//  actions
 import { articleChanged } from '../../actions/article-changed.action';
 import { articleRequest } from '../../actions/edit-article-request.action';
 import { saveArticle } from '../../actions/save-article.action';
 
+// selectors
 import { selectArticleUnderEdit } from '../../selectors/article.selector';
 import { selectSaving } from '../../selectors/ui.selector';
 import { selectUnsavedChanges } from '../../selectors/article.selector';
 
+//  utils
 import {
   createArticlePatchData,
   articleToFormGroup,
@@ -31,6 +40,7 @@ export class EditArticlePageComponent implements OnInit {
   article$: Observable<Article>;
   saving$: Observable<boolean>;
   unsavedChanges$: Observable<boolean>;
+  disableSave$: Observable<boolean>;
 
   constructor(
     private route: ActivatedRoute,
@@ -63,7 +73,13 @@ export class EditArticlePageComponent implements OnInit {
   ngOnInit() {
     //  todo: use this variable: e.g. have a spinner
     this.saving$ = this.store.pipe(select(selectSaving));
-    this.unsavedChanges$ = this.store.pipe(select(selectUnsavedChanges));
+
+    this.disableSave$ = this.store.pipe(select(selectUnsavedChanges)).pipe(
+      combineLatest(this.formGroup.statusChanges.pipe(startWith('INVALID'))),
+      map(([unsavedChanges, status]) => {
+        return !unsavedChanges || status === 'INVALID';
+      })
+    );
 
     /*
      *  Whenever a form input value changes, we update the store

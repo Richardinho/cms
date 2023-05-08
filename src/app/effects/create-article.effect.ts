@@ -1,5 +1,8 @@
+//  Angular
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+
+//  RXJS
 import { Store, select } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of } from 'rxjs';
@@ -11,8 +14,14 @@ import {
   concatMap,
   withLatestFrom,
 } from 'rxjs/operators';
+
+//  model
 import { AppState } from '../model';
+
+// services
 import { ArticleService } from '../services/article.service';
+
+// actions
 import { unauthorisedResponse } from '../actions/unauthorised-response.action';
 import { genericError } from '../actions/generic-error.action';
 import {
@@ -20,8 +29,10 @@ import {
   createArticleResponse,
 } from '../actions/create-article.action';
 
+// selectors
 import { selectJWTToken } from '../selectors/article.selector';
 
+// utils
 import { UNAUTHORIZED } from '../status-code.constants';
 
 @Injectable()
