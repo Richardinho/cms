@@ -1,34 +1,35 @@
 <div class="cta-bar">
-	<button
-		[disabled]="disableSaveButton$ | async"
-		class="button"
-		(click)="saveEdit()">Save&nbsp;edit</button>
+  <button
+    [disabled]="disableSaveButton$ | async"
+    class="button"
+    (click)="saveEdit()"
+  >
+    Save&nbsp;edit
+  </button>
 
-		<div class="spinner">
-			<spinner-component *ngIf="showLoader$ | async" ></spinner-component>
-		</div>
+  <div class="spinner">
+    <spinner-component *ngIf="showLoader$ | async"></spinner-component>
+  </div>
 </div>
 
 <!-- only purpose of this div is to so the container div can be relative to it: is there a better way? -->
 <div class="outer-container">
-	<div class="container">
-		<div [formGroup]="fGroup" class="edit-pane">
-			<label
-				for="edit-body"
-				class="label">body text</label>
-			<textarea 
-				id="edit-body"
-				data-test="edit-pane"
-				formControlName="body"
-				class="input"
-				></textarea>
-		</div>
+  <div class="container">
+    <div [formGroup]="fGroup" class="edit-pane">
+      <label for="edit-body" class="label">body text</label>
+      <textarea
+        id="edit-body"
+        data-test="edit-pane"
+        formControlName="body"
+        class="input"
+      ></textarea>
+    </div>
 
-		<div class="article-pane">
-			<div
-				class="article-content"
-				[innerHTML]="(intro$|async)?.body | markdownToHTML"
-				></div>
-		</div>
-	</div>
+    <div class="article-pane">
+      <div
+        class="article-content"
+        [innerHTML]="(intro$|async)?.body | markdownToHTML"
+      ></div>
+    </div>
+  </div>
 </div>

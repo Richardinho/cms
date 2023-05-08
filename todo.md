@@ -11,3 +11,4 @@
 - fix login journey (investigate first)
 - style links on menu page (remove underlines and blue color)
 - article published state in cache not kept in sync with server
+- article-list page: better UI to indicate unsaved changes
