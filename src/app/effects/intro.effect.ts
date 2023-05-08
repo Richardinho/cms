@@ -1,6 +1,9 @@
+//  Angular
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+
+// RXJS
 import { of } from 'rxjs';
 import {
   tap,
@@ -12,11 +15,14 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 
+// models
 import { AppState } from '../model';
 
+// services
 import { IntroService } from '../services/intro.service';
 import { MessageService, ERROR } from '../services/message.service';
 
+// actions
 import { genericError } from '../actions/generic-error.action';
 import { introChanged, nullAction } from '../actions/intro-changed.action';
 import {
@@ -28,6 +34,7 @@ import { introFoundInCache } from '../actions/intro-found-in-cache.action';
 import { saveIntro } from '../actions/save-intro.action';
 import { unauthorisedResponse } from '../actions/unauthorised-response.action';
 
+// utils
 import { UNAUTHORIZED } from '../status-code.constants';
 
 export const selectJWTToken = (state: AppState) => state.jwt_token;

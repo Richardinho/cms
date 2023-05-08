@@ -1,13 +1,21 @@
+//  Angular
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+// RXJS
 import { Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Article } from '../../model';
 import { Store, select } from '@ngrx/store';
+
+// models
+import { Article } from '../../model';
 import { AppState } from '../../model';
+
+// selectors
 import { introSavedChanges, selectIntro } from '../../selectors/intro.selector';
 import { selectShowLoader } from '../../selectors/show-loader.selector';
 
+// actions
 import { introChanged } from '../../actions/intro-changed.action';
 import { introRequest } from '../../actions/intro-request.action';
 import { saveIntro } from '../../actions/save-intro.action';

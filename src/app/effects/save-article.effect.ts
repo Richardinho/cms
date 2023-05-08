@@ -1,4 +1,7 @@
+//  Angular
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+
+//  RXJS
 import { of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
@@ -10,20 +13,34 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 
+// models
 import { AppState } from '../model';
 
+// services
 import { ArticleService } from '../services/article.service';
+import { MessageService, ERROR } from '../services/message.service';
 
+// actions
 import { articleSavedResponse } from '../actions/article-saved-response.action';
 import { genericError } from '../actions/generic-error.action';
 import { saveArticle } from '../actions/save-article.action';
 import { unauthorisedResponse } from '../actions/unauthorised-response.action';
 
+// selectors
 import { selectArticleUnderEditWithToken } from '../selectors/article.selector';
+
+// utils
 import { UNAUTHORIZED } from '../status-code.constants';
 
 @Injectable()
 export class SaveArticleEffects {
+  constructor(
+    private actions$: Actions,
+    private articleService: ArticleService,
+    private store: Store<AppState>,
+    private messageService: MessageService
+  ) {}
+
   saveArticle$ = createEffect(() =>
     this.actions$.pipe(
       ofType(saveArticle), // when type is 'saveArticle'
@@ -40,6 +57,7 @@ export class SaveArticleEffects {
           .updateArticle(article.article, article.token)
           .pipe(
             map((articleJSON) => {
+              this.messageService.show('changes saved to server');
               return articleSavedResponse({ articleJSON });
             }),
             catchError((error) => {
@@ -59,10 +77,4 @@ export class SaveArticleEffects {
       })
     )
   );
-
-  constructor(
-    private actions$: Actions,
-    private articleService: ArticleService,
-    private store: Store<AppState>
-  ) {}
 }

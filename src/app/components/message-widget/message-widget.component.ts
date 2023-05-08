@@ -1,3 +1,4 @@
+//  Angular
 import { OnInit } from '@angular/core';
 import {
   HostBinding,
@@ -6,6 +7,8 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
+
+//  services
 import { MessageService } from '../../services/message.service';
 
 @Component({
@@ -19,7 +22,6 @@ export class MessageWidgetComponent implements OnInit {
   @HostBinding('style.backgroundColor') backgroundColor = '#98FB98';
   @HostBinding('style.boxShadow') boxShadow = '0 0 2px 3px blue';
 
-  // box-shadow: 0 0 2px 3px #98FB98;
   message = 'this is a test';
 
   constructor(private messageService: MessageService) {}
@@ -28,7 +30,7 @@ export class MessageWidgetComponent implements OnInit {
     this.messageService.showMessage.subscribe((data) => {
       this.display = data.show ? 'block' : 'none';
       this.backgroundColor = this.getBackgroundColor(data.mode);
-      this.boxShadow = ` 0 2px 3px ${this.backgroundColor}`;
+      this.boxShadow = `0 2px 3px ${this.backgroundColor}`;
       this.message = data.message;
     });
   }

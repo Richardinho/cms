@@ -35,6 +35,8 @@ import { projectsReducer } from './reducers/projects.reducer';
 // add this to styles page
 import { SpinnerComponent } from './pages/configuration-page/spinner';
 
+//  effects
+import { GenericErrorEffects } from './effects/generic-error.effect';
 import { NavigationEffects } from './effects/navigation.effect';
 import { DeleteArticleEffects } from './effects/delete-article.effect';
 import { CreateArticleEffects } from './effects/create-article.effect';
@@ -91,6 +93,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
     }),
     EffectsModule.forRoot([
       DeleteArticleEffects,
+      GenericErrorEffects,
       SaveArticleEffects,
       LogInEffects,
       GetIntroEffects,
