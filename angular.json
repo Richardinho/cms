@@ -116,7 +116,6 @@
       }
     }
   },
-  "defaultProject": "cms",
   "cli": {
     "analytics": "b2b89ac6-fe74-4c1e-918d-3d16a50de8c2",
     "schematicCollections": [
