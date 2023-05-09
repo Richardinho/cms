@@ -2,6 +2,9 @@
   <button class="button" [disabled]="disableSave$ | async" (click)="saveEdit()">
     Save&nbsp;edit
   </button>
+  <div class="spinner">
+    <spinner-component *ngIf="showLoader$ | async"></spinner-component>
+  </div>
 </div>
 
 <div class="outer-container">

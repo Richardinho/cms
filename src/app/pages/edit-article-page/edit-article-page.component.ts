@@ -21,8 +21,8 @@ import { saveArticle } from '../../actions/save-article.action';
 
 // selectors
 import { selectArticleUnderEdit } from '../../selectors/article.selector';
-import { selectSaving } from '../../selectors/ui.selector';
 import { selectUnsavedChanges } from '../../selectors/article.selector';
+import { selectShowLoader } from '../../selectors/show-loader.selector';
 
 //  utils
 import {
@@ -38,9 +38,9 @@ import { tagsValidator } from './utils/tags.validator';
 })
 export class EditArticlePageComponent implements OnInit {
   article$: Observable<Article>;
-  saving$: Observable<boolean>;
   unsavedChanges$: Observable<boolean>;
   disableSave$: Observable<boolean>;
+  showLoader$: Observable<boolean>;
 
   constructor(
     private route: ActivatedRoute,
@@ -71,13 +71,15 @@ export class EditArticlePageComponent implements OnInit {
   });
 
   ngOnInit() {
-    //  todo: use this variable: e.g. have a spinner
-    this.saving$ = this.store.pipe(select(selectSaving));
+    this.showLoader$ = this.store.pipe(select(selectShowLoader));
 
     this.disableSave$ = this.store.pipe(select(selectUnsavedChanges)).pipe(
-      combineLatest(this.formGroup.statusChanges.pipe(startWith('INVALID'))),
-      map(([unsavedChanges, status]) => {
-        return !unsavedChanges || status === 'INVALID';
+      combineLatest(
+        this.formGroup.statusChanges.pipe(startWith('INVALID')),
+        this.showLoader$
+      ),
+      map(([unsavedChanges, status, showLoader]) => {
+        return !unsavedChanges || status === 'INVALID' || showLoader;
       })
     );
 
@@ -127,9 +129,7 @@ export class EditArticlePageComponent implements OnInit {
   }
 
   saveEdit() {
-    if (this.formGroup.valid) {
-      this.store.dispatch(saveArticle());
-    }
+    this.store.dispatch(saveArticle());
   }
 
   get mytags(): FormArray {

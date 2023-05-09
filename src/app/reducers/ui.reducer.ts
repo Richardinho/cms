@@ -1,5 +1,10 @@
+//  RXJS
 import { createReducer, on } from '@ngrx/store';
+
+//  models
 import { UI } from '../model';
+
+//  actions
 import { saveArticle } from '../actions/save-article.action';
 import { articleSavedResponse } from '../actions/article-saved-response.action';
 import { articleRequest } from '../actions/edit-article-request.action';
@@ -12,15 +17,17 @@ import {
 import { saveIntro } from '../actions/save-intro.action';
 import { navigateAway } from '../actions/navigate-away';
 import { articleLinksResponse } from '../actions/article-links-response';
-import { updateLinks } from './utils';
+import { genericError } from '../actions/generic-error.action';
+import { unauthorisedResponse } from '../actions/unauthorised-response.action';
 import {
   updateMetadataRequest,
   updateMetadataResponse,
 } from '../actions/update-metadata.action';
 import { projectsResponse } from '../actions/projects.action';
 
+import { updateLinks } from './utils';
+
 export const initialState: UI = {
-  saving: false,
   id_of_article_under_edit: '',
   articleLinks: [],
   loading: false,
@@ -92,8 +99,11 @@ const _uiReducer = createReducer(
   initialState,
   on(articleRequest, articleRequestReducer),
   on(deleteArticleResponse, deleteArticleReducer),
-  on(saveArticle, (state) => ({ ...state, saving: true })),
-  on(articleSavedResponse, (state) => ({ ...state, saving: false })),
+  on(saveArticle, (state) => ({ ...state, loading: true })),
+  on(articleSavedResponse, (state) => ({
+    ...state,
+    loading: false,
+  })),
   on(navigateAway, navigateAwayFromHomePageReducer),
   on(articleLinksResponse, articleLinksResponseReducer),
   on(updateMetadataRequest, (state) => ({ ...state, loading: true })),
@@ -101,7 +111,9 @@ const _uiReducer = createReducer(
   on(saveIntro, (state) => ({ ...state, loading: true })),
   on(introNotSavedToServer, (state) => ({ ...state, loading: false })),
   on(introSaved, (state) => ({ ...state, loading: false })),
-  on(projectsResponse, projectsResponseReducer)
+  on(genericError, (state) => ({ ...state, loading: false })),
+  on(projectsResponse, projectsResponseReducer),
+  on(unauthorisedResponse, (state) => ({ ...state, loading: false }))
 );
 
 export function uiReducer(state: any, action: any) {

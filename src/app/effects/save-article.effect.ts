@@ -44,14 +44,7 @@ export class SaveArticleEffects {
   saveArticle$ = createEffect(() =>
     this.actions$.pipe(
       ofType(saveArticle), // when type is 'saveArticle'
-      concatMap((action) =>
-        of(action).pipe(
-          // combine this action with article from store and JWT
-          withLatestFrom(
-            this.store.pipe(select(selectArticleUnderEditWithToken))
-          )
-        )
-      ),
+      withLatestFrom(this.store.pipe(select(selectArticleUnderEditWithToken))),
       mergeMap(([action, article]) => {
         return this.articleService
           .updateArticle(article.article, article.token)
