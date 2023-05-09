@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormArray, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'styles-page',
   templateUrl: './styles-page.component.html',
   styleUrls: ['./styles-page.component.scss'],
 })

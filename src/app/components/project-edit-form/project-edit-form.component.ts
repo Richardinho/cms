@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { tagsValidator, isNewProject } from './utils/tags.validator';
@@ -16,11 +16,11 @@ import { formDataToProject } from './utils/form-data-to-project';
 import { buildTagsFormGroup } from './utils/build-tags-form-group';
 
 @Component({
-  selector: 'project-edit-form',
+  selector: 'app-project-edit-form',
   templateUrl: './project-edit-form.component.html',
   styleUrls: ['./project-edit-form.component.scss'],
 })
-export class ProjectEditFormComponent {
+export class ProjectEditFormComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
   @Input()

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { AppState, Article } from '../../model';
@@ -15,7 +15,7 @@ interface LoginResponseData {
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss'],
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent {
   public username = '';
   public password = '';
 
@@ -27,10 +27,6 @@ export class LoginPageComponent implements OnInit {
     private route: ActivatedRoute,
     private store: Store<AppState>
   ) {}
-
-  ngOnInit() {
-    //this.authService.logOut();
-  }
 
   onSubmit() {
     const redirectUrl =

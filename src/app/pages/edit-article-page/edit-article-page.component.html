@@ -3,7 +3,7 @@
     Save&nbsp;edit
   </button>
   <div class="spinner">
-    <spinner-component *ngIf="showLoader$ | async"></spinner-component>
+    <app-spinner-component *ngIf="showLoader$ | async"></app-spinner-component>
   </div>
 </div>
 
@@ -36,11 +36,11 @@
         </div>
 
         <div class="">
-          <cms-checkbox
+          <app-cms-checkbox
             formControlName="published"
             cbId="published"
             label="published"
-          ></cms-checkbox>
+          ></app-cms-checkbox>
         </div>
 
         <div class="select-tags-container">
@@ -51,11 +51,11 @@
               class="checkbox"
               *ngFor="let tag of mytags.controls; let i=index"
             >
-              <cms-checkbox
+              <app-cms-checkbox
                 [formControlName]="i"
                 [cbId]="i"
                 [label]="articleService.tagData[i]"
-              ></cms-checkbox>
+              ></app-cms-checkbox>
             </div>
           </div>
           <p

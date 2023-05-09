@@ -1,37 +1,57 @@
-
 <ng-container [formGroup]="form">
-	<div class="input-container">
-		<label class="label" for="title">title</label>
-		<input class="input" id="title" required formControlName="title"/>
-		<div [class.show-error]="(title.dirty || title.touched) && title.invalid" class="error">A title is required</div>
-	</div>
+  <div class="input-container">
+    <label class="label" for="title">title</label>
+    <input class="input" id="title" required formControlName="title" />
+    <div
+      [class.show-error]="(title.dirty || title.touched) && title.invalid"
+      class="error"
+    >
+      A title is required
+    </div>
+  </div>
 
-	<div class="input-container">
-		<label class="label" for="href">href</label>
-		<input class="input" id="href" required formControlName="href"/>
-		<div [class.show-error]="(href.dirty || href.touched) && href.invalid" class="error">An href is required</div>
-	</div>
+  <div class="input-container">
+    <label class="label" for="href">href</label>
+    <input class="input" id="href" required formControlName="href" />
+    <div
+      [class.show-error]="(href.dirty || href.touched) && href.invalid"
+      class="error"
+    >
+      An href is required
+    </div>
+  </div>
 
-	<div class="footer">
-		<div class="tags" formGroupName="tags">
-			<ng-container *ngFor="let tag of tagList">
-				<cms-checkbox
-					[formControlName]="tag"
-					[cbId]="tag + '-' + project.id"
-					label={{tag}}></cms-checkbox>
-			</ng-container>
-			<div [class.show-error]="tags.invalid" class="tags-error">You are only allowed to select 3 tags</div>
-		</div>
+  <div class="footer">
+    <div class="tags" formGroupName="tags">
+      <ng-container *ngFor="let tag of tagList">
+        <app-cms-checkbox
+          [formControlName]="tag"
+          [cbId]="tag + '-' + project.id"
+          label="{{tag}}"
+        ></app-cms-checkbox>
+      </ng-container>
+      <div [class.show-error]="tags.invalid" class="tags-error">
+        You are only allowed to select 3 tags
+      </div>
+    </div>
 
-		<div class="button-group">
-			<ng-container *ngIf="!newProject">
-				<button [disabled]="formDisabled" (click)="save()" class="button">save edits</button>
-				<button (click)="cancel()" class="button">cancel</button>
-			</ng-container>
-			<ng-container *ngIf="newProject">
-				<button [disabled]="formDisabled" (click)="saveNewProject()" class="button">save new project</button>
-				<button (click)="cancelNewProject()" class="button">cancel</button>
-			</ng-container>
-		</div>
-	</div>
+    <div class="button-group">
+      <ng-container *ngIf="!newProject">
+        <button [disabled]="formDisabled" (click)="save()" class="button">
+          save edits
+        </button>
+        <button (click)="cancel()" class="button">cancel</button>
+      </ng-container>
+      <ng-container *ngIf="newProject">
+        <button
+          [disabled]="formDisabled"
+          (click)="saveNewProject()"
+          class="button"
+        >
+          save new project
+        </button>
+        <button (click)="cancelNewProject()" class="button">cancel</button>
+      </ng-container>
+    </div>
+  </div>
 </ng-container>

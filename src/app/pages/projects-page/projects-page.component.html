@@ -1,48 +1,56 @@
-<div class="cta-bar">
-</div>
+<div class="cta-bar"></div>
 
 <!-- only purpose of this div is to so the container div can be relative to it: is there a better way? -->
 <div class="outer-container">
+  <div class="container">
+    <h2 class="page-title">Projects</h2>
+    <div class="cta-header">
+      <button (click)="createProject()" class="button">create project</button>
+    </div>
+    <ul>
+      <li *ngFor="let project of projectLinks$ | async" class="project-item">
+        <ng-container *ngIf="project.underEdit">
+          <app-project-edit-form [project]="project"></app-project-edit-form>
+        </ng-container>
 
-	<div class="container">
-		<h2 class="page-title">Projects</h2>
-		<div class="cta-header">
-			<button (click)="createProject()" class="button">create project</button>
-		</div>
-		<ul>
-			<li *ngFor="let project of projectLinks$ | async" class="project-item">
-				<ng-container *ngIf="project.underEdit">
-					<project-edit-form [project]="project"></project-edit-form>
-				</ng-container>
+        <ng-container *ngIf="!project.underEdit">
+          <div class="title">{{project.title}}</div>
+          <div class="href">
+            <span class="project-label">href</span>{{project.href}}
+          </div>
+          <div class="tags">
+            <div class="project-label">tags</div>
+            <ul>
+              <li *ngIf="project.tag1" class="tag">{{project.tag1}}</li>
+              <li *ngIf="project.tag2" class="tag">{{project.tag2}}</li>
+              <li *ngIf="project.tag3" class="tag">{{project.tag3}}</li>
+            </ul>
+          </div>
 
-				<ng-container *ngIf="!project.underEdit">
-					<div class="title">{{project.title}}</div>
-					<div class="href"><span class="project-label">href</span>{{project.href}}</div>
-					<div class="tags">
-						<div class="project-label">tags</div>
-						<ul>
-							<li *ngIf="project.tag1" class="tag">{{project.tag1}}</li>
-							<li *ngIf="project.tag2" class="tag">{{project.tag2}}</li>
-							<li *ngIf="project.tag3" class="tag">{{project.tag3}}</li>
-						</ul>
-					</div>
+          <div class="published">
+            <span class="project-label">published</span>{{project.published}}
+          </div>
 
-					<div class="published">
-						<span class="project-label">published</span>{{project.published}}</div>
-					
-					<div class="buttons">
-						<button class="button" (click)="editProject(project.id)">edit</button>
-						<ng-container *ngIf="!project.published">
-							<button class="button" (click)="publishProject(project, true)">publish</button>
-						</ng-container>
-						<ng-container *ngIf="project.published">
-							<button class="button" (click)="publishProject(project, false)">unpublish</button>
-						</ng-container>
-						<button class="button" (click)="deleteProject(project.id)">delete</button>
-					</div>
-				</ng-container>
-			</li>
-		</ul>
-	</div>
+          <div class="buttons">
+            <button class="button" (click)="editProject(project.id)">
+              edit
+            </button>
+            <ng-container *ngIf="!project.published">
+              <button class="button" (click)="publishProject(project, true)">
+                publish
+              </button>
+            </ng-container>
+            <ng-container *ngIf="project.published">
+              <button class="button" (click)="publishProject(project, false)">
+                unpublish
+              </button>
+            </ng-container>
+            <button class="button" (click)="deleteProject(project.id)">
+              delete
+            </button>
+          </div>
+        </ng-container>
+      </li>
+    </ul>
+  </div>
 </div>
-

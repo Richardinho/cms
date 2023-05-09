@@ -1,61 +1,77 @@
-
 <div class="container">
-	<section>
-		<h2>Colors</h2>
+  <section>
+    <h2>Colors</h2>
 
-		<ul class="color-swatches">
-			<li class="color-background">background</li>
-			<li class="color-base">base</li>
-			<li class="color-border">border</li>
-			<li class="color-highlight">highlight</li>
-			<li class="color-light-blue">light blue?</li>
-			<li class="color-shadow">shadow</li>
-		</ul>
-	</section>
+    <ul class="color-swatches">
+      <li class="color-background">background</li>
+      <li class="color-base">base</li>
+      <li class="color-border">border</li>
+      <li class="color-highlight">highlight</li>
+      <li class="color-light-blue">light blue?</li>
+      <li class="color-shadow">shadow</li>
+    </ul>
+  </section>
 
+  <section>
+    <h2>Buttons</h2>
+    <button class="button">hello world</button>
+    <button class="button">another button</button>
+  </section>
 
-	<section>
-		<h2>Buttons</h2>
-		<button class="button">hello world</button>
-		<button class="button">another button</button>
-	</section>
+  <section>
+    <h2>Checkboxes</h2>
 
-	<section>
-		<h2>Checkboxes</h2>
+    <form #form="ngForm">
+      <app-cms-checkbox
+        cbId="foo"
+        [ngModel]="true"
+        name="foo"
+        label="this is foo"
+      ></app-cms-checkbox>
+      <app-cms-checkbox
+        cbId="bar"
+        [ngModel]="false"
+        name="bar"
+        label="this is bar"
+      ></app-cms-checkbox>
+    </form>
 
-		<form #form="ngForm">
-			<cms-checkbox cbId="foo" [ngModel]="true" name="foo" label="this is foo"></cms-checkbox>
-			<cms-checkbox cbId="bar" [ngModel]="false" name="bar" label="this is bar"></cms-checkbox>
-		</form>
-
-		<pre>
+    <pre>
 	{{ form.value | json }}
-		</pre>
-	</section>
+		</pre
+    >
+  </section>
 
-
-	<section>
-		<form>
-			<cms-checkbox [formControl]="blahFormControl" cbId="blah" label="this is reactive form control"></cms-checkbox>
-		</form>
-		<pre>
+  <section>
+    <form>
+      <app-cms-checkbox
+        [formControl]="blahFormControl"
+        cbId="blah"
+        label="this is reactive form control"
+      ></app-cms-checkbox>
+    </form>
+    <pre>
 	{{ blahFormControl.value | json }}
-		</pre>
-	</section>
+		</pre
+    >
+  </section>
 
-	<section>
-		<div [formGroup]="formGroup">
-			<div formArrayName="tags">
-				<div class="checkbox"
-						 *ngFor="let tag of mytags.controls; let i=index"
-						 >
-						 <cms-checkbox [formControlName]="i" cbId={{i}} label="ssssfsfsf"></cms-checkbox>
-				</div>
-			</div>
-		</div>
+  <section>
+    <div [formGroup]="formGroup">
+      <div formArrayName="tags">
+        <div class="checkbox" *ngFor="let tag of mytags.controls; let i=index">
+          <cms-checkbox
+            [formControlName]="i"
+            cbId="{{i}}"
+            label="ssssfsfsf"
+          ></cms-checkbox>
+        </div>
+      </div>
+    </div>
 
-		<pre>
+    <pre>
 	{{ formGroup.value | json }}
-		</pre>
-	</section>
+		</pre
+    >
+  </section>
 </div>

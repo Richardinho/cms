@@ -1,5 +1,5 @@
 //  Angular
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 // RXJS
@@ -24,7 +24,7 @@ import { saveIntro } from '../../actions/save-intro.action';
   templateUrl: './intro-page.component.html',
   styleUrls: ['./intro-page.component.scss'],
 })
-export class IntroPageComponent {
+export class IntroPageComponent implements OnInit {
   intro$: Observable<any>;
   showLoader$: Observable<boolean>;
   disableSaveButton$: Observable<boolean>;
