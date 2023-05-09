@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AppState } from './model';
 import { Store, select } from '@ngrx/store';
-import {
-	CanActivate,
-	ActivatedRouteSnapshot,
-	RouterStateSnapshot,
-	UrlTree,
-	Router,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { selectJWTToken } from './selectors/article.selector';
 
@@ -18,7 +12,7 @@ const selectFoo = (state: AppState) => {
 @Injectable({
 	providedIn: 'root',
 })
-export class AppGuard implements CanActivate {
+export class AppGuard  {
 
 	constructor(private store: Store<AppState>, private router: Router) {}
 
