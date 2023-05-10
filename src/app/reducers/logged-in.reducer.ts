@@ -1,14 +1,13 @@
 import { createReducer, on } from '@ngrx/store';
-import { logInResponse, logOut } from '../actions/log-in.action';
-// is this ever fired?
-import { sessionExpired } from '../actions/session-expired.action';
+import { sessionExpired, logInResponse, logOut } from '../actions';
 
 const initialState = '';
 
-const _logInReducer = createReducer(initialState,
+const _logInReducer = createReducer(
+  initialState,
   on(logInResponse, (state, action) => action['jwt_token']),
   on(logOut, () => ''),
-  on(sessionExpired, () => ''),
+  on(sessionExpired, () => '')
 );
 
 export function logInReducer(state: any, action: any) {

@@ -5,25 +5,27 @@ import { createReducer, on } from '@ngrx/store';
 import { UI } from '../model';
 
 //  actions
-import { saveArticle } from '../actions/save-article.action';
-import { articleSavedResponse } from '../actions/article-saved-response.action';
-import { articleRequest } from '../actions/edit-article-request.action';
-import { deleteArticleResponse } from '../actions/delete-article-response.action';
-import { introChanged } from '../actions/intro-changed.action';
 import {
-  introSaved,
+  articleRequest,
+  articleSavedResponse,
+  deleteArticleResponse,
+  introChanged,
   introNotSavedToServer,
-} from '../actions/intro-request.action';
-import { saveIntro } from '../actions/save-intro.action';
-import { navigateAway } from '../actions/navigate-away';
-import { articleLinksResponse } from '../actions/article-links-response';
-import { genericError } from '../actions/generic-error.action';
-import { unauthorisedResponse } from '../actions/unauthorised-response.action';
+  introSaved,
+  saveArticle,
+} from '../actions';
+
 import {
+  articleLinksResponse,
+  genericError,
+  navigateAway,
+  saveIntro,
+  unauthorisedResponse,
   updateMetadataRequest,
   updateMetadataResponse,
-} from '../actions/update-metadata.action';
-import { projectsResponse } from '../actions/projects.action';
+} from '../actions';
+
+import { projectsResponse } from '../actions';
 
 import { updateLinks } from './utils';
 

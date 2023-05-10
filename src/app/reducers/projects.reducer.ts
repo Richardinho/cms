@@ -9,7 +9,7 @@ import {
   createProjectRequest,
   createNewProjectResponse,
   deleteLocalProject,
-} from '../actions/projects.action';
+} from '../actions';
 
 let latestId = 1;
 

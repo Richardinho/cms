@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppState } from './model';
 import { loggedInSelector } from './selectors/logged-in.selector';
 import { Store, select } from '@ngrx/store';
-import { logOut } from './actions/log-in.action';
+import { logOut } from './actions';
 
 @Component({
   selector: 'app-root',

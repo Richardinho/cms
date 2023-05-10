@@ -5,7 +5,7 @@ import { AppState, Article } from '../../model';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { environment } from '../../../environments/environment';
-import { logInRequest } from '../../actions/log-in.action';
+import { logInRequest } from '../../actions';
 
 interface LoginResponseData {
   jwt_token: string;

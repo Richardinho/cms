@@ -1,14 +1,17 @@
+//  Angular
 import { Component, OnInit, OnDestroy } from '@angular/core';
+
+//  RXJS
 import { Store, select } from '@ngrx/store';
 
+//  models
 import { AppState } from '../../model';
 
-//import { navigateAway } from './actions/navigate-away';
-
+//  selectors
 import { selectArticleLinks } from '../../selectors/select-article-links';
 
-import { requestArticleLinks } from '../../actions/request-article-links';
-import { createArticleRequest } from '../../actions/create-article.action';
+//  actions
+import { createArticleRequest, requestArticleLinks } from '../../actions/';
 
 // TODO: change name to ArticleLinksPageComponent
 @Component({
@@ -28,8 +31,6 @@ export class ArticlePageComponent implements OnInit {
   }
 
   createArticle() {
-    // TODO: inline action
-    const action = createArticleRequest();
-    this.store.dispatch(action);
+    this.store.dispatch(createArticleRequest());
   }
 }

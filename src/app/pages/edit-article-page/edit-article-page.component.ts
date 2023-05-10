@@ -15,9 +15,7 @@ import { ArticleService } from '../../services/article.service';
 import { AppState, Article } from '../../model';
 
 //  actions
-import { articleChanged } from '../../actions/article-changed.action';
-import { articleRequest } from '../../actions/edit-article-request.action';
-import { saveArticle } from '../../actions/save-article.action';
+import { articleChanged, articleRequest, saveArticle } from '../../actions';
 
 // selectors
 import { selectArticleUnderEdit } from '../../selectors/article.selector';

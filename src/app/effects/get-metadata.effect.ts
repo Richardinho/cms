@@ -11,9 +11,12 @@ import {
 } from 'rxjs/operators';
 import { AppState } from '../model';
 
-import { genericError } from '../actions/generic-error.action';
-import { metadataRequest, metadataResponse } from '../actions/metadata.action';
-import { unauthorisedResponse } from '../actions/unauthorised-response.action';
+import {
+  unauthorisedResponse,
+  metadataRequest,
+  metadataResponse,
+  genericError,
+} from '../actions';
 
 import { MetadataService } from '../services/metadata.service';
 import { selectJWTToken } from '../selectors/article.selector';

@@ -15,28 +15,31 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 
-//  model
+//  models
 import { AppState } from '../model';
 
-// services
+//  services
 import { ArticleService } from '../services/article.service';
 
-// actions
-import { unauthorisedResponse } from '../actions/unauthorised-response.action';
-import { genericError } from '../actions/generic-error.action';
-import {
-  createArticleRequest,
-  createArticleResponse,
-} from '../actions/create-article.action';
+//  actions
+import { unauthorisedResponse, genericError } from '../actions';
+import { createArticleRequest, createArticleResponse } from '../actions';
 
-// selectors
+//  selectors
 import { selectJWTToken } from '../selectors/article.selector';
 
-// utils
+//  utils
 import { UNAUTHORIZED } from '../status-code.constants';
 
 @Injectable()
 export class CreateArticleEffects {
+  constructor(
+    private actions$: Actions,
+    private articleService: ArticleService,
+    private store: Store<AppState>,
+    private router: Router
+  ) {}
+
   navigateToEditPage$ = createEffect(
     () => {
       return this.actions$.pipe(
@@ -52,9 +55,7 @@ export class CreateArticleEffects {
   createArticle$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createArticleRequest),
-      concatMap((action) =>
-        of(action).pipe(withLatestFrom(this.store.pipe(select(selectJWTToken))))
-      ),
+      withLatestFrom(this.store.pipe(select(selectJWTToken))),
       switchMap(([action, token]) => {
         return this.articleService.createArticle(token).pipe(
           map((id) => createArticleResponse({ id })),
@@ -75,11 +76,4 @@ export class CreateArticleEffects {
       })
     )
   );
-
-  constructor(
-    private actions$: Actions,
-    private articleService: ArticleService,
-    private store: Store<AppState>,
-    private router: Router
-  ) {}
 }

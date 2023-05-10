@@ -1,17 +1,27 @@
+//  Angular
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
+
+//  RXJS
 import { Store } from '@ngrx/store';
-import { tagsValidator, isNewProject } from './utils/tags.validator';
-import { Project, AppState } from '../../model';
 import { Observable } from 'rxjs';
+
+//  models
+import { Project, AppState } from '../../model';
+
+//  actions
 import {
   editProject,
   saveProject,
   deleteLocalProject,
   saveNewProjectRequest,
-} from '../../actions/projects.action';
+} from '../../actions';
 
+//  services
 import { tagData } from '../../services/article.service';
+
+//  utils
+import { tagsValidator, isNewProject } from './utils/tags.validator';
 import { formDataToProject } from './utils/form-data-to-project';
 import { buildTagsFormGroup } from './utils/build-tags-form-group';
 

@@ -13,12 +13,12 @@ import {
 import { AppState } from '../model';
 import { MetadataService } from '../services/metadata.service';
 
-import { genericError } from '../actions/generic-error.action';
-import { unauthorisedResponse } from '../actions/unauthorised-response.action';
 import {
   updateMetadataRequest,
   updateMetadataResponse,
-} from '../actions/update-metadata.action';
+  unauthorisedResponse,
+  genericError,
+} from '../actions';
 
 import { selectJWTToken } from '../selectors/article.selector';
 

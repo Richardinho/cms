@@ -1,15 +1,21 @@
+//  Angular
 import { Component, OnInit } from '@angular/core';
-import { AppState } from '../../model';
-import { Observable } from 'rxjs';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+
+//  RXJS
+import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 
-import { metadataRequest } from '../../actions/metadata.action';
-import { updateMetadataRequest } from '../../actions/update-metadata.action';
+//  models
+import { AppState } from '../../model';
 
+//  actions
+import { updateMetadataRequest, metadataRequest } from '../../actions';
+
+//  selectors
 import { selectMetadata } from '../../selectors/metadata.selector';
 import { selectShowLoader } from '../../selectors/show-loader.selector';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 // TODO: should it be called MetadataPageComponent?
 @Component({

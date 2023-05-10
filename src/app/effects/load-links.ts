@@ -14,10 +14,12 @@ import { AppState } from '../model';
 
 import { ArticleService } from '../services/article.service';
 
-import { unauthorisedResponse } from '../actions/unauthorised-response.action';
-import { genericError } from '../actions/generic-error.action';
-import { articleLinksResponse } from '../actions/article-links-response';
-import { requestArticleLinks } from '../actions/request-article-links';
+import {
+  articleLinksResponse,
+  genericError,
+  requestArticleLinks,
+  unauthorisedResponse,
+} from '../actions';
 
 import { selectArticlesWithJWTToken } from '../selectors/article.selector';
 

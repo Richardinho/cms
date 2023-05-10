@@ -9,7 +9,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { MessageService, ERROR } from '../services/message.service';
 
 //  actions
-import { genericError } from '../actions/generic-error.action';
+import { genericError } from '../actions';
 
 @Injectable()
 export class GenericErrorEffects {

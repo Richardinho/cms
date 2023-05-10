@@ -16,9 +16,7 @@ import { introSavedChanges, selectIntro } from '../../selectors/intro.selector';
 import { selectShowLoader } from '../../selectors/show-loader.selector';
 
 // actions
-import { introChanged } from '../../actions/intro-changed.action';
-import { introRequest } from '../../actions/intro-request.action';
-import { saveIntro } from '../../actions/save-intro.action';
+import { introRequest, introChanged, saveIntro } from '../../actions';
 
 @Component({
   templateUrl: './intro-page.component.html',

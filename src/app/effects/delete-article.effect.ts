@@ -16,9 +16,11 @@ import { ArticleService } from '../services/article.service';
 
 import { AppState } from '../model';
 
-import { deleteArticle } from '../actions/delete-article.action';
-import { deleteArticleResponse } from '../actions/delete-article-response.action';
-import { unauthorisedResponse } from '../actions/unauthorised-response.action';
+import {
+  unauthorisedResponse,
+  deleteArticle,
+  deleteArticleResponse,
+} from '../actions';
 
 import { selectArticleUnderEditWithToken } from '../selectors/article.selector';
 

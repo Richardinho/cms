@@ -1,10 +1,10 @@
-import { articleChanged } from '../article-changed.action';
+import { articleChanged } from '../actions';
 
 describe('article-changed.action', () => {
   it('should return action with patch data', () => {
     const expected = {
       type: '[EditArticle Page] Article Changed',
-      articlePatchData: 'foo'
+      articlePatchData: 'foo',
     };
 
     const result: any = articleChanged({ articlePatchData: 'foo' });

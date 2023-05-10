@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { DialogService } from '../../services/dialog.service';
 import { Project, AppState } from '../../model';
 import { selectProjects } from '../../selectors/project.selector';
+
 import {
   projectsRequest,
   editProject,
@@ -12,7 +13,7 @@ import {
   projectDeletedResponse,
   saveProject,
   createProjectRequest,
-} from '../../actions/projects.action';
+} from '../../actions';
 
 @Component({
   templateUrl: './projects-page.component.html',

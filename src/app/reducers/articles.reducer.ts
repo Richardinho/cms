@@ -1,10 +1,17 @@
 import { createReducer, on } from '@ngrx/store';
-import { articleChanged } from '../actions/article-changed.action';
-import { articleSavedResponse } from '../actions/article-saved-response.action';
-import { deleteArticleResponse } from '../actions/delete-article-response.action';
-import { getArticleResponse } from '../actions/get-article-response.action';
 
+//  actions
+import {
+  articleSavedResponse,
+  deleteArticleResponse,
+  getArticleResponse,
+  articleChanged,
+} from '../actions';
+
+//  models
 import { Article, Articles } from '../model';
+
+//  services
 import { tagData } from '../services/article.service';
 
 export const initialState = {};

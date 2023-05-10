@@ -21,10 +21,12 @@ import { ArticleService } from '../services/article.service';
 import { MessageService, ERROR } from '../services/message.service';
 
 // actions
-import { articleSavedResponse } from '../actions/article-saved-response.action';
-import { genericError } from '../actions/generic-error.action';
-import { saveArticle } from '../actions/save-article.action';
-import { unauthorisedResponse } from '../actions/unauthorised-response.action';
+import {
+  articleSavedResponse,
+  genericError,
+  saveArticle,
+  unauthorisedResponse,
+} from '../actions';
 
 // selectors
 import { selectArticleUnderEditWithToken } from '../selectors/article.selector';

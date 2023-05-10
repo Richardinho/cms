@@ -10,6 +10,7 @@ import {
   map,
   catchError,
 } from 'rxjs/operators';
+
 import { of } from 'rxjs';
 
 import {
@@ -22,9 +23,9 @@ import {
   deleteProject,
   projectDeletedResponse,
   createNewProjectResponse,
-} from '../actions/projects.action';
-import { unauthorisedResponse } from '../actions/unauthorised-response.action';
-import { genericError } from '../actions/generic-error.action';
+  genericError,
+  unauthorisedResponse,
+} from '../actions';
 
 import { selectProjectsWithJWTToken } from '../selectors/project.selector';
 import { AppState, Project } from '../model';

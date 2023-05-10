@@ -14,11 +14,13 @@ import { AppState } from '../model';
 
 import { ArticleService } from '../services/article.service';
 
-import { articleFoundInCache } from '../actions/article-found-in-cache.action';
-import { articleRequest } from '../actions/edit-article-request.action';
-import { genericError } from '../actions/generic-error.action';
-import { getArticleResponse } from '../actions/get-article-response.action';
-import { unauthorisedResponse } from '../actions/unauthorised-response.action';
+import {
+  articleFoundInCache,
+  articleRequest,
+  genericError,
+  getArticleResponse,
+  unauthorisedResponse,
+} from '../actions';
 
 import { selectArticleWithToken } from '../selectors/article.selector';
 
