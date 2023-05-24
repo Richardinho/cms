@@ -23,13 +23,13 @@
 
     <form #form="ngForm">
       <app-cms-checkbox
-        cbId="foo"
+        id="foo"
         [ngModel]="true"
         name="foo"
         label="this is foo"
       ></app-cms-checkbox>
       <app-cms-checkbox
-        cbId="bar"
+        id="bar"
         [ngModel]="false"
         name="bar"
         label="this is bar"
@@ -46,7 +46,7 @@
     <form>
       <app-cms-checkbox
         [formControl]="blahFormControl"
-        cbId="blah"
+        id="blah"
         label="this is reactive form control"
       ></app-cms-checkbox>
     </form>
@@ -62,7 +62,7 @@
         <div class="checkbox" *ngFor="let tag of mytags.controls; let i=index">
           <cms-checkbox
             [formControlName]="i"
-            cbId="{{i}}"
+            id="{{i}}"
             label="ssssfsfsf"
           ></cms-checkbox>
         </div>

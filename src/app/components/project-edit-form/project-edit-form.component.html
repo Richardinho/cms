@@ -26,7 +26,7 @@
       <ng-container *ngFor="let tag of tagList">
         <app-cms-checkbox
           [formControlName]="tag"
-          [cbId]="tag + '-' + project.id"
+          [id]="tag + '-' + project.id"
           label="{{tag}}"
         ></app-cms-checkbox>
       </ng-container>

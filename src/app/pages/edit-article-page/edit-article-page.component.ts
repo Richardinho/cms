@@ -43,7 +43,7 @@ export class EditArticlePageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private articleService: ArticleService,
+    public articleService: ArticleService,
     private store: Store<AppState>
   ) {}
 
@@ -51,7 +51,7 @@ export class EditArticlePageComponent implements OnInit {
     return this.formGroup.value;
   }
 
-  private formGroup: FormGroup = new FormGroup({
+  public formGroup: FormGroup = new FormGroup({
     id: new FormControl(''),
     body: new FormControl('', Validators.required),
     title: new FormControl('', Validators.required),
