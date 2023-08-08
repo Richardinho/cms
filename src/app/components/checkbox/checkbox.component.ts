@@ -9,9 +9,15 @@ import {
   selector: 'app-cms-checkbox',
   styleUrls: ['./checkbox.component.scss'],
   template: `
-    <label class="label" [for]="id">{{ label }}</label>
-    <input #input [id]="id" [formControl]="formControl" type="checkbox" />
-    <label [for]="id" class="box"></label>
+    <label class="label" [for]="_id">{{ label }}</label>
+
+    <input
+      #input
+      [id]="_id"
+      [formControl]="formControl"
+      type="checkbox" />
+
+    <label [for]="_id" class="box"></label>
   `,
   providers: [
     {
@@ -25,6 +31,11 @@ export class CheckboxComponent implements ControlValueAccessor {
   @Input() id: string | number;
   @Input() label: string;
   @ViewChild('input', { static: false }) input: ElementRef;
+
+  get _id() {
+
+    return '__' + this.id + '__';
+  }
 
   formControl: FormControl = new FormControl(true);
 

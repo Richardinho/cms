@@ -60,11 +60,11 @@
     <div [formGroup]="formGroup">
       <div formArrayName="tags">
         <div class="checkbox" *ngFor="let tag of mytags.controls; let i=index">
-          <cms-checkbox
+          <app-cms-checkbox
             [formControlName]="i"
             id="{{i}}"
             label="ssssfsfsf"
-          ></cms-checkbox>
+          ></app-cms-checkbox>
         </div>
       </div>
     </div>
