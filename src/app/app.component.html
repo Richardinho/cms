@@ -1,6 +1,9 @@
 <div class="container">
   <div class="header" *ngIf="loggedIn$ | async; else elseBlock">
-    <a class="link" routerLink="/">Menu</a>
+    <a class="link" routerLink="/article-list">Articles</a>
+    <a class="link" routerLink="/projects">Projects</a>
+    <a class="link" routerLink="/metadata">Metadata</a>
+    <a class="link" routerLink="/intro">Intro</a>
 
     <div class="right-aligned">
       <button class="button" (click)="logOut()">logout</button>

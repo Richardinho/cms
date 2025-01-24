@@ -13,3 +13,4 @@
 - article-list page: better UI to indicate unsaved changes
 - edit article page: spinner on save, and messages for saved/error states
 - update to Angular 16
+- put menu in nav bar instead of its own page

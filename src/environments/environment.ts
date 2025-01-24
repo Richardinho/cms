@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  blogDomain: 'https://foo.com',
+  blogDomain: 'http://foo.com',
 };
 
 /*
